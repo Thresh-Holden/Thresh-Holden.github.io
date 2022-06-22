@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>3D游戏编程与设计 - 中山大学</title>
+    <link>http://Thresh-Holden.github.io/</link>
+    <description>Recent content on 3D游戏编程与设计 - 中山大学</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Dec 2020 00:00:00 +0800</lastBuildDate><atom:link href="http://Thresh-Holden.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Theme preview</title>
+      <link>http://Thresh-Holden.github.io/post/even-preview/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/even-preview/</guid>
+      <description>Based on MarkdownPreview test.md. Markdown 1 2 3 4 5 6 7 8 # H1 ## H2 ### H3 #### H4 ##### H5 ###### H6 ### Duplicate Header ### Duplicate Header H1 H2 H3 H4 H5 H6 Duplicate Header Duplicate Header Paragraphs 1 2 3 4 This is a paragraph. I am still part of the paragraph. New paragraph. This is a paragraph. I am still part of the paragraph.</description>
+    </item>
+    
+    <item>
+      <title>关于</title>
+      <link>http://Thresh-Holden.github.io/about/</link>
+      <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/about/</guid>
+      <description>该网站是关于游戏编程与开发的技术支撑网站。具体包括： 游戏引擎的架构 设计模式应用 计算机语言中高级知识 由中山大学维护 该网站使用 Hugo 的 Even 主题生成， Hugo</description>
+    </item>
+    
+    <item>
+      <title>附录 X3-05、反射 与 Unity</title>
+      <link>http://Thresh-Holden.github.io/post/x3-05-reflection/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x3-05-reflection/</guid>
+      <description>1、什么是反射 Reflection，中文翻译为反射。 这是 dotNet 获取 运行时 类型信息/定义 的方式。dotNet的应用程序由几个部分：‘程序集(Ass</description>
+    </item>
+    
+    <item>
+      <title>附录 X3-06、协程与Unity</title>
+      <link>http://Thresh-Holden.github.io/post/x3-06-coroutine/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x3-06-coroutine/</guid>
+      <description>1、进程、线程与协程 进程（Process）是执行中的程序，是操作系统管理、分配资源（CPU、内存、IO等）的单位。简单的，进程运行在由操作系</description>
+    </item>
+    
+    <item>
+      <title>第11章、数据驱动的设计</title>
+      <link>http://Thresh-Holden.github.io/post/11-data-driven-design/</link>
+      <pubDate>Sat, 21 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/11-data-driven-design/</guid>
+      <description>Data 课程内容与资源 本节课内容属于游戏高级技术。如果你不打算从事游戏行业，了解即可 课程案例： 从官网商店下载 Asset Store -&amp;gt; Unity Essentials / Sample / Survival Shooter 1、课程简介 课程目</description>
+    </item>
+    
+    <item>
+      <title>九、UI系统</title>
+      <link>http://Thresh-Holden.github.io/post/09-ui/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/09-ui/</guid>
+      <description>You can&amp;rsquo;t connect the dots looking forward; you can only connect them looking backwards &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 资源下载 资源商店，Game Jam Menu Template 资源商店，Unity Samples: UI 深入csharp 协程 和 Unity 对</description>
+    </item>
+    
+    <item>
+      <title>十、游戏智能</title>
+      <link>http://Thresh-Holden.github.io/post/10-intelligent/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/10-intelligent/</guid>
+      <description>AI - 课程内容与资源 深入csharp 基于代理的 C# 反射技术 1、游戏智能与AI 1.1 人工智能概述 通常来说，人工智能（Artificial Intelli</description>
+    </item>
+    
+    <item>
+      <title>第12章、AR/MR 技术</title>
+      <link>http://Thresh-Holden.github.io/post/12-ar-and-mr/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/12-ar-and-mr/</guid>
+      <description>So keep looking until you find it. Don&amp;rsquo;t settle. &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 1、AR/MR 概述 什么是“真实”？你如何定义“真实”，如果你说的是你看到的、摸到的、感受到的一切，那么“真</description>
+    </item>
+    
+    <item>
+      <title>第13章、多人游戏与网络</title>
+      <link>http://Thresh-Holden.github.io/post/13-multiplayer-and-networking/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/13-multiplayer-and-networking/</guid>
+      <description>So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever. &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 预计时间：3 * 45 min 1、网络游戏概述 本质上，多人联网游戏是</description>
+    </item>
+    
+    <item>
+      <title>第14章、集成脚本引擎</title>
+      <link>http://Thresh-Holden.github.io/post/14-script-integration/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/14-script-integration/</guid>
+      <description>Don&amp;rsquo;t let the noise of other&amp;rsquo;s opinions drown out your own inner voice. And most important, have the courage to follow your heart and intuition. &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 1、资源下载 sLua 2、相关知识 托管资源、垃圾回收 本节课内容属于游</description>
+    </item>
+    
+    <item>
+      <title>八、粒子系统与流动效果</title>
+      <link>http://Thresh-Holden.github.io/post/08-particle-system/</link>
+      <pubDate>Tue, 03 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/08-particle-system/</guid>
+      <description>It freed me to enter one of the most creative periods of my life &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 课程内容与资源 资源下载 资源商店，Fx Explosion , 9.8 MB 标准资源包 ParticleSystems 资源商店，Unit</description>
+    </item>
+    
+    <item>
+      <title>七、模型与动画</title>
+      <link>http://Thresh-Holden.github.io/post/07-model-and-animation/</link>
+      <pubDate>Sun, 11 Oct 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/07-model-and-animation/</guid>
+      <description>It was beautiful, historical, artistically subtle in a way that science can&amp;rsquo;t capture, and I found it fascinating &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：6-8 * 45 min 人设之美令人难忘，它对游戏的成功至关重要。 动画系统使得游戏运动管理</description>
+    </item>
+    
+    <item>
+      <title>六、物理系统与碰撞</title>
+      <link>http://Thresh-Holden.github.io/post/06-physics-and-collision/</link>
+      <pubDate>Sun, 11 Oct 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/06-physics-and-collision/</guid>
+      <description>It was awful tasting medicine, but I guess the patient needed it. Sometimes life hits you in the head with a brick. Don&amp;rsquo;t lose faith &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 课程内容 资源与代码下载 1、物理引擎基础 这是《守望先锋</description>
+    </item>
+    
+    <item>
+      <title>五、与游戏世界交互</title>
+      <link>http://Thresh-Holden.github.io/post/05-interaction-with-gameworld/</link>
+      <pubDate>Thu, 01 Oct 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/05-interaction-with-gameworld/</guid>
+      <description>It freed me to enter one of the most creative periods of my life &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 课程内容 资源与代码下载 1、游戏交互与创新 游戏交互是玩家体验的基础。这里 交互</description>
+    </item>
+    
+    <item>
+      <title>四、游戏对象与图形基础</title>
+      <link>http://Thresh-Holden.github.io/post/04-gameobject-and-graphics/</link>
+      <pubDate>Sat, 19 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/04-gameobject-and-graphics/</guid>
+      <description>It was beautiful, historical, artistically subtle in a way that science can&amp;rsquo;t capture, and I found it fascinating &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 1、构建游戏世界 作家、艺术家用想象描绘游戏世界，程序员用图形元素构</description>
+    </item>
+    
+    <item>
+      <title>三、空间与运动</title>
+      <link>http://Thresh-Holden.github.io/post/03-space-and-motion/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/03-space-and-motion/</guid>
+      <description>I stumbled into by following my curiosity and intuition turned out to be priceless later on &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏世界空间模型 1.1 游戏世界的设计维度（文化与艺术） 游戏世界是一个虚</description>
+    </item>
+    
+    <item>
+      <title>二、离散仿真引擎基础</title>
+      <link>http://Thresh-Holden.github.io/post/02-dscrete-simulation-basic/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/02-dscrete-simulation-basic/</guid>
+      <description>You can&amp;rsquo;t connect the dots looking forward; you can only connect them looking backwards &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏引擎 1.1 游戏引擎概念与结构 A game engine is a software-development environment designed for people to build video games. 根据这个定义，</description>
+    </item>
+    
+    <item>
+      <title>附件一、UML符号与面向对象的设计</title>
+      <link>http://Thresh-Holden.github.io/post/x1-uml-notation/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x1-uml-notation/</guid>
+      <description>工欲善其事，必先利其器 &amp;mdash; 孔子 《论语》 1、什么是 UML？ Unified Modeling Language（统一建模语言）是一种标准的图形化编程语言用于软件分析与设计结果的</description>
+    </item>
+    
+    <item>
+      <title>附录 X3-07、方法扩展、Lambda 表达式</title>
+      <link>http://Thresh-Holden.github.io/post/x3-07-method-extend-lambda/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x3-07-method-extend-lambda/</guid>
+      <description>1、类方法的扩展 1.1 初识类扩展 你可能觉得 C# 的 Random 类提供的方法不够用。如果想提供一些特殊随机数产生方法，你可以用以下方法扩展它： 1 2 3 4 5 6 7 8 9</description>
+    </item>
+    
+    <item>
+      <title>一、游戏的本质</title>
+      <link>http://Thresh-Holden.github.io/post/01-nature-of-game/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/01-nature-of-game/</guid>
+      <description>Dropping in on the ones that looked interesting &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：2 * 45 min 1、游戏的概念 1.1 什么是游戏？ 游戏无处不在。在游牧年代据说就有了投壶这样的游戏，人们打牌、下</description>
+    </item>
+    
+    <item>
+      <title>前言</title>
+      <link>http://Thresh-Holden.github.io/post/preface/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/preface/</guid>
+      <description>You&amp;rsquo;ve got to find what you love &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 1、Welcome 首先看一段视频（李易峰-2018江苏卫视-角色）： “年少的人难免轻狂，&amp;hellip;”，当</description>
+    </item>
+    
+    <item>
+      <title>课程大纲 (2020)</title>
+      <link>http://Thresh-Holden.github.io/post/index-2020/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/index-2020/</guid>
+      <description>3D 游戏编程与程序设计 &amp;mdash;应用设计模式设计、开发游戏软件 前言 一、游戏的本质 二、离散仿真基础 三、空间与运动 四、游戏对象与图形基础 五、与</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://Thresh-Holden.github.io/post/another-page/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/another-page/</guid>
+      <description>Welcome to another page yay
+back</description>
+    </item>
+    
+    <item>
+      <title>作业优秀博客汇总</title>
+      <link>http://Thresh-Holden.github.io/post/x4-ex/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x4-ex/</guid>
+      <description>附录 X4、作业优秀博客汇总 {:.no_toc} 目录 {:toc} 1、最有价值个人博客（Valuable Person Blogs） 2019 最佳技术博客 StarashZ 2019 优秀博客 yuxy36、Jenny_S</description>
+    </item>
+    
+  </channel>
+</rss>

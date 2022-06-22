@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>四、游戏对象与图形基础 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="It was beautiful, historical, artistically subtle in a way that science can&amp;rsquo;t capture, and I found it fascinating &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 1、构建游戏世界 作家、艺术家用想象描绘游戏世界，程序员用图形元素构" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/04-gameobject-and-graphics/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="四、游戏对象与图形基础" />
+<meta property="og:description" content="It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 1、构建游戏世界 作家、艺术家用想象描绘游戏世界，程序员用图形元素构" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/04-gameobject-and-graphics/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-19T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="四、游戏对象与图形基础">
+<meta itemprop="description" content="It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 1、构建游戏世界 作家、艺术家用想象描绘游戏世界，程序员用图形元素构"><meta itemprop="datePublished" content="2020-09-19T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="8472">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="四、游戏对象与图形基础"/>
+<meta name="twitter:description" content="It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 1、构建游戏世界 作家、艺术家用想象描绘游戏世界，程序员用图形元素构"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">四、游戏对象与图形基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-19 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1构建游戏世界">1、构建游戏世界</a>
+          <ul>
+            <li><a href="#11-游戏原型设计">1.1 游戏原型设计</a></li>
+            <li><a href="#12-数字游戏原型设计">1.2 数字游戏原型设计</a></li>
+            <li><a href="#13-构建游戏-demo-的重要性">1.3 构建游戏 demo 的重要性</a></li>
+          </ul>
+        </li>
+        <li><a href="#2游戏常见对象构建">2、游戏常见对象构建</a>
+          <ul>
+            <li><a href="#21-基础游戏对象">2.1 基础游戏对象</a></li>
+            <li><a href="#22-camera-摄像机--游戏场景渲染">2.2 Camera 摄像机 – 游戏场景渲染</a></li>
+            <li><a href="#23-天空盒">2.3 天空盒</a></li>
+            <li><a href="#24-光源">2.4 光源</a></li>
+            <li><a href="#25-声音源与拾音器">2.5 声音源与拾音器</a></li>
+          </ul>
+        </li>
+        <li><a href="#33d物体与渲染">3、3D物体与渲染</a>
+          <ul>
+            <li><a href="#31-3d-模型基础">3.1 3D 模型基础</a></li>
+            <li><a href="#32-材质与着色器">3.2 材质与着色器</a></li>
+            <li><a href="#33-地形">3.3 地形</a></li>
+            <li><a href="#34-光照贴图">3.4 光照贴图</a></li>
+          </ul>
+        </li>
+        <li><a href="#4面向对象的游戏编程">4、面向对象的游戏编程</a>
+          <ul>
+            <li><a href="#41-动作管理器的设计">4.1 动作管理器的设计</a></li>
+            <li><a href="#42-核心代码与设计解读">4.2 核心代码与设计解读</a></li>
+            <li><a href="#43-使用动作组合">4.3 使用动作组合</a></li>
+          </ul>
+        </li>
+        <li><a href="#5小结">5、小结</a></li>
+        <li><a href="#6作业与练习">6、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<p><em>预计时间：4-6 * 45 min</em></p>
+<h2 id="1构建游戏世界">1、构建游戏世界</h2>
+<p>作家、艺术家用想象描绘游戏世界，程序员用图形元素构建游戏世界。</p>
+<h3 id="11-游戏原型设计">1.1 游戏原型设计</h3>
+<p>艺术就是利用语言、声音、文字、绘画、眼神、呼吸、肢体等表达形式，创造游戏场景或情境，使人通过感知（看、听、嗅、触）得到某种审美的满足。因此，尽早的呈现游戏世界并与它互动，是感知游戏世界的第一步。例如：作家唐三描述了《斗罗大陆》，设计师就需要不断用绘图、手办等去描绘与改进这个世界。一方面，满足作者的目标，即“成神之路就是对世界法则的认知，每个人的有自己独特的成神之路，必须靠自己的努力”；另一方面，满足玩家的审美，特别是要逐步挖掘玩家（千百年来中国人）内心深处的梦想或情节（执念） &ndash; “修仙成神”。所以 Adams 强调，游戏过程就是玩家在人造世界中 <strong>成就梦想之路</strong>。</p>
+<p>Tracy Fullerton 在《游戏设计工坊》用原型设计描述这个步骤</p>
+<blockquote>
+<p>原型是优秀游戏设计的核心。原型开发是为您的想法创建一个工作模型，允许您测试其可行性并对其进行改进。虽然游戏原型是可玩的，但通常只包含对美术作品、声音和功能的粗略近似。它们非常像草图，其目的是让你专注于一小部分游戏机制或功能，并观察它们是如何运作的。</p>
+<p>许多第一次设计游戏的设计师宁愿投身其中并立即开始创造“真正的”游戏，而不是从原型开始。但是如果你投入时间，你就会发现没有什么比一个好的原型制作过程更有价值去提高游戏玩法了。当您在制作原型时，您不需要考虑如何完善它的外观或技术是否优化。您所需要担心的只是基本机制，如果这些机制能够维持游戏测试人员的兴趣，那么您就知道您的设计是可靠的。</p>
+</blockquote>
+<p><img src="../images/ch04/ch04-physical-prototype.png" alt=""></p>
+<p>游戏原型设计将设计师从编程或技术细节中解脱出来，聚焦于 MDA ：机制（Mechanics）、动态（Dynamics）和美学（Aesthetics）</p>
+<p>判断一下你成为游戏设计师的概率：</p>
+<ul>
+<li>你有多少手办？大概多少投入？</li>
+</ul>
+<div class="admonition info"><p class="admonition-title">阅读</p>
+<p>Tracy Fullerton《游戏设计工坊》！ 如果你对游戏世界设计感兴趣</p>
+</div>
+<h3 id="12-数字游戏原型设计">1.2 数字游戏原型设计</h3>
+<p>如果你有一支靠谱的设计与编程团队，他们不仅能用数字化手段支持游戏原型设计，而且能在短期内（3-7天）制作出游戏 Demo。甚至，编程团队可以创造出专用游戏设计引擎，支撑游戏的长期运行。</p>
+<p>数据原型聚焦：</p>
+<p><img src="../images/ch04/ch04-prototype-focus.png" alt=""></p>
+<p>数字原型是可玩的，因此可以通过玩家测试，建立以数据为基础的分析与研究，持续改进游戏。</p>
+<ul>
+<li>机制与动态：规则的复杂性、玩家成长曲线等基于数字的分析</li>
+<li>运动：玩家的感觉分析</li>
+<li>美学：玩家的试听分析</li>
+<li>技术：渲染（shader）、VR、AI等</li>
+</ul>
+<p>游戏设计工具：</p>
+<ul>
+<li>平面设计工具，Photoshop&hellip;</li>
+<li>3d 模型与动画设计工具，Maya&hellip;</li>
+<li>游戏快速设计工具，Unity 3D, construct2&hellip;</li>
+<li>专用游戏设计工具，&hellip;（游戏引擎都这么来的）</li>
+</ul>
+<p><img src="../images/ch04/ch04-digital-prototype.png" alt=""></p>
+<p>construct 3, 快速构建游戏原型</p>
+<h3 id="13-构建游戏-demo-的重要性">1.3 构建游戏 demo 的重要性</h3>
+<p>游戏开发是高风险（必须进入排名头部10~20%）、高投入（资源制作、市场开发与运维）的行业。</p>
+<ul>
+<li>一个游戏故事，几幅游戏原画很难打动投资人</li>
+<li>一个好题材，企业内部可能同时有几支团队并行开发 demo, 你必须成为最快最好的团队</li>
+<li>你缺乏与题材合适的资源（形象设计、动画等）</li>
+</ul>
+<p>Unity提供的资源和工具，可帮助你快速构建设想的游戏世界！</p>
+<h2 id="2游戏常见对象构建">2、游戏常见对象构建</h2>
+<p>游戏世界构建在 Unity 中主要涉及两个菜单 GameObject 和 Assets。 当然最重要的还是 <strong>Asset Store</strong>！ 它不只是资源，更是我们学习构建游戏世界的素材。因为你未来可能在上面发布资源，成为贡献者或受益者。</p>
+<h3 id="21-基础游戏对象">2.1 基础游戏对象</h3>
+<p><strong>1、GameObject 菜单</strong></p>
+<p>GameObject 菜单上游戏元素是最基础的。尽管实际游戏生产中我们更多依赖模型、预制，但它们都是由这些元素构成。只有理解它们才能更好的控制它们。</p>
+<ul>
+<li>Empty （不显示却是最常用对象之一）
+<ul>
+<li>作为子对象的容器</li>
+<li>创建一个新的对象空间</li>
+</ul>
+</li>
+<li>3D 物体
+<ul>
+<li>基础 3D 物体（Primitive Object）：立方体（Cube）、球体（Sphere）、胶囊体（Capsule）、圆柱体（Sylinder）、平面（Plane）、四边形（Quad）</li>
+<li>构造 3D 物体：由三角形网格构建的物体：如地形等</li>
+</ul>
+</li>
+<li>Camera 摄像机，观察游戏世界的窗口</li>
+<li>Light 光线，游戏世界的光源</li>
+<li>Audio 声音</li>
+<li>UI 基于事件的 new UI 系统（专题介绍）</li>
+<li>Particle System 粒子系统与特效（专题介绍）</li>
+</ul>
+<p><strong>2、基础物体</strong></p>
+<p>Unity可以与用建模软件创建的任何形状的3D模型一起工作。但是在Unity中也有许多可以直接创建的原始对象类型，如立方体、球体、胶囊、圆柱体、平面和四边形。这些对象通常本身就很有用(例如，平面通常用作平面)，但是它们也提供了一种快速的方法来创建占位符和用于测试目的的原型。使用 GameObject -&gt; 3D Object菜单（或 API），可以将这些原始对象添加到场景中。</p>
+<p>基础游戏物体使用，参见：<a href="https://docs.unity3d.com/Manual/PrimitiveObjects.html">Primitive and placeholder objects</a></p>
+<p>以胶囊体（Capsule）为例：</p>
+<p>它在场景视图中，是这样的多面体：</p>
+<p><img src="https://docs.unity3d.com/uploads/Main/PrimitiveCapsule.png" alt=""></p>
+<p>这个多面体非常有用，它通常作为人形物体的碰撞检测盒。特别在手机游戏中，并没有足够的计算资源进行复杂物体碰撞计算，而是用胶囊体取代。你常会发现你的手或臂膀能穿树而过，这不是因为你有特异功能，而是游戏技术就是这样！</p>
+<p><strong>游戏物体共有的属性</strong></p>
+<p><img src="../images/ch04/ch04-gameobject-comm.png" alt=""></p>
+<ul>
+<li>Active
+<ul>
+<li>不活跃则不会执行 update() 和 rendering 等消息或事件</li>
+</ul>
+</li>
+<li>Name
+<ul>
+<li>对象的名字，<strong>不是ID</strong>，不同对象可以重名。ID 使用 GetInstanceID()</li>
+</ul>
+</li>
+<li>Tag
+<ul>
+<li>字串，有特殊用途。如标识主摄像机等</li>
+</ul>
+</li>
+<li>Layer
+<ul>
+<li>[0..31]，分组对象管理。常用于摄像机选择性渲染等</li>
+</ul>
+</li>
+<li>transForm
+<ul>
+<li>空间属性</li>
+</ul>
+</li>
+</ul>
+<h3 id="22-camera-摄像机--游戏场景渲染">2.2 Camera 摄像机 – 游戏场景渲染</h3>
+<p>相机是在场景空间中定义视图的对象。该对象的位置定义了观察点，而对象的正向(Z)和向上(Y)轴分别定义了视图方向和屏幕顶部。相机组件还定义了视图中区域的大小和形状。设置好这些参数后，相机就可以向屏幕显示它当前“看到”的内容。</p>
+<p>摄像机对象使用，参见：<a href="https://docs.unity3d.com/Manual/CamerasOverview.html">Cameras</a></p>
+<p><strong>1、摄像机与基本属性</strong></p>
+<p>摄像机除了空间部件外，有一个 Camera 部件。甚至说，拥有 Cemara 部件的游戏对象都是摄像机！</p>
+<div class="admonition example"><p class="admonition-title">操作 04-01 ，摄像机 Cemara 基本属性</p>
+<ul>
+<li>新建一个场景，确保 Main Camera 位置（0，0，-10），欧拉角（0，0，0）</li>
+<li>在场景中添加一些游戏元素</li>
+<li>选择摄像机，观察场景视图中 Camera Preview
+<ul>
+<li>选择移动工具 <img src="../images/ch04/ch04-tools-move.png" alt="">，像机上显示红、绿、蓝三根轴</li>
+<li>选中 Z 轴（黄色），移动鼠标修改 Z 值</li>
+</ul>
+</li>
+<li>类似，选择旋转工具，修改旋转角 Z 值</li>
+<li>修改 Camera 部件的投影（Project）属性，比较视图差别
+<ul>
+<li>透视图（Perspective），修改位置 Z 的值</li>
+<li>正交视图（Orthographic），修改位置 Z 的值</li>
+</ul>
+</li>
+<li>修改 Camera 部件的视野角度（Field of View）</li>
+</ul>
+</div>
+<p><strong>要点</strong></p>
+<ul>
+<li>漫游是最简单的游戏软件，建好模型，控制好摄像机移动即可
+<ul>
+<li>所谓第一人称游戏，就是摄像机作为玩家的眼睛</li>
+<li>所谓第三人称游戏，就是摄像机跟随玩家运动</li>
+</ul>
+</li>
+<li>透视图 vs 正交视图
+<ul>
+<li>立体投影，越近物体越大</li>
+<li>平面投影，距离不影响视图</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch04/ch04-camera-prospective.png" alt=""></p>
+<p><strong>2、Camera部件属性说明</strong></p>
+<p><img src="https://docs.unity3d.com/uploads/Main/InspectorCamera35.png" alt=""></p>
+<ul>
+<li>Background: 背景颜色</li>
+<li>Culling Mask: 剔除遮罩。用于指定摄像机所作用的层(Layer)。</li>
+<li>Field of View(FOV): 视野范围。只针对透视镜头，用于控制视角宽度与纵向角度。</li>
+<li>Size: 视口大小。只针对正交镜头，设定为相当于屏幕高度的一半。</li>
+<li>ClippingPlanes: 表示摄像机的作用范围。只显示距离为[Near, Far]之间的物体。</li>
+<li>Viewport Rect: 控制摄像机呈现结果对应到屏幕上的位置以及大小。屏幕坐标系：左下角是(0, 0)，右上角是(1, 1)。</li>
+<li>Depth: 当多个摄像机同时存在时，这个参数决定了呈现的先后顺序，值越大越靠后呈现。</li>
+</ul>
+<p>更多属性说明：<a href="https://docs.unity3d.com/Manual/class-Camera.html">官方</a>， <a href="https://docs.unity.cn/cn/current/Manual/class-Camera.html">中文</a></p>
+<p><strong>3、多摄像机基础</strong></p>
+<div class="admonition example"><p class="admonition-title">操作 04-02，双摄像机“鸟瞰图”</p>
+<ul>
+<li>在场景中放置一些 3D 物体</li>
+<li>放置第二摄像机
+<ul>
+<li>设置正交视图；</li>
+<li>位置与旋转： positon(0,3,0), rotation(90,0,0)；</li>
+<li>(x,y,w,h) = (0.9,0,0.1,0.12)</li>
+<li>0 （必须大于主摄像机深度）</li>
+</ul>
+</li>
+<li>运行结果：右下角出现了一个小窗口</li>
+</ul>
+</div>
+<div class="admonition info"><p class="admonition-title">注意</p>
+<p>这种方法简单，但需要两倍的渲染时间。实战应该用 2D GUI 制作。例如：在 OnGUI 中先画地图，然后在制定位置画个红点。性能、性能、性能，重要的事情说三遍！</p>
+</div>
+<p>多摄像机是制造效果的重要手段。游戏中同时显示多个场景镜头的实时渲染与合成，会产生特别的效果。这是一个中级话题。多摄像机合成的重要属性包括：</p>
+<ul>
+<li>Clear Flag：覆盖、叠加？</li>
+<li>Culling mask：选择渲染物体</li>
+<li>Depth：像机渲染的顺序</li>
+</ul>
+<p><strong>课程实践：Unity中使用多个相机</strong></p>
+<ul>
+<li>中文 <a href="http://www.manew.com/thread-47076-1-1.html">在Unity中使用多个相机 - 及其重要性</a></li>
+<li>原文 <a href="http://blog.theknightsofunity.com/using-multiple-unity-cameras-why-this-may-be-important/">Using Multiple Unity Cameras – Why This May Be Important?</a></li>
+</ul>
+<h3 id="23-天空盒">2.3 天空盒</h3>
+<p>天空是任何游戏离不开的设定，而且要按季节与时间变化，是表示时间的重要工具。从 Unity 5 开始，官方不再资源天空提供资源，一般从 Asset Store 获取
+使用 skybox 在 Store 中搜索，下载你喜欢的天空，例如：</p>
+<ul>
+<li>Skybox</li>
+<li>Fantasy Skybox FREE</li>
+</ul>
+<div class="admonition warning"><p class="admonition-title">操作指南</p>
+<p>2019版 <a href="https://docs.unity3d.com/Manual/skyboxes-using.html">sky 手册</a></p>
+<p>2018版 <a href="https://docs.unity.cn/cn/current/Manual/HOWTO-UseSkybox.html">中文操作</a></p>
+</div>
+<p><strong>1、天空盒的原理与制作</strong></p>
+<p>天空盒是一种材料，例如：我们通过六面体构建一个天空盒。</p>
+<div class="admonition example"><p class="admonition-title">操作 04-03，天空盒</p>
+<ul>
+<li>先下载天空盒，它会包含一些天空贴图（免去自己制作麻烦）</li>
+<li>Assets 上下文菜单 -&gt; create -&gt; Material 起名 mysky</li>
+<li>在 Inspector 视图中选择 Shader -&gt; Skybox -&gt; 6Sided</li>
+<li>结果如图</li>
+</ul>
+<p><img src="../images/ch04/ch04-skybox-creation.png" alt=""></p>
+<ul>
+<li>在资源贴图中选择合适的图片，拖放到对应位置！</li>
+</ul>
+</div>
+<p><strong>2、使用天空盒</strong></p>
+<ul>
+<li>在 Camera 对象中添加部件 Rendering -&gt; Skybox</li>
+<li>将天空盒拖放入 Skybox！</li>
+</ul>
+<p>对应摄像机就使用自定义天空盒。</p>
+<p><strong>3、设置恢复系统默认天空</strong></p>
+<p>要将天空盒分配给您正在处理的场景，请执行以下操作：</p>
+<ul>
+<li>从菜单栏中选择 Window &gt; Rendering &gt; Lighting Settomgs。</li>
+<li>在随后出现的窗口中选择 Scene 选项卡。</li>
+<li>将新的天空盒材质拖放到 Skybox 字段。</li>
+</ul>
+<h3 id="24-光源">2.4 光源</h3>
+<p>光与影是让游戏世界富有魅力。灯光是每个场景的重要组成部分。网格和纹理定义了场景的形状和外观，而灯光定义了3D环境的颜色和情绪。你可能会在每个场景中使用不止一盏灯。让他们一起工作需要一些练习，可能是相当惊人的结果。</p>
+<p><img src="https://docs.unity3d.com/uploads/Main/LightTwoLights.jpg" alt=""></p>
+<p>两个光源的案例，具体细节参见 <a href="https://docs.unity3d.com/Manual/Lights.html">Lights</a></p>
+<p><strong>1、创建一个灯光</strong></p>
+<p>以下两种方法一样：</p>
+<ul>
+<li>菜单 GameObject -&gt; Light</li>
+<li>创建一个空对象，添加灯光组件</li>
+</ul>
+<p><strong>2、光源组件的基本属性</strong></p>
+<p><img src="https://docs.unity3d.com/uploads/Main/LightInspectorV3.png" alt=""></p>
+<ul>
+<li>灯光类型（type）
+<ul>
+<li>平行光（类似太阳光）</li>
+<li>聚光灯（spot）</li>
+<li>点光源（point）</li>
+<li>区域光（area）</li>
+</ul>
+</li>
+<li>阴影（shallow）</li>
+<li>剪影（cookies</li>
+</ul>
+<p>光组件的更多细节：<a href="https://docs.unity3d.com/Manual/class-Light.html">官方</a>，<a href="https://docs.unity.cn/cn/current/Manual/class-Light.html">中文</a></p>
+<h3 id="25-声音源与拾音器">2.5 声音源与拾音器</h3>
+<p>如果没有声音，不管是背景音乐还是音效，游戏都是不完整的。Unity的音频系统灵活而强大。它可以导入大多数标准的音频文件格式，并具有复杂的功能，可以在3D空间播放声音，还可以选择使用echo和过滤器等效果，也可以采用多层混音器构建复杂效果。Unity还可以从用户机器上的任何可用麦克风录制音频，以便在游戏过程中使用或存储和传输。</p>
+<p><strong>1、立体声的原理与 Unity 部件</strong></p>
+<p>在现实生活中，声音是由物体发出并被听者听到的。声音被感知的方式取决于许多因素。听者可以粗略地分辨出声音来自哪个方向，也能从声音的响度和音质中获得一定的距离感。由于多普勒效应，快速移动的声源(如落下的炸弹或经过的警车)在移动时音调会发生变化。此外，环境会影响声音的反射方式，所以洞穴里的声音会有回音，而在空旷的环境中则不会。</p>
+<p><img src="https://docs.unity3d.com/uploads/Main/AudioSourceListDiagram.png" alt=""></p>
+<p>Unity 通过在对象上附加音频源（Audio Source），另一个对象(通常是主摄像机)的附加音频拾音器（Audio Listener）接收发出的声音。Unity可以模拟源与侦听器对象之间的距离和位置产生的立体声效果，并向用户播放。源和拾音器对象的相对速度也可以用来模拟多普勒效应，以增加真实感。</p>
+<p>但是，Unity 并不会根据游戏场景的物体表面计算声音的反射产生回音的声效。你可以给有音源的部件添加音频过滤器（Audio Filters）来模拟，在物体可以在强回波环境中移动的情况下，在场景中添加混响区（Reverb Zone）。例如，你的游戏可能包括汽车通过隧道，如果你在隧道里放一个混响区，那么当汽车进入隧道时，发动机的声音就会开始回声，而当汽车从隧道的另一边出来时，回声就会减弱。</p>
+<p>你也可以使用混音器（Audio Mixer）收集多路声音，以产生更复杂的效果。</p>
+<p><strong>2、声源设置与3d效果</strong></p>
+<p>第一步导入音频文件（Audio Clips）</p>
+<div class="admonition example"><p class="admonition-title">操作 04-04，Audio Clips</p>
+<ul>
+<li>将语音格式文件（如 mp3，wav等）拖放入 Assets 的相关目录</li>
+<li>用 audio 在资源仓库中搜索，导入如 Android Native Audio 这样的资源</li>
+<li>选择 Audio Clips, 观察属性</li>
+<li>在属性视图下面的预览窗口，播放该音乐</li>
+</ul>
+</div>
+<p><img src="https://docs.unity3d.com/uploads/Main/AudioClipImporter50.png" alt=""></p>
+<div class="admonition example"><p class="admonition-title">操作 04-05，播放立体声</p>
+<ul>
+<li>创建音源：建一个空对象，并挂载 AddComponent -&gt; Audio -&gt; Audio Source</li>
+<li>将 Assets 中的 AudioClip 拖放入音源部件</li>
+<li>选中 play On Wake 和 Loop，保证程序启动后不断播放声音</li>
+<li>空间音效：Spatial Blend 设置为 3D</li>
+<li>3D 设置
+<ul>
+<li>语音衰减方法：Logarithmic Rolloff</li>
+<li>Min Distance = 1</li>
+<li>Max Distance = 5</li>
+</ul>
+</li>
+<li>将声源放置在 postion =（-5，0，-10），即与主摄像机同一水平位置</li>
+<li>运行程序
+<ul>
+<li>使用移动工具</li>
+<li>修改声源 x 值，听立体声效</li>
+<li>修改声源 x，y 值，听立体声效</li>
+</ul>
+</li>
+<li>终止程序运行</li>
+</ul>
+</div>
+<h2 id="33d物体与渲染">3、3D物体与渲染</h2>
+<p>Unity 几乎支持所有工具构建的3D模型与动画。</p>
+<h3 id="31-3d-模型基础">3.1 3D 模型基础</h3>
+<p><strong>1、网格与物体形状</strong></p>
+<p>三角网格是游戏物体表面的唯一形式。将场景视图从 Shade -&gt; Wirframe 就看到所有物体包括立方体，圆都是网格。</p>
+<p><img src="../images/ch04/ch04-mesh.png" alt=""></p>
+<p>3D 物体常见显示部件：</p>
+<ul>
+<li>Mesh 部件：
+<ul>
+<li>物体表面三角网格，形成物体形状</li>
+</ul>
+</li>
+<li>Mesh Renderer部件：
+<ul>
+<li>表面渲染器，显示物体色彩</li>
+<li>其中：Material 和 Shader 对象</li>
+<li>（材料与着色器 Shader）则是绘制物体的工具</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-材质与着色器">3.2 材质与着色器</h3>
+<p>主要<strong>概念</strong>：</p>
+<p><img src="https://docs.unity3d.com/uploads/Main/material_diagram.jpg" alt="材质与着色器与纹理"></p>
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/Manual/Textures.html">纹理</a>（<a href="https://docs.unity3d.com/Manual/Textures.html">Texture</a>）：位图，贴图，表示物体本身的色彩。</li>
+<li>材质（Material）：包含一个或一组 Texture，以及元数据（meta-data）属性，着色程序（Shader）。</li>
+<li>其中元数据（meta-data）定义了 Texture 与 mesh 的映射关系，材料的光线吸收、透明度、反射与漫反射、折射、自发光、眩光等特性的参数</li>
+<li>Shader 是着色程序。它能利用显卡硬件渲染特性，按元数据将材质按物体纹理、光线特性，结合游戏场景中的光线生成用户感知的位图（像素点）。</li>
+<li>Shader 的编程超出了本课程的范围，涉及大量图形学与显卡计算的知识。一句话，物体发光、质感、层次、反射、镜像等效果取决于Shader。
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/Manual/Materials.html">内置着色器</a></li>
+</ul>
+</li>
+</ul>
+<p><strong><a href="https://docs.unity.cn/cn/current/Manual/shader-StandardShader.html">标准着色器</a></strong></p>
+<p>Unity 标准着色器是一个包含一整套功能的内置着色器。此着色器可用于渲染“真实世界”的对象，如石头、木头、玻璃、塑料和金属，并支持各种着色器类型和组合。只需在材质编辑器中使用或不使用各种纹理字段和参数即可启用或禁用此着色器的功能。</p>
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/Manual/StandardShaderMaterialParameters.html">材质编辑器</a>
+<ul>
+<li>渲染模式</li>
+<li>反照率颜色和透明度</li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li><a href="https://docs.unity.cn/cn/current/Manual/StandardShaderMaterialCharts.html">材质图表</a></li>
+</ul>
+<div class="admonition note"><p class="admonition-title">版本差别</p>
+<p>2018版手册与2020版有比较大差别，读者应注意在2020英文版丰富了许多细节。以纹理为例：2019版添加了 Render Texture，Movie Textures 等内容。</p>
+<ul>
+<li><a href="https://docs.unity3d.com/Manual/Shaders.html">Materials, Shaders &amp; Textures</a></li>
+<li><a href="https://docs.unity.cn/cn/current/Manual/Shaders.html">材质、着色器和纹理</a></li>
+</ul>
+</div>
+<h3 id="33-地形">3.3 地形</h3>
+<p>Unity 的地形 (Terrain) 系统允许您为游戏添加大型景观。在运行时，地形渲染在效率方面进行了高度优化。Unity Editor 提供了一系列工具来快速轻松地创建地形。</p>
+<div class="admonition warning"><p class="admonition-title">版本差别</p>
+<p>Unity 4.0、5.0、2018 以及 2019 地形编辑界面都有些不一样。</p>
+</div>
+<ul>
+<li>地形编辑器
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/Manual/terrain-UsingTerrains.html">2018 地形编辑器</a></li>
+<li><a href="https://docs.unity3d.com/Manual/terrain-UsingTerrains.html">2020 地形编辑器</a></li>
+</ul>
+</li>
+<li>地形编辑工具
+<ul>
+<li>创建相邻地域</li>
+<li>升降地形</li>
+<li>地表纹理贴图</li>
+<li>指定高度升降</li>
+<li>平滑地形</li>
+</ul>
+</li>
+<li>种树</li>
+<li>种草</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">操作 04-06，地形编辑</p>
+<ol>
+<li>准备：到商店，选 资源 -&gt; 纹理和材质，找有树有草的案例。如：<code>Fantasy Skybox</code></li>
+<li>设置合适地图大小</li>
+<li>在周边添加几块地形</li>
+<li>编辑地图，选择合适大小的刷子，尝试使用每一种工具</li>
+<li>种树</li>
+<li>种草</li>
+</ol>
+<p>要求效果接近 <code>Fantasy Skybox</code> 演示场景的地形，如图所示：</p>
+<p><img src="../images/ch04/ch04-fantasy-demo.png" alt=""></p>
+</div>
+<div class="admonition example"><p class="admonition-title">操作 04-07，玩家降临</p>
+<ol>
+<li>下载标准资源包，导入 Characters 资源
+<ul>
+<li>通过商店导入
+<ul>
+<li>进入商店选 By-Unity -&gt; Essentials 将 Standard Assets 加入 My Assets</li>
+<li>Unity 菜单中 Windows -&gt; package management，同步 Mysets 后，下载和导入</li>
+<li>导入时选择 <code>Characters</code> <code>CrossPlatformInput</code> <code>Utility</code> 三个包</li>
+</ul>
+</li>
+<li>官方下载 <strong>旧版本</strong>
+<ul>
+<li>进入官方下载，选择 2018.1.x 版本，就可以选择下载 <code>Standard Assets</code></li>
+<li>安装它，会安装到 <code>C:\Program Files\Unity\Editor\Standard Assets</code></li>
+<li>在 unity 菜单中 Assets -&gt; import ，选择 <code>Characters.unitypackage</code> 文件导入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>修改两处过时代码
+<ul>
+<li>会出现一些错误，改正它。（编辑器模块错误就算了）</li>
+</ul>
+</li>
+<li>添加 第三人称控制器 中的预制 ThirdPersonController 或 第一人控制器 中的预制 FPSController 到场景。</li>
+<li>运行</li>
+<li>指挥行走</li>
+</ol>
+</div>
+<h3 id="34-光照贴图">3.4 光照贴图</h3>
+<p>光照贴图（Lightmapping）是预先计算场景中表面的亮度，并将结果存储在图表或“光映射”中，以备以后使用的过程。</p>
+<div class="admonition warning"><p class="admonition-title">版本差别</p>
+<p><a href="https://docs.unity3d.com/Manual/Lightmapping.html">2020 Lightmapping: Getting started</a></p>
+<p><a href="https://docs.unity.cn/cn/current/Manual/Lightmapping.html">2018 光照贴图：入门</a></p>
+</div>
+<h2 id="4面向对象的游戏编程">4、面向对象的游戏编程</h2>
+<p>如果感觉到场记（控制器）管的事太多，不仅要处理用户交互事件，还要游戏对象加载、游戏规则实现、运动实现等等，而显得非常臃肿。一个最直观的想法就是让更多的人（角色）来管理不同方面的工作。显然，这就是面向对象基于职责的思考，例如：用专用的对象来管理运动，专用的对象管理播放视频，专用的对象管理规则。就和踢足球一样，自己踢5人场，一个裁判就够了，如果是国际比赛，就需要主裁判、边裁判、电子裁判等角色通过消息协同来完成更为复杂的工作。</p>
+<h3 id="41-动作管理器的设计">4.1 动作管理器的设计</h3>
+<p>为了用一组简单的动作组合成复杂的动作，我们采用 cocos2d 的方案，建立与 CCAtion 类似的类。先上设计图：</p>
+<p><img src="../images/ch04/ch04-oo-design.png" alt=""></p>
+<p>设计思路如下：</p>
+<ul>
+<li>通过门面模式（控制器模式）输出组合好的几个动作，共原来程序调用。
+<ul>
+<li>好处，动作如何组合变成动作模块内部的事务</li>
+<li>这个门面就是 CCActionManager</li>
+</ul>
+</li>
+<li>通过组合模式实现动作组合，按组合模式设计方法
+<ul>
+<li>必须有一个抽象事物表示该类事物的共性，例如 SSAction，表示动作，不管是基本动作或是组合后动作</li>
+<li>基本动作，用户设计的基本动作类。 例如：CCMoveToAction</li>
+<li>组合动作，由（基本或组合）动作组合的类。例如：CCSequenceAction</li>
+</ul>
+</li>
+<li>接口回调（函数回调）实现管理者与被管理者解耦
+<ul>
+<li>如组合对象实现一个事件抽象接口（ISSCallback），作为监听器（listener）监听子动作的事件</li>
+<li>被组合对象使用监听器传递消息给管理者。至于管理者如何处理就是实现这个监听器的人说了算了</li>
+<li>例如：每个学生做完作业通过邮箱发消息给学委，学委是谁，如何处理，学生就不用操心了</li>
+</ul>
+</li>
+<li>通过模板方法，让使用者减少对动作管理过程细节的要求
+<ul>
+<li>SSActionManager 作为 CCActionManager 基类</li>
+</ul>
+</li>
+</ul>
+<p>最终，程序员可以方便的定义动作并实现动作的自由组合，做到：</p>
+<ul>
+<li>程序更能适应需求变化</li>
+<li>对象更容易被 <strong>复用</strong></li>
+<li>程序更易于维护</li>
+</ul>
+<h3 id="42-核心代码与设计解读">4.2 核心代码与设计解读</h3>
+<p><strong>1、动作基类（SSAction）</strong></p>
+<p>直接给代码：</p>
+<p><img src="../images/ch04/ch04-oo-ssaction.png" alt=""></p>
+<p>设计要点：</p>
+<ul>
+<li><a href="https://docs.unity3d.com/ScriptReference/ScriptableObject.html">ScriptableObject</a> 是不需要绑定 GameObject 对象的可编程基类。这些对象受 Unity 引擎场景管理</li>
+<li><code>protected</code> 防止用户自己 new 抽象的对象</li>
+<li>使用 <code>virtual</code> 申明虚方法，通过重写实现多态。这样继承者就明确使用 Start 和 Update 编程游戏对象行为</li>
+<li>利用接口（<code>ISSACtionCallback</code>）实现消息通知，避免与动作管理者直接依赖</li>
+</ul>
+<p><strong>2、简单动作实现</strong></p>
+<p>实现具体动作，将一个物体移动到目标位置，并通知任务完成：</p>
+<p><img src="../images/ch04/ch04-oo-moveto.png" alt=""></p>
+<p>设计要点：</p>
+<ul>
+<li>让 Unity 创建动作类，确保内存正确回收。别指望开发者是 c 语言高手。</li>
+<li>多态。C++ 语言必申明重写，Java则默认重写</li>
+<li>似曾相识的运动代码。动作完成，并发出事件通知，期望管理程序自动回收运行对象。</li>
+</ul>
+<p><strong>3、顺序动作组合类实现</strong></p>
+<p>实现一个动作组合序列，顺序播放动作：</p>
+<p><img src="../images/ch04/ch04-oo-sequence.png" alt="">
+<img src="../images/ch04/ch04-oo-sequence1.png" alt=""></p>
+<p>设计要点：</p>
+<ul>
+<li>让动作组合继承抽象动作，能够被进一步组合；实现回调接受，能接收被组合动作的事件</li>
+<li>创建一个动作顺序执行序列，-1 表示无限循环，start 开始动作。</li>
+<li><code>Update</code>方法执行执行当前动作</li>
+<li><code>SSActionEvent</code> 收到当前动作执行完成，推下一个动作，如果完成一次循环，减次数。如完成，通知该动作的管理者</li>
+<li><code>Start</code> 执行动作前，为每个动作注入当前动作游戏对象，并将自己作为动作事件的接收者</li>
+<li><code>OnDestory</code> 如果自己被注销，应该释放自己管理的动作。</li>
+</ul>
+<p>这是标准的组合设计模式。被组合的对象和组合对象属于同一种类型。通过组合模式，我们能实现几乎满足所有越位需要、非常复杂的动作管理。</p>
+<p><strong>4、动作事件接口定义</strong></p>
+<p>接口作为接收通知对象的抽象类型：</p>
+<p><img src="../images/ch04/ch04-oo-callback.png" alt=""></p>
+<p>设计要点：</p>
+<ul>
+<li>事件类型定义，使用了 <strong>枚举变量</strong></li>
+<li>定义了事件处理接口，所有事件管理者都必须实现这个接口，来实现事件调度。所以，组合事件需要实现它，事件管理器也必须实现它。</li>
+<li>这里展示了语言函数 <strong>默认参数</strong> 的写法。</li>
+</ul>
+<p><strong>5、动作管理基类 – SSActionManager</strong></p>
+<p>这是动作对象管理器的基类，实现了所有动作的基本管理</p>
+<p><img src="../images/ch04/ch04-oo-ssactionmanager.png" alt=""><br>
+<img src="../images/ch04/ch04-oo-ssactionmanager1.png" alt=""></p>
+<p>设计要点：</p>
+<ul>
+<li>创建 MonoBehaiviour 管理一个动作集合，动作做完自动回收动作。
+<ul>
+<li>有一个动作字典。（字典是线程不安全的，有影响吗？）</li>
+<li>待加入、删除动作列表？</li>
+</ul>
+</li>
+<li>update 演示了由添加、删除等复杂集合对象的使用。</li>
+<li>提供了添加新动作的方法 RunAction。该方法把游戏对象与动作绑定，并绑定该动作事件的消息接收者。</li>
+<li>执行该动作的 Start 方法</li>
+</ul>
+<h3 id="43-使用动作组合">4.3 使用动作组合</h3>
+<p>代码：</p>
+<p><img src="../images/ch04/ch04-oo-ccactionmanager.png" alt=""></p>
+<p>部署：</p>
+<ul>
+<li>main 对象添加场景控制器脚本</li>
+<li>main 对象添加运动控制器脚本，并将场景控制器拖入该对象控制器属性</li>
+<li>将游戏对象A和B拖入场景控制器属性 move1 和 move2</li>
+<li>运行</li>
+</ul>
+<p>代码说明：</p>
+<ul>
+<li>初始化
+<ul>
+<li>定义动作移动到 A 点</li>
+<li>将 对象1 移动到 A 点</li>
+<li>定义动作移动到 C 点，在移动到 D点序列</li>
+<li>将 对象2 执行移动序列</li>
+</ul>
+</li>
+<li>Update
+<ul>
+<li>Update 是方法覆盖，提醒编程人员重新该方法不会多态，且要用 base 调用原方法</li>
+</ul>
+</li>
+<li>处理移动完成事件
+<ul>
+<li>让 对象1 在 A 和 B 之间来回移动</li>
+</ul>
+</li>
+</ul>
+<h2 id="5小结">5、小结</h2>
+<ul>
+<li>学会使用资源商店，获取资源</li>
+<li>图形基础知识
+<ul>
+<li>基本物体</li>
+<li>摄像机与多摄像机的使用，如鸟瞰图</li>
+<li>天空</li>
+<li>光源类型</li>
+<li>声音</li>
+<li>材质与着色器</li>
+<li>地图编辑</li>
+<li>光照贴图</li>
+<li>Unity 标准资源与角色</li>
+</ul>
+</li>
+<li>设计模式在动作管理中应用
+<ul>
+<li>组合模式</li>
+<li>门面控制器模式</li>
+<li>接口或函数回调</li>
+<li>模板模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="6作业与练习">6、作业与练习</h2>
+<p><strong>自学资源</strong></p>
+<ul>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/struct">结构类型</a></li>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/enum">枚举类型</a></li>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/const">const 关键字</a></li>
+</ul>
+<p><strong>作业内容</strong></p>
+<p>1、基本操作演练【建议做】</p>
+<ul>
+<li>下载  Fantasy Skybox FREE， 构建自己的游戏场景</li>
+<li>写一个简单的总结，总结游戏对象的使用</li>
+</ul>
+<p>2、编程实践（二选一）</p>
+<ul>
+<li>牧师与魔鬼 动作分离版
+<ul>
+<li>【2019开始的新要求】：设计一个裁判类，当游戏达到结束条件时，通知场景控制器游戏结束</li>
+</ul>
+</li>
+<li>奖励关卡的游戏原型设计
+<ul>
+<li>阅读天蚕土豆小说《大主宰》<a href="https://www.doupobook.com/dazhuzai/4768.html">第 975-981 章</a>，这段描述了男主离开九幽族到神兽之原的途中在太空中穿梭的过程。</li>
+<li>用基本图形描述游戏中的对象（美工不是考虑的问题），你需要关注以下问题
+<ol>
+<li>游戏世界对象和元素</li>
+<li>基本玩法与挑战</li>
+<li>管理游戏物体的运动</li>
+</ol>
+</li>
+<li>必须用一段视频展现成果</li>
+</ul>
+</li>
+</ul>
+<p>3、材料与渲染联系【可选】</p>
+<ul>
+<li>Standard Shader 自然场景渲染器。
+<ul>
+<li>阅读官方 <a href="https://docs.unity3d.com/Manual/shader-StandardShader.html">Standard Shader</a> 手册 。</li>
+<li>选择合适内容，如 <a href="https://docs.unity3d.com/Manual/StandardShaderMaterialParameterAlbedoColor.html">Albedo Color and Transparency</a>，寻找合适素材，用博客展示相关效果的呈现</li>
+</ul>
+</li>
+<li>声音
+<ul>
+<li>阅读官方 <a href="https://docs.unity3d.com/Manual/Audio.html">Audio</a> 手册</li>
+<li>用博客给出游戏中利用 Reverb Zones 呈现车辆穿过隧道的声效的案例</li>
+</ul>
+</li>
+</ul>
+<p><strong>作业提交要求</strong></p>
+<ul>
+<li>仅能用博客或在线文档提交作业，建议使用 Github 提交代码和作业。<strong>不能使用docx、pdf等需要下载阅读的格式</strong></li>
+<li>deadline 下周二 24 点前</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/05-interaction-with-gameworld/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">五、与游戏世界交互</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/03-space-and-motion/">
+            <span class="next-text nav-default">三、空间与运动</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

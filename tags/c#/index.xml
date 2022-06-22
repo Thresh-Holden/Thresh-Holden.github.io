@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C# on 3D游戏编程与设计 - 中山大学</title>
+    <link>http://Thresh-Holden.github.io/tags/c#/</link>
+    <description>Recent content in C# on 3D游戏编程与设计 - 中山大学</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Dec 2020 00:00:00 +0800</lastBuildDate><atom:link href="http://Thresh-Holden.github.io/tags/c#/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>附录 X3-05、反射 与 Unity</title>
+      <link>http://Thresh-Holden.github.io/post/x3-05-reflection/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x3-05-reflection/</guid>
+      <description>1、什么是反射 Reflection，中文翻译为反射。 这是 dotNet 获取 运行时 类型信息/定义 的方式。dotNet的应用程序由几个部分：‘程序集(Ass</description>
+    </item>
+    
+    <item>
+      <title>附录 X3-06、协程与Unity</title>
+      <link>http://Thresh-Holden.github.io/post/x3-06-coroutine/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x3-06-coroutine/</guid>
+      <description>1、进程、线程与协程 进程（Process）是执行中的程序，是操作系统管理、分配资源（CPU、内存、IO等）的单位。简单的，进程运行在由操作系</description>
+    </item>
+    
+    <item>
+      <title>附录 X3-07、方法扩展、Lambda 表达式</title>
+      <link>http://Thresh-Holden.github.io/post/x3-07-method-extend-lambda/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x3-07-method-extend-lambda/</guid>
+      <description>1、类方法的扩展 1.1 初识类扩展 你可能觉得 C# 的 Random 类提供的方法不够用。如果想提供一些特殊随机数产生方法，你可以用以下方法扩展它： 1 2 3 4 5 6 7 8 9</description>
+    </item>
+    
+  </channel>
+</rss>

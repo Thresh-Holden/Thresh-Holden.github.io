@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>第13章、多人游戏与网络 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever. &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 预计时间：3 * 45 min 1、网络游戏概述 本质上，多人联网游戏是" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/13-multiplayer-and-networking/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="第13章、多人游戏与网络" />
+<meta property="og:description" content="So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever. &mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 预计时间：3 * 45 min 1、网络游戏概述 本质上，多人联网游戏是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/13-multiplayer-and-networking/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-11-20T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-11-20T00:00:00+08:00" />
+
+<meta itemprop="name" content="第13章、多人游戏与网络">
+<meta itemprop="description" content="So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever. &mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 预计时间：3 * 45 min 1、网络游戏概述 本质上，多人联网游戏是"><meta itemprop="datePublished" content="2020-11-20T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-11-20T00:00:00+08:00" />
+<meta itemprop="wordCount" content="9345">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="第13章、多人游戏与网络"/>
+<meta name="twitter:description" content="So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever. &mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 预计时间：3 * 45 min 1、网络游戏概述 本质上，多人联网游戏是"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">第13章、多人游戏与网络</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-11-20 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#课程内容与资源">课程内容与资源</a></li>
+        <li><a href="#1网络游戏概述">1、网络游戏概述</a>
+          <ul>
+            <li><a href="#11-多人游戏与网络游戏">1.1 多人游戏与网络游戏</a></li>
+            <li><a href="#12-多人网络游戏基本结构">1.2 多人网络游戏基本结构</a></li>
+            <li><a href="#13-unity-网络游戏的概念">1.3 Unity 网络游戏的概念</a></li>
+          </ul>
+        </li>
+        <li><a href="#2从零开始设置多人游戏">2、从零开始设置多人游戏</a>
+          <ul>
+            <li><a href="#21-玩家对象联网运动">2.1 玩家对象联网运动</a></li>
+            <li><a href="#22-联网相互射击">2.2 联网相互射击</a></li>
+            <li><a href="#23-玩家状态同步">2.3 玩家状态同步</a></li>
+            <li><a href="#24-管理繁殖的对象">2.4 管理繁殖的对象</a></li>
+          </ul>
+        </li>
+        <li><a href="#3其他类型网络游戏教程">3、其他类型网络游戏教程</a></li>
+        <li><a href="#4作业与练习">4、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever.</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<h2 id="课程内容与资源">课程内容与资源</h2>
+<p><img src="../images/game-architecture-network.png" alt=""></p>
+<p><em>预计时间：3 * 45 min</em></p>
+<h2 id="1网络游戏概述">1、网络游戏概述</h2>
+<p>本质上，多人联网游戏是细致和复杂的技术。一个游戏的多个实例运行在不同的机器上，且这些机器可能位于世界不同的和遥远的地方，这些游戏实例内部的游戏对象之间进行同步和通信时，会遇到许多特殊的问题和困难。</p>
+<p>本部分主要关注 Unity 内置的多人联网和相关的高级API（HLAPI），希望能够使得创建多人游戏项目更容易。</p>
+<h3 id="11-多人游戏与网络游戏">1.1 多人游戏与网络游戏</h3>
+<p><a href="https://en.wikipedia.org/wiki/Multiplayer_video_game">多人视频游戏</a>是一类视频游戏，多个人可以在同一时间同一个游戏环境游戏。视频游戏通常是单人游戏，让玩家接受编程预设的挑战或 AI 控制的对手（缺乏人类思维）。多人游戏允许玩家与对手合作、竞争，并开展人类社交互动。在多人游戏中，玩家可以一人挑战多个选手，或与人合作以实现共同的目标，或监督、指导其他玩家的活动。多人游戏通常分享单个游戏系统资源或使用网络技术，使得在更远的距离上一起玩游戏。</p>
+<p><a href="https://en.wikipedia.org/wiki/Online_game">网络游戏/在线游戏</a>是一类视频游戏，游戏的部分或全部内容通过互联网或计算机网络。网络游戏是无处不在的现代游戏平台，包括个人计算机，游戏机和移动设备，涉及多个主题，包括第一人称射击游戏，策略游戏和巨量多人在线角色扮演游戏（Massive Multi Player Online Game/MMORPG）等。</p>
+<p>在线游戏的设计可以从简单的基于文本的环境到复杂的图形和虚拟世界的结合。游戏中的在线组件的存在范围可以简单到在线排行榜等次要特征，也可以到作为核心游戏玩法的一部分，如直接与其他玩家一起分享一个场景。许多网络游戏创建自己的在线社区（包括其他游戏），尤其是社交游戏，则整合了玩家现有的现实生活。</p>
+<p><strong>技术驱动者游戏架构发展，推动了游戏玩法和应用的创新</strong></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Video_game">视频游戏</a>是一种电子游戏，以产生视觉反馈视频设备如电视屏幕或计算机监视器，形成多媒体交互用户界面。
+<ul>
+<li>1947 年 Thomas T. Goldsmith Jr. 发明了 Estle Ray Mann 电子管</li>
+<li>1952 年 William Higinbotham 开发了 <a href="https://en.wikipedia.org/wiki/Tennis_for_Two">Tennis for Two</a> 电子互动游戏</li>
+<li>1981 年 Nintendo（任天堂）开发了著名的 Mario 系列电子游戏，视频游戏普及</li>
+</ul>
+</li>
+<li>多人视频游戏
+<ul>
+<li>1950 年 IBM 推出了现代多用户主机操作系统 OS/360</li>
+<li>1973 年 在多用户实时操作系统 PLATO 上，开发了第一代多人游戏 Empire ，次年推出了 Spasim</li>
+</ul>
+</li>
+<li>网络游戏/在线游戏
+<ul>
+<li>1969 年 建立了有四个节点的第一代计算机网络，<a href="https://en.wikipedia.org/wiki/ARPANET">ARPANET</a>，计算机网络进入商用</li>
+<li>1973 年 以太网 Xerox PARC 出现，消除了游戏之间巨大的延时</li>
+<li>1993 年 第一代网络游戏  <a href="https://en.wikipedia.org/wiki/Doom_(1993_video_game)">DOOM</a> 出现，支持四个在线玩家</li>
+<li>2004 年 暴雪娱乐发布的一款大型多人在线角色扮演游戏（MMORPG）魔兽世界（World of Warcraft），也称在线策略游戏（MMORTS）</li>
+</ul>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Social-network_game">社交游戏</a>（Social-Network Games） 是一种 Massively multiplayer online game （MMO）游戏，强度通过社区网络构建虚拟世界。
+<ul>
+<li>社交游戏的鼻祖是 <a href="https://en.wikipedia.org/wiki/MUD">MUDs</a></li>
+</ul>
+</li>
+</ul>
+<p>Todo: 网络游戏分类与玩法等 参考 <a href="http://www.baike.com/wiki/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F">百度百科</a></p>
+<h3 id="12-多人网络游戏基本结构">1.2 多人网络游戏基本结构</h3>
+<p><strong>1、P2P 局域网对战架构</strong></p>
+<p>P2P局域网对象游戏是最流行的网络游戏架构，每个玩家一个游戏实例运行于自己的主机之上，主机之间采用Peer-to-Peer的直接通信方式。在网络通信服务的形式上，一般采用浮动服务器，即其中一个玩家的机器既是客户端，又扮演服务器的角色，通常由创建游戏的玩家担任服务器（HOST）。多数即时对战MMORTS网络游戏采用这种结构。</p>
+<p><strong>2、游戏大厅代理的结构</strong></p>
+<p>通过会话大厅（lobby），为不同玩家牵线搭桥，既直接管理客户端，也管理游戏，是回合制网络游戏的常见类型。如各种棋牌类网络游戏。</p>
+<p><strong>3、C/S 结构</strong></p>
+<p>网络游戏典型的结构是C/S结构，特别适合于多人在线游戏，成千上万人进行同一场游戏。服务器上有完整的游戏世界模型，玩家在客户端去观察这个世界，并与之互动。C/S结构的优点是能够充分发挥客户端计算机的处理能力，很多工作可以在客户端处理后再提交给服务器，使得客户端响应速度快。对于网络游戏来讲，这是十分关键的。</p>
+<p>缺点就是网络游戏的升级比较麻烦，每次升级需要客户端下载体积庞大的更新软件，然后进行安装，对于一些带宽并不是十分充足的用户而言，升级就成了游戏的梦魇。不过，良好的客户端程序框架设计完全可以避免升级时下载庞大的更新软件。比如，客户端软件可以把场景定义文件独立出来，客户端程序在运行时动态加载 场景定义文件。这样，当网络游戏的设计者发现需要增加游戏场景时，他只需要更新一个场景定义文件就可以了，当然还需要一些必需的场景资源文件，如新增加的 图像、背景音效等。</p>
+<h3 id="13-unity-网络游戏的概念">1.3 Unity 网络游戏的概念</h3>
+<p>从 Unity 5.0 开始，提供了全新的 UNet 开发网络游戏，面向两种类型的用户：</p>
+<ul>
+<li>使用 Unity 开发简单多人游戏，应该从高阶 API 开始
+<ul>
+<li>使用 “NetworkManager” 管理网络，控制游戏对象网络状态</li>
+<li>从客户端调用服务器函数 或 从服务器调用客户端函数</li>
+<li>使用网络组件，可视化编辑程序</li>
+<li>Internet 服务支持</li>
+</ul>
+</li>
+<li>用户自定义网络基础设施或高级多人游戏，应该从 NetworkTransport API 开始
+<ul>
+<li>使用 UDP 等</li>
+<li>自建复杂的网络结构</li>
+</ul>
+</li>
+</ul>
+<p><strong>1、主机与服务器</strong></p>
+<p><strong>HOST</strong>：主机，运行服务器程序的机器</p>
+<p><strong>Server</strong>：服务器，游戏程序实例。它连接所有客户端，并管理所有客户端共享的游戏对象及部分需要同步的状态（属性）</p>
+<p><strong>Client</strong>：客户端，游戏程序实例。玩家游戏主机运行的程序</p>
+<p>Unity 典型的网络游戏结构：</p>
+<p><img src="https://docs.unity3d.com/2018.1/Documentation/uploads/Main/NetworkHost.png" alt=""></p>
+<p><strong>2、实例化与孵化</strong></p>
+<p>在一个单机中，游戏对象创建称为<strong>实例化（Instantiate）</strong></p>
+<p>在网络游戏中，网络游戏对象，客户端必须从服务器接受这些对象及其属性，称为<strong>孵化（Spawn）</strong>，并由服务器的孵化系统（Spawning System）管理分布式对象生命周期和状态同步</p>
+<p><strong>3、网络游戏对象</strong></p>
+<p><strong>网络游戏对象（Networked GameObjects）</strong> ：在服务器上注册，由孵化系统（Spawning System）管理的对象，它必须包含 NetworkIdentity 组件，并用 NetworkBehaviour 脚本编程。</p>
+<p>**玩家游戏对象（player  GameObjects）**是特殊的网络游戏对象，指一个 client 加入网络游戏，服务器创建并孵化到客户端，由玩家控制的游戏对象。客户端代码可以控制它们的状态，并自动有服务器同步到其他玩家的客户端。例如：联网赛车游戏，每个玩家都有属于自己的赛车。</p>
+<p><img src="https://docs.unity3d.com/2018.1/Documentation/uploads/Main/NetworkLocalPlayers.png" alt=""></p>
+<p><strong>4、网络权限</strong>，指网络游戏对象在本地、服务器被控制的权利。</p>
+<p><strong>5、远程动作</strong></p>
+<p>服务器调用客户端对应游戏对象的方法（Client RPC），或反之（Command）。</p>
+<p><img src="https://docs.unity3d.com/2018.1/Documentation/uploads/Main/UNetDirections.jpg" alt=""></p>
+<h2 id="2从零开始设置多人游戏">2、从零开始设置多人游戏</h2>
+<p>本部分介绍了设置简单多人游戏项目的步骤。这个 step-by-step 的过程是通用的，可以帮助理解 UNet 的一些基本概念。</p>
+<p><em>以下内容主要来自 unity 5.5 手册 <a href="https://docs.unity.cn/cn/560/Manual/UNetSetup.html">Setting up a Multiplayer Project from Scratch</a>, 作者翻译并重新整理</em></p>
+<p><strong>请创建一个新的空Unity项目</strong>，开启网络游戏之旅。</p>
+<h3 id="21-玩家对象联网运动">2.1 玩家对象联网运动</h3>
+<p>本级主要介绍<a href="https://docs.unity3d.com/Manual/UNetPlayers.html">玩家对象</a>，并研究如何实现本地创建的玩家对象在网络上被创建、运动控制与同步。</p>
+<p><img src="../images/drf/info.png" alt=""> _玩家对象 在 Unity 5 版本称为 <em>Player Objects</em>。从 Unity 2017 称为 <em>Player GameObject</em></p>
+<p><img src="../images/drf/notebook.png" alt="">  <strong>编程练习 13-1：</strong></p>
+<p>设置内容包括：</p>
+<ul>
+<li>网络控制器（<strong>Network Manager</strong>）和 用户控制界面（<strong>Network Manager HUD</strong>，供玩家找到并加入游戏）</li>
+<li>玩家预制（<strong>Player Prefabs</strong> 玩家控制的本地对象）</li>
+<li>联网感知（<strong>multiplayer-aware</strong>）的 Scripts 和 GameObjects</li>
+</ul>
+<p>具体步骤如下：</p>
+<p><strong>1）NetworkManager 设置</strong></p>
+<p>第一步是在项目中创建 NetworkManager 对象：</p>
+<ul>
+<li>从菜单 Game Object -&gt; Create Empty 添加一个新的空游戏对象。</li>
+<li>在层次结构视图中选择它。</li>
+<li>将对象重命名为“NetworkManager”，使用右键上下文菜单中或单击对象的名称并键入。</li>
+<li>在对象的检查器窗口中，单击添加组件按钮</li>
+<li>找到组件 Network -&gt; NetworkManager 并将其添加到对象。该组件管理游戏的网络状态。</li>
+</ul>
+<p><img src="../images/ch13/UNetTut1.png" alt=""></p>
+<ul>
+<li>找到组件 Network -&gt; NetworkManagerHUD 并将其添加到对象。该组件在您的游戏中提供了一个简单的用户界面来控制网络状态。</li>
+</ul>
+<p><img src="../images/ch13/NetworkManagerRuntimeUI.png" alt=""></p>
+<p>有关更多详细信息，请参阅使用 NetworkManager。</p>
+<p><strong>2）设置玩家对象预制</strong></p>
+<p>下一步是设置代表游戏中玩家对象的 Unity Prefab。默认情况下，NetworkManager 通过克隆玩家预制来为 Client 实例化玩家对象。在这个例子中，玩家对象将是一个简单的立方体。</p>
+<ul>
+<li>从菜单 Game Object -&gt; 3D Object -&gt; Cube 创建一个新的立方体</li>
+</ul>
+<p><img src="../images/ch13/UNetTut2.png" alt=""></p>
+<ul>
+<li>在层次视图中找到该立方体并选择它</li>
+<li>将对象重命名为 “PlayerCube”</li>
+<li>在对象的检查器窗口中，单击添加组件按钮</li>
+<li>将组件 Network -&gt; NetworkIdentity 添加到对象。该组件用于标识服务器和客户端之间的对象。</li>
+</ul>
+<p><img src="../images/ch13/UNetTut3.png" alt=""></p>
+<ul>
+<li>将 NetworkIdentity 上的 “Local Player Authority” 复选框设置为 true。这将允许客户端控制玩家对象的移动</li>
+</ul>
+<p><img src="../images/ch13/UNetTut4.png" alt=""></p>
+<ul>
+<li>将立方体对象拖放到资源窗口中制作预制件。创建一个名为 “PlayerCube” 的预制件</li>
+<li>从场景中删除 PlayerCube 对象 - 现在我们不需要它，我们有一个预制</li>
+</ul>
+<p>详细信息 参考 Player Objects</p>
+<p><strong>3）注册玩家预制</strong></p>
+<p>一旦玩家预制被创建，它就必须在网络系统上注册。</p>
+<ul>
+<li>在层次视图中找到 NetworkManager 对象并选择它</li>
+<li>在 NetworkManager 组件面板打开 “Spawn Info” 折叠</li>
+<li>找到 “Player Prefab” 插槽（可以拖入对象的属性）</li>
+<li>将 PlayerCube 预制件拖入 “Player Prefab” 插槽</li>
+</ul>
+<p><img src="../images/ch13/UNetTut5.png" alt=""></p>
+<p>现在，请第一次保存该项目。从菜单 File -&gt; Save 保存项目。你也应该保存场景, 让我们称这个场景为 “offline” 场景。</p>
+<p><strong>4）玩家对象运动（单人版）</strong></p>
+<p>第一版游戏功能是移动玩家对象。在没有联网的情况下完成，因此它工作在单人模式下。</p>
+<ul>
+<li>在资源视图中查找 PlayerCube 预制件。</li>
+<li>点击Add Component 按钮并选择 “New Script”</li>
+<li>为新的脚本名称输入名称 “PlayerMove”。一个新的脚本将被创建。</li>
+<li>通过双击它在编辑器（如 Visual Studio）中打开这个新脚本</li>
+<li>将这个简单的移动代码添加到脚本中：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">PlayerMove</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Update</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">x</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Horizontal&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">z</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Vertical&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这将钩住由箭头箭头键或控制板控制立方体。立方体只能在客户端上移动 - 它不是联网的。</p>
+<p>再次保存该项目。</p>
+<p><strong>5）测试主机（hosted）游戏</strong></p>
+<p>点击播放按钮，在编辑器中进入运行模式。您应该看到 NetworkManagerHUD 的默认用户界面：</p>
+<p><img src="../images/ch13/NetworkManagerRuntimeUI.png" alt=""></p>
+<p>按 “HOST” 以游戏主机模式开始游戏。玩家对象被创建，并且 HUD 显示服务器处于活动状态。这个游戏是作为“主机”运行的 - 这时服务器和客户端在同一个进程中。</p>
+<p>请参阅：Network Concepts。</p>
+<p>按下箭头键可以让玩家立方体对象四处移动。</p>
+<p>通过在编辑器中按停止按钮退出运行模式。</p>
+<p><strong>6）测试玩家对客户的移动</strong></p>
+<ul>
+<li>使用菜单 File -&gt; Build Settings 打开 Build Settings 对话框。</li>
+<li>按下 “Add Open Scenes” 按钮，将当前场景添加到版本</li>
+</ul>
+<p><img src="../images/ch13/UNetTut6.png" alt=""></p>
+<ul>
+<li>按 “Build and Run” 按钮创建构建。这会提示输入可执行文件的名称，输入一个名称，如“networkTest”</li>
+<li>编译后的独立程序将启动，并显示分辨率选择对话框。</li>
+<li>选择 “windowed” 复选框和较低的分辨率，如640x480</li>
+<li>程序将启动并显示 NetworkManager HUD。</li>
+<li>从菜单中选择 “HOSTED” 作为主机启动。应该创建一个玩家多维数据集</li>
+<li>按箭头键稍微移动玩家立方体</li>
+<li>切换回编辑器并关闭 Build Settings 对话框。</li>
+<li>使用运行按钮进入运行模式</li>
+<li>从 NetworkManagerHUD 用户界面中，选择 “LAN Client” 作为客户端连接到主机</li>
+<li>应该出现两个立方体，一个在主机上的本地运行，另一个在该客户端的远程运行</li>
+<li>按箭头键移动立方体</li>
+<li>这两个立方体都在移动 这是因为移动脚本没有网络同步。</li>
+</ul>
+<p><strong>7）联网玩家对象的运动</strong></p>
+<ul>
+<li>关闭独立运行程序</li>
+<li>在编辑器中退出运行模式</li>
+<li>打开 PlayerMove 脚本。</li>
+<li>更新脚本以仅移动本地播放器</li>
+<li>添加 <strong>“Using UnityEngine.Networking”</strong></li>
+<li>将 “MonoBehaviour” 更改为 <strong>“NetworkBehaviour”</strong></li>
+<li>在Update函数中添加一个 “isLocalPlayer” 检测，以便只有本地程序处理输入</li>
+</ul>
+<p>具体代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.Networking</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">PlayerMove</span> <span class="p">:</span> <span class="n">NetworkBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Update</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(!</span><span class="n">isLocalPlayer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">x</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Horizontal&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">z</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Vertical&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在资源视图中找到 PlayerCube 预制并选择</li>
+<li>单击 “Add Component” 按钮并添加 Networking -&gt; NetworkTransform 组件。该组件使对象在网络中同步它的位置。</li>
+</ul>
+<p><img src="../images/ch13/UNetTut7.png" alt=""></p>
+<p>再次保存该项目</p>
+<p><strong>8）测试多人游戏</strong></p>
+<ul>
+<li>重新编译并运行独立程序并以 HOST 模式启动</li>
+<li>在编辑器中进入运行模式并作为客户端连接</li>
+<li>玩家对象现在应该彼此独立移动，并且由其客户端上的本地玩家控制。</li>
+</ul>
+<p><strong>9）识别本地玩家对象</strong></p>
+<p>游戏中的立方体当前都是白色，因此用户无法确定哪个立方体是立方体。为了识别玩家，我们将使本地玩家的立方体变红。</p>
+<ul>
+<li>打开 PlayerMove 脚本</li>
+<li>添加 OnStartLocalPlayer 函数的实现来更改运行期间玩家对象的颜色。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="n">OnStartLocalPlayer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MeshRenderer</span><span class="p">&gt;().</span><span class="n">material</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>该功能仅在其客户端的本地程序调用。这将使用户看到本地创建的立方体为红色。OnStartLocalPlayer 函数是本地玩你家对象初始化的好地方，仅用于本地程序执行，例如配置摄像头和输入。</p>
+<p>NetworkBehaviour 基类还有其他有用的虚函数，详见 Spawning。</p>
+<ul>
+<li>构建并运行游戏</li>
+<li>现在由本地玩家控制的立方体应该是红色，而其他的仍然是白色。</li>
+</ul>
+<h3 id="22-联网相互射击">2.2 联网相互射击</h3>
+<p>多人游戏中的一个共同特点是让玩家发射子弹。当子弹与玩家对象发生碰撞时，就会消灭对方。</p>
+<p><img src="../images/drf/notebook.png" alt=""> <strong>编程练习 13-2：</strong></p>
+<p>设置内容包括：</p>
+<ul>
+<li>一个对象预制（Bullet），添加 Rigidbody 等部件</li>
+<li>添加 NetworkIdentity，NetworkTransform 并注册到 NetworkManager （用于服务器 Spawn）</li>
+<li>一个运行于服务器的 CmdXXX 方法。 AOP（面向截面编程） 编织(weave) 为远程过程调用方法（）RPC</li>
+</ul>
+<p>具体步骤如下：</p>
+<p><strong>1）射击子弹（未联网）</strong></p>
+<p>先添加非联网子弹，再改为联网的子弹。</p>
+<ul>
+<li>创建一个球体游戏对象</li>
+</ul>
+<p><img src="../images/ch13/UNetTut8.png" alt=""></p>
+<ul>
+<li>将球体对象重命名为 “Bullet”</li>
+<li>将子弹的比例从 1.0 改为 0.2</li>
+<li>将子弹拖到资源文件夹制作预制</li>
+<li>从场景中删除子弹对象</li>
+<li>给子弹添加一个Rigidbody组件</li>
+</ul>
+<p><img src="../images/ch13/UNetTut9.png" alt=""></p>
+<ul>
+<li>将刚体上的 “Use Gravity” 复选框设置为 false</li>
+<li>更新PlayerMove脚本以发射子弹：
+<ul>
+<li>添加公共变量（slot/插槽）放置子弹预制</li>
+<li>在 Update 函数中添加输入处理</li>
+<li>添加一个函数 Fire 来发射子弹</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.Networking</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">PlayerMove</span> <span class="p">:</span> <span class="n">NetworkBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">bulletPrefab</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="n">OnStartLocalPlayer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MeshRenderer</span><span class="p">&gt;().</span><span class="n">material</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Update</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(!</span><span class="n">isLocalPlayer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">x</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Horizontal&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">z</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Vertical&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetKeyDown</span><span class="p">(</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">Space</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Fire</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Fire</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// create the bullet object from the bullet prefab</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">bullet</span> <span class="p">=</span> <span class="p">(</span><span class="n">GameObject</span><span class="p">)</span><span class="n">Instantiate</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bulletPrefab</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">-</span> <span class="n">transform</span><span class="p">.</span><span class="n">forward</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// make the bullet move away in front of the player</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bullet</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody</span><span class="p">&gt;().</span><span class="n">velocity</span> <span class="p">=</span> <span class="p">-</span><span class="n">transform</span><span class="p">.</span><span class="n">forward</span><span class="p">*</span><span class="m">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// make bullet disappear after 2 seconds</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Destroy</span><span class="p">(</span><span class="n">bullet</span><span class="p">,</span> <span class="m">2.0f</span><span class="p">);</span>        
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>保存脚本并返回到编辑器</li>
+<li>选择 PlayerCube 预制并找到 PlayerMove 组件</li>
+<li>在组件上找到 bulletPrefab 插槽</li>
+<li>将子弹预制件拖入 bulletPrefab 插槽</li>
+</ul>
+<p><img src="../images/ch13/UNetTut10.png" alt=""></p>
+<ul>
+<li>构建项目，然后启动作为主机的独立程序</li>
+<li>在编辑器中进入运行模式并作为客户端连接</li>
+<li>按空格键应该会导致一个子弹被创建并从玩家对象中发射</li>
+<li>子弹不会在其他客户端上被触发，只有空格键被按下。</li>
+<li>主机与编辑器退出运行状态</li>
+</ul>
+<p><strong>2）联网射击子弹</strong></p>
+<ul>
+<li>找到子弹预制件并选择它</li>
+<li>将 NetworkIdentity 添加到项目符号预制</li>
+<li>将 NetworkTransform 组件添加到项目符号预制</li>
+<li>在子弹预制的 NetworkTransform 组件上将发送速率设置为零。子弹在射击后不会改变方向或速度，因此不需要发送移动更新。</li>
+</ul>
+<p><img src="../images/ch13/UNetTut11.png" alt=""></p>
+<p><img src="../images/drf/advanced.png" alt=""> 请注意 Bullet 和 PlayCube 预知 NetworkTransform 组件 <strong>Transform Syns Mod</strong> 的不同</p>
+<ul>
+<li>选择 NetworkManager 并打开 “Spawn Info” 折叠</li>
+<li>用 Add 按钮添加一个新的 spawn 预制件</li>
+<li>将 Bullet 预制件拖入新的 spawn 预制插槽</li>
+</ul>
+<p><img src="../images/ch13/UNetTut12.png" alt=""></p>
+<ul>
+<li>打开 PlayerMove 脚本</li>
+<li>更新 PlayerMove 脚本来联网发射子弹：
+<ul>
+<li>通过添加 [Command] 自定义属性和“Cmd”前缀，将Fire功能更改为联网命令</li>
+<li>在子弹对象上使用Network.Spawn（）</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.Networking</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">PlayerMove</span> <span class="p">:</span> <span class="n">NetworkBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">bulletPrefab</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="n">OnStartLocalPlayer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">MeshRenderer</span><span class="p">&gt;().</span><span class="n">material</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">    [Command]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">CmdFire</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="c1">// This [Command] code is run on the server!</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       <span class="c1">// create the bullet object locally</span>
+</span></span><span class="line"><span class="cl">       <span class="kt">var</span> <span class="n">bullet</span> <span class="p">=</span> <span class="p">(</span><span class="n">GameObject</span><span class="p">)</span><span class="n">Instantiate</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bulletPrefab</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">-</span> <span class="n">transform</span><span class="p">.</span><span class="n">forward</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       <span class="n">bullet</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody</span><span class="p">&gt;().</span><span class="n">velocity</span> <span class="p">=</span> <span class="p">-</span><span class="n">transform</span><span class="p">.</span><span class="n">forward</span><span class="p">*</span><span class="m">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">       <span class="c1">// spawn the bullet on the clients</span>
+</span></span><span class="line"><span class="cl">       <span class="n">NetworkServer</span><span class="p">.</span><span class="n">Spawn</span><span class="p">(</span><span class="n">bullet</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">       <span class="c1">// when the bullet is destroyed on the server it will automaticaly be destroyed on clients</span>
+</span></span><span class="line"><span class="cl">       <span class="n">Destroy</span><span class="p">(</span><span class="n">bullet</span><span class="p">,</span> <span class="m">2.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Update</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(!</span><span class="n">isLocalPlayer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">x</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Horizontal&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">z</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Vertical&#34;</span><span class="p">)*</span><span class="m">0.1f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetKeyDown</span><span class="p">(</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">Space</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Command function is called from the client, but invoked on the server</span>
+</span></span><span class="line"><span class="cl">            <span class="n">CmdFire</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此代码使用 [Command] 指令在服务器上在运行该代码，并向所有客户端 Spawn 创建的 Bullet 对象。有关更多信息，请参阅 <a href="https://docs.unity3d.com/2018.1/Documentation/Manual/UNetActions.html">Networked Actions/Remote Actions</a>。</p>
+<ul>
+<li>构建，然后启动作为主机的独立应用</li>
+<li>在编辑器中进入运行模式并作为客户端连接</li>
+<li>按下空格键应该让所有客户端上的正确观察到玩家发射的子弹</li>
+</ul>
+<p><strong>3）子弹碰撞</strong></p>
+<p>这里增加了一个碰撞处理程序，以便子弹在击中玩家立方体对象时消失。</p>
+<ul>
+<li>找到子弹预制件并选择它</li>
+<li>选择 Add Component 按钮并添加一个新脚本</li>
+<li>调用新脚本“Bullet”</li>
+<li>打开新脚本并添加碰撞处理程序，该程序在击中玩家对象时销毁子弹</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Bullet</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">OnCollisionEnter</span><span class="p">(</span><span class="n">Collision</span> <span class="n">collision</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">hit</span> <span class="p">=</span> <span class="n">collision</span><span class="p">.</span><span class="n">gameObject</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">hitPlayer</span> <span class="p">=</span> <span class="n">hit</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">PlayerMove</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">hitPlayer</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">print</span> <span class="p">(</span><span class="s">&#34;hit player&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Destroy</span><span class="p">(</span><span class="n">hit</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在当子弹击中玩家对象时，它将被销毁。当服务器上的子弹销毁时，由于它是由网络管理的衍生对象，因此它也将在客户端上销毁。</p>
+<h3 id="23-玩家状态同步">2.3 玩家状态同步</h3>
+<p>与子弹射击有关的一个共同特征是玩家对象具有满血开始的“生命值”属性，然后当玩家受到子弹击中伤害时减少, 这个值需要在网络中同步。</p>
+<p><img src="../images/drf/notebook.png" alt=""> <strong>编程练习 13-3：</strong></p>
+<p><strong>1）玩家状态（非联网生命值）</strong></p>
+<p>先添加生命值到玩家对象。</p>
+<ul>
+<li>选择 PlayerCube 预制</li>
+<li>选择 Add Component 按钮并添加一个新脚本</li>
+<li>脚本名称 “Combat”</li>
+<li>打开 Combat 脚本，添加健康变量和 TakeDamage 函数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Combat</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">maxHealth</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">health</span> <span class="p">=</span> <span class="n">maxHealth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">void</span> <span class="n">TakeDamage</span><span class="p">(</span><span class="kt">int</span> <span class="n">amount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">health</span> <span class="p">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;health value = &#34;</span> <span class="p">+</span> <span class="n">health</span><span class="p">.</span><span class="n">ToSting</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">health</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;Dead!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>子弹脚本需要更新，以在命中时调用 TakeDamage 函数。</p>
+<ul>
+<li>打开 bullet 脚本
+<ul>
+<li>在碰撞处理函数中添加一个来自 Combat 脚本的 TakeDamage 函数调用</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Bullet</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">OnCollisionEnter</span><span class="p">(</span><span class="n">Collision</span> <span class="n">collision</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">hit</span> <span class="p">=</span> <span class="n">collision</span><span class="p">.</span><span class="n">gameObject</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">hitPlayer</span> <span class="p">=</span> <span class="n">hit</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">PlayerMove</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">hitPlayer</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Subscribe and Publish model may be good here!</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">combat</span> <span class="p">=</span> <span class="n">hit</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Combat</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">combat</span><span class="p">.</span><span class="n">TakeDamage</span><span class="p">(</span><span class="m">30</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当被子弹击中时，这会使玩家对象的健康状态下降。但是你不能在游戏中看到这种情况。我们需要添加一个简单的健康栏。</p>
+<ul>
+<li>选择 PlayerCube 预制</li>
+<li>选择 Add Component  按钮并添加一个名为 HealthBar 的新脚本</li>
+<li>打开 HealthBar 脚本</li>
+</ul>
+<p>这是很多使用旧 IMGUI 系统的代码。这对于网络来说并不相关，所以我们现在就使用它而没有解释。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">HealthBar</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GUIStyle</span> <span class="n">healthStyle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GUIStyle</span> <span class="n">backStyle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Combat</span> <span class="n">combat</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Awake</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">combat</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Combat</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">OnGUI</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">InitStyles</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Draw a Health Bar</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">Vector3</span> <span class="n">pos</span> <span class="p">=</span> <span class="n">Camera</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">WorldToScreenPoint</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// draw health bar background</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GUI</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">grey</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GUI</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">grey</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GUI</span><span class="p">.</span><span class="n">Box</span><span class="p">(</span><span class="k">new</span> <span class="n">Rect</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="p">-</span><span class="m">26</span><span class="p">,</span> <span class="n">Screen</span><span class="p">.</span><span class="n">height</span> <span class="p">-</span> <span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="m">20</span><span class="p">,</span> <span class="n">Combat</span><span class="p">.</span><span class="n">maxHealth</span><span class="p">/</span><span class="m">2</span><span class="p">,</span> <span class="m">7</span><span class="p">),</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="n">backStyle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// draw health bar amount</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GUI</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GUI</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">green</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GUI</span><span class="p">.</span><span class="n">Box</span><span class="p">(</span><span class="k">new</span> <span class="n">Rect</span><span class="p">(</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span><span class="p">-</span><span class="m">25</span><span class="p">,</span> <span class="n">Screen</span><span class="p">.</span><span class="n">height</span> <span class="p">-</span> <span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="p">+</span> <span class="m">21</span><span class="p">,</span> <span class="n">combat</span><span class="p">.</span><span class="n">health</span><span class="p">/</span><span class="m">2</span><span class="p">,</span> <span class="m">5</span><span class="p">),</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="n">healthStyle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">InitStyles</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span> <span class="n">healthStyle</span> <span class="p">==</span> <span class="k">null</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">healthStyle</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GUIStyle</span><span class="p">(</span> <span class="n">GUI</span><span class="p">.</span><span class="n">skin</span><span class="p">.</span><span class="n">box</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">healthStyle</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">background</span> <span class="p">=</span> <span class="n">MakeTex</span><span class="p">(</span> <span class="m">2</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="k">new</span> <span class="n">Color</span><span class="p">(</span> <span class="m">0f</span><span class="p">,</span> <span class="m">1f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">1.0f</span> <span class="p">)</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span> <span class="n">backStyle</span> <span class="p">==</span> <span class="k">null</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">backStyle</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GUIStyle</span><span class="p">(</span> <span class="n">GUI</span><span class="p">.</span><span class="n">skin</span><span class="p">.</span><span class="n">box</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">backStyle</span><span class="p">.</span><span class="n">normal</span><span class="p">.</span><span class="n">background</span> <span class="p">=</span> <span class="n">MakeTex</span><span class="p">(</span> <span class="m">2</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="k">new</span> <span class="n">Color</span><span class="p">(</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">1.0f</span> <span class="p">)</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">Texture2D</span> <span class="n">MakeTex</span><span class="p">(</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">height</span><span class="p">,</span> <span class="n">Color</span> <span class="n">col</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Color</span><span class="p">[]</span> <span class="n">pix</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Color</span><span class="p">[</span><span class="n">width</span> <span class="p">*</span> <span class="n">height</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">pix</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="p">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pix</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="p">=</span> <span class="n">col</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Texture2D</span> <span class="n">result</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Texture2D</span><span class="p">(</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="p">.</span><span class="n">SetPixels</span><span class="p">(</span> <span class="n">pix</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="p">.</span><span class="n">Apply</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>保存该项目</li>
+<li>构建并运行游戏并查看玩家对象的健康栏</li>
+<li>如果玩家现在射击另一个玩家，则该特定客户端的健康状况会下降，但其他客户端则不会。</li>
+</ul>
+<p><strong>2）玩家状态（网络健康）</strong></p>
+<p>生命值变化在游戏中广泛应用。每个客户机看到不同的玩家的生命值不同。运行状况应只应用于服务器，并将更改复制到客户端。我们称服务器为生命值之“服务器权限”。</p>
+<ul>
+<li>打开 Combat 脚本
+<ul>
+<li>将脚本更改为 NetworkBehaviour</li>
+<li>[SyncVar] 指令生命值属性具有 “服务器权限”</li>
+<li>将 isServer 检查添加到 TakeDamage 中，所以它只会应用在服务器上</li>
+</ul>
+</li>
+</ul>
+<p>有关 SyncVars 的更多信息，请参阅 <a href="">State Synchronization</a>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.Networking</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Combat</span> <span class="p">:</span>  <span class="n">NetworkBehaviour</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">maxHealth</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">    [SyncVar]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">health</span> <span class="p">=</span> <span class="n">maxHealth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">void</span> <span class="n">TakeDamage</span><span class="p">(</span><span class="kt">int</span> <span class="n">amount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(!</span><span class="n">isServer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">health</span> <span class="p">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">health</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;Dead!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>保存该项目</li>
+<li>构建并运行游戏并查看玩家对象的生命值</li>
+</ul>
+<p><strong>3）死亡和重生</strong></p>
+<p>目前，当玩家的生命值达到零时，没有任何事情发生。为了让游戏更具游戏性，当健康状况达到零时，玩家应死亡并以完全健康的方式传送回起始位置。</p>
+<ul>
+<li>打开 Combat 脚本
+<ul>
+<li>添加一个 [ClientRpc] 指示 RpcRespawn 函数具有 “本地权限”。有关更多信息，请参阅 Networked Actions。</li>
+<li>当生命值达到零时，调用服务器上的 RpcRespawn 函数操作，[ClientRpc] 指令在所有客户端执行该函数。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.Networking</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Combat</span> <span class="p">:</span>  <span class="n">NetworkBehaviour</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">maxHealth</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">    [SyncVar]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">health</span> <span class="p">=</span> <span class="n">maxHealth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">void</span> <span class="n">TakeDamage</span><span class="p">(</span><span class="kt">int</span> <span class="n">amount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(!</span><span class="n">isServer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">health</span> <span class="p">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">health</span> <span class="p">=</span> <span class="n">maxHealth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">// called on the server, will be invoked on the clients</span>
+</span></span><span class="line"><span class="cl">            <span class="n">RpcRespawn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">    [ClientRpc]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">RpcRespawn</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">isLocalPlayer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// move back to zero location</span>
+</span></span><span class="line"><span class="cl">            <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这个游戏中，客户端控制玩家对象的位置 - 玩家对象在客户端具有“本地权限”。如果服务器只是将玩家的位置设置为开始位置，则客户端将覆盖该位置，因为客户端具有权限。为了避免这种情况，服务器通知拥有的客户端将玩家对象移动到开始位置。</p>
+<ul>
+<li>构建并运行游戏</li>
+<li>将玩家对象从开始位置移开</li>
+<li>在一名玩家身上射击子弹，直到他们的健康状况达到零</li>
+<li>玩家对象应该传送到开始位置</li>
+</ul>
+<p><img src="../images/drf/splash_green.png" alt="">  网络编程的要点是你首先了解当前代码在服务器上运行还是在本地运行，并远程调用。</p>
+<ul>
+<li>[Command] ：本地玩家对象执行的代码，调用服务器执行的函数</li>
+<li>[ClientRpc] ：服务器执行的代码，调用所有客户端执行函数</li>
+<li>[SyncVar]：服务器授权变量，Spwan 自动同步到客户端</li>
+</ul>
+<h3 id="24-管理繁殖的对象">2.4 管理繁殖的对象</h3>
+<p>玩家对象是由玩家控制，并繁殖到客户端。但是大量的对象是服务器控制并繁殖到客户端，例如子弹、敌人等。这样集中管理这些繁殖到客户端就显得非常有意义。</p>
+<p>本节设置的内容是：</p>
+<ul>
+<li>在服务器端创建一个对象工厂的原型 EnemySpawner</li>
+</ul>
+<p><img src="../images/drf/notebook.png" alt=""> <strong>编程练习 13-4：</strong></p>
+<p><strong>1）创建“敌人”繁殖厂</strong></p>
+<ul>
+<li>从 GameObject 菜单中创建一个新的空游戏对象</li>
+<li>将该对象重命名为 “EnemySpawner”</li>
+<li>选择 EnemySpawner 对象</li>
+<li>选择 Add Component 按钮并将 NetworkIdentity 添加到该对象</li>
+<li>在 NetworkIdentity 中单击 “Server Only” 复选框。这使得 EnemySpawner 不会在客户端生成。</li>
+<li>选择 Add Component 按钮并创建一个名为 “EnemySpawner” 的新脚本</li>
+<li>编辑新脚本</li>
+<li>使其成为 NetworkBehaviour</li>
+<li>实现虚函数 OnStartServer 来创建敌人</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.Networking</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">EnemySpawner</span> <span class="p">:</span> <span class="n">NetworkBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">enemyPrefab</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">numEnemies</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="n">OnStartServer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">=</span><span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">numEnemies</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">pos</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Random</span><span class="p">.</span><span class="n">Range</span><span class="p">(-</span><span class="m">8.0f</span><span class="p">,</span> <span class="m">8.0f</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="m">0.2f</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Random</span><span class="p">.</span><span class="n">Range</span><span class="p">(-</span><span class="m">8.0f</span><span class="p">,</span> <span class="m">8.0f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">rotation</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">Euler</span><span class="p">(</span> <span class="n">Random</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">180</span><span class="p">),</span> <span class="n">Random</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">180</span><span class="p">),</span> <span class="n">Random</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">180</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="p">(</span><span class="n">GameObject</span><span class="p">)</span><span class="n">Instantiate</span><span class="p">(</span><span class="n">enemyPrefab</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">rotation</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">NetworkServer</span><span class="p">.</span><span class="n">Spawn</span><span class="p">(</span><span class="n">enemy</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>2）创建 “Enemy” 预制</strong></p>
+<ul>
+<li>从 GameObject 菜单中创建一个新的 Capsule。</li>
+<li>将对象重命名为 “Enemy”</li>
+<li>选择添加组件按钮将一个 NetworkIdentity 组件添加到 Enemy</li>
+<li>选择添加组件按钮将 NetworkTransform 组件添加到 Enemy</li>
+<li>将 Enemy 对象拖到资源视图中以创建预制件</li>
+<li>从场景中删除 Enemy 对象</li>
+<li>选择 Enemy 预制</li>
+<li>选择添加组件按钮并将 Combat 脚本添加到 Enemy</li>
+<li>选择 Add Component 按钮并将 HealthBar 脚本添加到 Enemy</li>
+<li>选择 NetworkManager 并在 Spawn Info 中添加一个新的可重复使用的预制</li>
+<li>将新的 spawn 预制设置为敌方预制</li>
+</ul>
+<p>bullet 脚本设置为仅适用于玩家。现在更新 bullet 脚本以处理任何具有 Combat 脚本的对象：</p>
+<ul>
+<li>打开 bullet 脚本</li>
+<li>更改碰撞检测以使用 Combat 而不是 PlayerMove：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Bullet</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">OnCollisionEnter</span><span class="p">(</span><span class="n">Collision</span> <span class="n">collision</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">hit</span> <span class="p">=</span> <span class="n">collision</span><span class="p">.</span><span class="n">gameObject</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">hitCombat</span> <span class="p">=</span> <span class="n">hit</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Combat</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">hitCombat</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">hitCombat</span><span class="p">.</span><span class="n">TakeDamage</span><span class="p">(</span><span class="m">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>3）测试 “Enemy”</strong></p>
+<ul>
+<li>选择EnemySpawner 对象</li>
+<li>找到 EnemySpawner 组件上的 “Enemy” 插槽</li>
+<li>将 Enemy 预制物拖入插槽</li>
+<li>将 numEnemies 值设置为4</li>
+</ul>
+<p>测试：</p>
+<ul>
+<li>构建并运行游戏</li>
+<li>当作为 Host 开始时，应该在随机位置创建四个敌人</li>
+<li>玩家应该能够射击敌人，他们的健康状况应该下降</li>
+<li>当客户加入时，他们应该看到处于相同位置的敌人，以及与服务器上相同的健康值</li>
+</ul>
+<p><strong>4）摧毁敌人</strong></p>
+<p>敌人可以用子弹射击并且他们的生命值下降，当他们的生命之达到零而不是重生时，但不像玩家对象一样重生。敌人应该被毁灭。</p>
+<ul>
+<li>打开战斗脚本
+<ul>
+<li>添加一个 “destroyOnDeath” 变量</li>
+<li>当生命值达到零时，检查 destroyOnDeath</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.Networking</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Combat</span> <span class="p">:</span>  <span class="n">NetworkBehaviour</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">maxHealth</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">bool</span> <span class="n">destroyOnDeath</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">    [SyncVar]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">health</span> <span class="p">=</span> <span class="n">maxHealth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">void</span> <span class="n">TakeDamage</span><span class="p">(</span><span class="kt">int</span> <span class="n">amount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(!</span><span class="n">isServer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">health</span> <span class="p">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">destroyOnDeath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">health</span> <span class="p">=</span> <span class="n">maxHealth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1">// called on the server, will be invoked on the clients</span>
+</span></span><span class="line"><span class="cl">                <span class="n">RpcRespawn</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">    [ClientRpc]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">RpcRespawn</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">isLocalPlayer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// move back to zero location</span>
+</span></span><span class="line"><span class="cl">            <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>选择 Enemy 预制</li>
+<li>设置 destroyOnDeath 选择框为 true</li>
+</ul>
+<p>运行 HOST 和 Client ，现在当生命值为零时敌人将被摧毁，但玩家将重生。</p>
+<p><strong>5）为每个玩家对象指定 Home</strong></p>
+<p>目前所有玩家对象出现在零点。这意味着它们可能在彼此之上。玩家应该在不同的地点。NetworkStartPosition 组件可用于执行此操作。</p>
+<ul>
+<li>创建一个新的空 GameObject</li>
+<li>将该对象重命名为 “Pos1”</li>
+<li>选择添加组件按钮并添加 NetworkStartPosition 组件</li>
+<li>将Pos1对象移动到位置（-3,0,0）</li>
+<li>创建第二个空的 GameObject</li>
+<li>将对象重命名为 “Pos2”</li>
+<li>选择添加组件按钮并添加 NetworkStartPosition 组件</li>
+<li>将Pos2对象移到位置（3,0,0）</li>
+<li>找到 NetworkManager 并选择它。</li>
+<li>打开 “Spawn Info” 折页</li>
+<li>将 “Player Spawn Method” 更改为 “Round Robin”</li>
+<li>构建并运行游戏</li>
+</ul>
+<p>现在应该在 Pos1 和 Pos2 对象的位置创建玩家对象。</p>
+<p><img src="../images/drf/splash_green.png" alt=""> 网络游戏对象的种类：</p>
+<ul>
+<li>网络对象：有 NetworkIdentity 组件， 使用 NetworkBehaviour 组件
+<ul>
+<li>玩家对象 ：注册为 player 的预制</li>
+<li>server only 对象: 不在 client 出现的对象</li>
+<li>普通网络对象：</li>
+</ul>
+</li>
+<li>非网络对象</li>
+</ul>
+<p><img src="../images/drf/folder_smart.png" alt=""> 本练习<a href="https://github.com/pmlpml/unity3d-learning/archive/ex-unet.zip">最终代码</a>下载</p>
+<h2 id="3其他类型网络游戏教程">3、其他类型网络游戏教程</h2>
+<p><strong>回合制游戏教程</strong></p>
+<p><a href="http://blog.theknightsofunity.com/turn-based-multiplayer-game-gamesparks-unity-1/">http://blog.theknightsofunity.com/turn-based-multiplayer-game-gamesparks-unity-1/</a></p>
+<p>Todo：</p>
+<h2 id="4作业与练习">4、作业与练习</h2>
+<p>1、选择一个以前的作业或自己选择一个小游戏，设计成网络游戏。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-11-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/12-ar-and-mr/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">第12章、AR/MR 技术</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/14-script-integration/">
+            <span class="next-text nav-default">第14章、集成脚本引擎</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

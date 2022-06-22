@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>附录 X3-05、反射 与 Unity - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="1、什么是反射 Reflection，中文翻译为反射。 这是 dotNet 获取 运行时 类型信息/定义 的方式。dotNet的应用程序由几个部分：‘程序集(Ass" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/x3-05-reflection/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="附录 X3-05、反射 与 Unity" />
+<meta property="og:description" content="1、什么是反射 Reflection，中文翻译为反射。 这是 dotNet 获取 运行时 类型信息/定义 的方式。dotNet的应用程序由几个部分：‘程序集(Ass" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/x3-05-reflection/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-12-20T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-12-20T00:00:00+08:00" />
+
+<meta itemprop="name" content="附录 X3-05、反射 与 Unity">
+<meta itemprop="description" content="1、什么是反射 Reflection，中文翻译为反射。 这是 dotNet 获取 运行时 类型信息/定义 的方式。dotNet的应用程序由几个部分：‘程序集(Ass"><meta itemprop="datePublished" content="2020-12-20T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-12-20T00:00:00+08:00" />
+<meta itemprop="wordCount" content="2031">
+<meta itemprop="keywords" content="附件,C#," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="附录 X3-05、反射 与 Unity"/>
+<meta name="twitter:description" content="1、什么是反射 Reflection，中文翻译为反射。 这是 dotNet 获取 运行时 类型信息/定义 的方式。dotNet的应用程序由几个部分：‘程序集(Ass"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">附录 X3-05、反射 与 Unity</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-20 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1什么是反射">1、什么是反射</a></li>
+        <li><a href="#2命名空间与装配件的区别">2、命名空间与装配件的区别</a></li>
+        <li><a href="#3运行期得到类型信息的用途">3、运行期得到类型信息的用途</a></li>
+        <li><a href="#4一些代码">4、一些代码</a>
+          <ul>
+            <li><a href="#41-获取类型">4.1 获取类型</a></li>
+            <li><a href="#42-动态创建对象">4.2 动态创建对象</a></li>
+            <li><a href="#43-动态调用方法">4.3 动态调用方法</a></li>
+            <li><a href="#44-动态创建委托">4.4 动态创建委托</a></li>
+            <li><a href="#45-获取类型定义">4.5 获取类型定义</a></li>
+          </ul>
+        </li>
+        <li><a href="#5unity-中的反射">5、Unity 中的反射</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="1什么是反射">1、什么是反射</h2>
+<p>Reflection，中文翻译为反射。</p>
+<p>这是 dotNet 获取 <strong>运行时</strong> <strong>类型信息/定义</strong> 的方式。dotNet的应用程序由几个部分：‘程序集(Assembly)’、‘模块(Module)’、‘类型(class)’组成，而反射提供一种编程的方式，让程序员可以在程序运行期获得这几个组成部分的定义信息，例如：</p>
+<p>Assembly类可以获得正在运行的装配件信息，也可以动态的加载装配件，以及在装配件中查找类型信息，并创建该类型的实例。
+<code>System.Type</code>类型表示对象的类型信息，此信息包含对象的所有要素：方法、构造器、属性等等，通过Type类可以得到这些要素的信息，并且调用之。
+MethodInfo包含方法的信息，通过这个类可以得到方法的名称、参数、返回值等，并且可以调用之。
+诸如此类，还有FieldInfo、EventInfo等等，这些类都包含在System.Reflection命名空间下。</p>
+<h2 id="2命名空间与装配件的区别">2、命名空间与装配件的区别</h2>
+<p>Assembly 是物理机制，是dotNet应用程序执行的最小单位，编译出来的 dll、exe 都是装配件</p>
+<p>NameSpace 是逻辑机制，是对象命名的空间。一个命名空间可能分布在几个装配件中。</p>
+<h2 id="3运行期得到类型信息的用途">3、运行期得到类型信息的用途</h2>
+<p>官方说法，反射在以下情况下很有用：</p>
+<ul>
+<li>需要访问程序元数据中的特性时。</li>
+<li>检查和实例化程序集中的类型。</li>
+<li>在运行时构建新类型。 使用 System.Reflection.Emit 中的类。</li>
+<li>执行后期绑定，访问在运行时创建的类型上的方法。 请参阅主题 “动态加载和使用类型”。</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>动态创建对象，调用函数</li>
+<li>根据对象的注解实现语义，如 ORM 实现</li>
+<li>动态代理的实现，如 RPC，AOP 实现</li>
+<li>做插件</li>
+</ul>
+<h2 id="4一些代码">4、一些代码</h2>
+<h3 id="41-获取类型">4.1 获取类型</h3>
+<p>获得类型信息有两种方法</p>
+<ul>
+<li>一种是得到实例对象，这个时侯我仅仅是得到这个实例对象，得到的方式也许是一个object的引用，也许是一个接口的引用，但是我并不知道它的确切类型，我需要了解，那么就可以通过调用System.Object上声明的方法GetType来获取实例对象的类型对象，比如在某个方法内，我需要判断传递进来的参数是否实现了某个接口，如果实现了，则调用该接口的一个方法：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="err">…</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span>  <span class="k">void</span>  <span class="n">Process</span><span class="p">(</span>  <span class="kt">object</span>  <span class="n">processObj</span>  <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Type</span>  <span class="n">t</span>  <span class="p">=</span>  <span class="n">processsObj</span><span class="p">.</span><span class="n">GetType</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span>  <span class="n">t</span><span class="p">.</span><span class="n">GetInterface</span><span class="p">(</span><span class="err">“</span><span class="n">ITest</span><span class="err">”</span><span class="p">)</span>  <span class="p">!=</span><span class="k">null</span>  <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="err">…</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">…</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外一种获取类型的方法是通过Type.GetType以及Assembly.GetType方法，如：
+<code>Type  t  =  Type.GetType(“System.String”);</code></p>
+<h3 id="42-动态创建对象">4.2 动态创建对象</h3>
+<p>System.Activator提供了方法来根据类型动态创建对象，比如创建一个DataTable：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="n">Type</span>  <span class="n">t</span>  <span class="p">=</span>  <span class="n">Type</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="s">&#34;System.Data.DataTable,System.Data,Version=1.0.3300.0,  Culture=neutral,  PublicKeyToken=b77a5c561934e089&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">DataTable</span>  <span class="n">table</span>  <span class="p">=</span>  <span class="p">(</span><span class="n">DataTable</span><span class="p">)</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="43-动态调用方法">4.3 动态调用方法</h3>
+<h3 id="44-动态创建委托">4.4 动态创建委托</h3>
+<h3 id="45-获取类型定义">4.5 获取类型定义</h3>
+<p>System.reflection命名空间包含的几个类，允许你反射（解析）这些元数据表的代码</p>
+<ul>
+<li>System.Reflection.Assembly</li>
+<li>System.Reflection.MemberInfo</li>
+<li>System.Reflection.EventInfo</li>
+<li>System.Reflection.FieldInfo</li>
+<li>System.Reflection.MethodBase</li>
+<li>System.Reflection.ConstructorInfo</li>
+<li>System.Reflection.MethodInfo</li>
+<li>System.Reflection.PropertyInfo</li>
+<li>System.Type</li>
+</ul>
+<p>以下是上面几个类的使用方法：</p>
+<p>（1）使用Assembly定义和加载程序集，加载在程序集清单中列出模块，以及从此程序集中查找类型并创建该类型的实例。<br>
+（2）使用Module了解包含模块的程序集以及模块中的类等，还可以获取在模块上定义的所有全局方法或其他特定的非全局方法。<br>
+（3）使用ConstructorInfo了解构造函数的名称、参数、访问修饰符（如pulic 或private）和实现详细信息（如abstract或virtual）等。使用Type的GetConstructors或 GetConstructor方法来调用特定的构造函数。<br>
+（4）使用MethodInfo了解方法的名称、返回类型、参数、访问修饰符（如pulic 或private）和实现详细信息（如abstract或virtual）等。使用Type的GetMethods或GetMethod方法来调用特定的方法。<br>
+（5）使用FiedInfo了解字段的名称、访问修饰符（如public或private）和实现详细信息（如static）等，并获取或设置字段值。<br>
+（6）使用EventInfo了解事件的名称、事件处理程序数据类型、自定义属性、声明类型和反射类型等，添加或移除事件处理程序。<br>
+（7）使用PropertyInfo了解属性的名称、数据类型、声明类型、反射类型和只读或可写状态等，获取或设置属性值。<br>
+（8）使用ParameterInfo了解参数的名称、数据类型、是输入参数还是输出参数，以及参数在方法签名中的位置等。</p>
+<ul>
+<li>MSDN <a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/reflection">反射（C# 编程指南）</a></li>
+<li><a href="https://www.cnblogs.com/wangshenhe/p/3256657.html">C# 反射中文整理</a></li>
+</ul>
+<h2 id="5unity-中的反射">5、Unity 中的反射</h2>
+<div class="admonition warning"><p class="admonition-title">注意事项，不能使用 System.Reflection.Emit </p>
+<p>这意味不能在运行时构造新的数据类型</p>
+</div>
+<div class="admonition warning"><p class="admonition-title">注意事项，性能 </p>
+<p>反射会严重影响性能</p>
+</div>
+<p>由于 Unity C# 脚本在手机上，编译后并不能动态更新，插件也无法使用。</p>
+<p>在 Unity 中，主要应用就是 <strong>基于代理的反射技术</strong> ，可以兼顾效率和通用的需要，参考代码：</p>
+<p><img src="../images/ch10/x3-05-reflection.png" alt=""></p>
+<p>如果熟悉事件的话，你也可以将一组特定对象的方法放在一个事件中，一起激发哦！例如，把所有部件代码的 Start 方法放入一个 startEvent 的中。</p>
+<div class="admonition question"><p class="admonition-title">思考题、研讨</p>
+<ul>
+<li>
+<p>用反射技术编写类似的函数</p>
+<ul>
+<li>GameObject.SendMessage</li>
+<li>GameObject.SendMessageUpwards</li>
+<li>GameObject.BroadcastMessage</li>
+</ul>
+</li>
+<li>
+<p>分析这些方法的计算成本</p>
+</li>
+<li>
+<p>OnCollisionEntry() 的调用是这样实现的吗？给出理由</p>
+</li>
+<li>
+<p>使用 c# 反射技术列出一个对象的所有方法名称</p>
+</li>
+</ul>
+</div>
+<ul>
+<li>参考阅读： <a href="https://www.cnblogs.com/cyjb/archive/2013/03/21/DelegateBuilder.html">C# 反射的委托创建器</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-12-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%99%84%E4%BB%B6/">附件</a>
+          <a href="/tags/c/">C#</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/even-preview/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Theme preview</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/x3-06-coroutine/">
+            <span class="next-text nav-default">附录 X3-06、协程与Unity</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

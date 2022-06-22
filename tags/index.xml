@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on 3D游戏编程与设计 - 中山大学</title>
+    <link>http://Thresh-Holden.github.io/tags/</link>
+    <description>Recent content in Tags on 3D游戏编程与设计 - 中山大学</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Dec 2020 00:00:00 +0800</lastBuildDate><atom:link href="http://Thresh-Holden.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C#</title>
+      <link>http://Thresh-Holden.github.io/tags/c#/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/tags/c#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>附件</title>
+      <link>http://Thresh-Holden.github.io/tags/%E9%99%84%E4%BB%B6/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/tags/%E9%99%84%E4%BB%B6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>课件</title>
+      <link>http://Thresh-Holden.github.io/tags/%E8%AF%BE%E4%BB%B6/</link>
+      <pubDate>Sat, 21 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/tags/%E8%AF%BE%E4%BB%B6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>UML</title>
+      <link>http://Thresh-Holden.github.io/tags/uml/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/tags/uml/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>大纲</title>
+      <link>http://Thresh-Holden.github.io/tags/%E5%A4%A7%E7%BA%B2/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/tags/%E5%A4%A7%E7%BA%B2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>demo</title>
+      <link>http://Thresh-Holden.github.io/tags/demo/</link>
+      <pubDate>Tue, 10 Jul 2018 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/tags/demo/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

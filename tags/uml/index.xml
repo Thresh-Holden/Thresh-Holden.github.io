@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>UML on 3D游戏编程与设计 - 中山大学</title>
+    <link>http://Thresh-Holden.github.io/tags/uml/</link>
+    <description>Recent content in UML on 3D游戏编程与设计 - 中山大学</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 05 Sep 2020 00:00:00 +0800</lastBuildDate><atom:link href="http://Thresh-Holden.github.io/tags/uml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>附件一、UML符号与面向对象的设计</title>
+      <link>http://Thresh-Holden.github.io/post/x1-uml-notation/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/x1-uml-notation/</guid>
+      <description>工欲善其事，必先利其器 &amp;mdash; 孔子 《论语》 1、什么是 UML？ Unified Modeling Language（统一建模语言）是一种标准的图形化编程语言用于软件分析与设计结果的</description>
+    </item>
+    
+  </channel>
+</rss>

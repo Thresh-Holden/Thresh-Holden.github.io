@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>二、离散仿真引擎基础 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="You can&amp;rsquo;t connect the dots looking forward; you can only connect them looking backwards &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏引擎 1.1 游戏引擎概念与结构 A game engine is a software-development environment designed for people to build video games. 根据这个定义，" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/02-dscrete-simulation-basic/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="二、离散仿真引擎基础" />
+<meta property="og:description" content="You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏引擎 1.1 游戏引擎概念与结构 A game engine is a software-development environment designed for people to build video games. 根据这个定义，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/02-dscrete-simulation-basic/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-05T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="二、离散仿真引擎基础">
+<meta itemprop="description" content="You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏引擎 1.1 游戏引擎概念与结构 A game engine is a software-development environment designed for people to build video games. 根据这个定义，"><meta itemprop="datePublished" content="2020-09-05T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="9846">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="二、离散仿真引擎基础"/>
+<meta name="twitter:description" content="You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏引擎 1.1 游戏引擎概念与结构 A game engine is a software-development environment designed for people to build video games. 根据这个定义，"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">二、离散仿真引擎基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-05 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1游戏引擎">1、游戏引擎</a>
+          <ul>
+            <li><a href="#11-游戏引擎概念与结构">1.1 游戏引擎概念与结构</a></li>
+            <li><a href="#12-游戏引擎产生与分类">1.2 游戏引擎产生与分类</a></li>
+          </ul>
+        </li>
+        <li><a href="#2游戏引擎核心-离散仿真">2、游戏引擎核心-离散仿真</a>
+          <ul>
+            <li><a href="#21-离散仿真的程序直观">2.1 离散仿真的程序直观</a></li>
+            <li><a href="#22-离散仿真与离散事件仿真">2.2 离散仿真与离散事件仿真</a></li>
+          </ul>
+        </li>
+        <li><a href="#3unity-离散仿真引擎实现与应用">3、Unity 离散仿真引擎实现与应用</a>
+          <ul>
+            <li><a href="#31-unity-3d-操作快速入门">3.1 Unity 3D 操作快速入门</a></li>
+            <li><a href="#32-unity-离散仿真引擎快速入门">3.2 Unity 离散仿真引擎快速入门</a></li>
+            <li><a href="#33-游戏对象的组织预制与场景">3.3 游戏对象的组织、预制与场景</a></li>
+            <li><a href="#34-游戏对象动态构建">3.4 游戏对象动态构建</a></li>
+          </ul>
+        </li>
+        <li><a href="#4小结">4、小结</a></li>
+        <li><a href="#5作业与练习">5、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<p><em>预计时间：3-4 * 45 min</em></p>
+<h2 id="1游戏引擎">1、游戏引擎</h2>
+<h3 id="11-游戏引擎概念与结构">1.1 游戏引擎概念与结构</h3>
+<blockquote>
+<p>A <em>game engine</em> is a software-development environment designed for people to build video games.</p>
+</blockquote>
+<p>根据这个定义，从 <a href="https://www.scirra.com/construct2">Construct2</a> 到 <a href="https://www.unrealengine.com/">Unreal Engine</a> 都是游戏引擎。因为 EPIC Game 能够提供电影艺术级别效果，能一下就抓住你的眼球，所以 Unreal Engine 才是学生们眼中引擎是。与之相比，而 Construct2 等引擎尽管默默无闻，但也是无数游戏设计师的最爱。</p>
+<p><img src="../images/ch02/ch02-game-engine-effects.png" alt=""></p>
+<p>游戏引擎产生了如此难以置信的精美而“真实”的场景画面，几乎每个人都梦想能开发这样的引擎！</p>
+<div class="admonition info"><p class="admonition-title">虚幻引擎官方广告</p>
+<p><a href="https://www.unrealengine.com/zh-CN/">虚幻引擎</a> 效果好，强调游戏技术多领域发展，真想废了 Unity 啊！</p>
+</div>
+<p>简而言之，<strong>游戏引擎</strong> 是一组游戏运行部件以及软件工具的集合。随着技术进步，多数现代游戏引擎都包含以下部件，游戏引擎架构如图所示：</p>
+<p><img src="../images/game-architecture.png" alt=""></p>
+<p>如上图所示，游戏引擎分为两个层次：</p>
+<p>游戏内容层：一组工具管理游戏需要的数据<br>
+游戏引擎层：一组游戏运行部件，支撑游戏的运行与人机交互</p>
+<p>尽管不同厂家的引擎性能差别巨大，每个部件功能也不同，其基本原理和使用方法基本一致。特别的，现代游戏都是数据驱动的架构，即游戏代码工作量一般不太大，游戏的行为、规则主要由<strong>数据驱动</strong>。</p>
+<h3 id="12-游戏引擎产生与分类">1.2 游戏引擎产生与分类</h3>
+<p>早期游戏引擎是在游戏开发过程产生的。例如：id TECH 制作了游戏 《德军总部3D》、《Doom 3》（毁灭战士）、《Quake》（雷神之锤）等大卖的 3D 游戏，同时也把 3D 游戏的核心部件以及相关工具卖给其他游戏公司或电影制作企业。比较著名的就是 <a href="https://www.moddb.com/engines/quake-engine/downloads">Quake engine</a>，它的作者 <strong>约翰·卡马克</strong> 是开源运动的支持者，你可以下载源代码与各种资源。</p>
+<div class="admonition info"><p class="admonition-title">约翰·卡马克</p>
+<p>id TECH 联合创始人(John Carmack)。现在已经加入 <strong>Oculus Rift</strong> 团队，并且担任首席技术官一职。<br>
+Oculus 是美国 AR/VR 技术创新公司</p>
+</div>
+<div class="admonition info"><p class="admonition-title">早期引擎</p>
+<p>早期游戏引擎都是以动画与渲染为核心，并没有使用现代显卡技术。</p>
+</div>
+<p><strong>PC与游戏机专业游戏引擎</strong></p>
+<p>以下是一些商业引擎与代表作：</p>
+<table>
+<thead>
+<tr>
+<th>引擎</th>
+<th>代表作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>虚幻/Unreal</td>
+<td>《战争机器》</td>
+</tr>
+<tr>
+<td>Cry Engine*</td>
+<td>《Crysis》</td>
+</tr>
+<tr>
+<td>寒霜/Frostbite</td>
+<td>《战地》</td>
+</tr>
+<tr>
+<td>Infinity Ward</td>
+<td>《使命召唤》</td>
+</tr>
+<tr>
+<td>EGO</td>
+<td>《尘埃2》</td>
+</tr>
+<tr>
+<td>id TECH</td>
+<td>《DOOM3》</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>《半条命2》</td>
+</tr>
+<tr>
+<td>X-Ray*</td>
+<td>《潜行者》</td>
+</tr>
+<tr>
+<td>Havok Vision</td>
+<td>《哥特王朝》</td>
+</tr>
+<tr>
+<td>Quake/idTECH</td>
+<td>《雷神之锤》</td>
+</tr>
+<tr>
+<td>Chrome4*</td>
+<td>《狂野西部2》</td>
+</tr>
+<tr>
+<td>MT framework</td>
+<td>《生化危机5》</td>
+</tr>
+<tr>
+<td>Gamebryo</td>
+<td>《上古卷轴IV》</td>
+</tr>
+<tr>
+<td>Jupiter EX</td>
+<td>《 F.E.A.R》</td>
+</tr>
+</tbody>
+</table>
+<p>* 顶级特效引擎，需要强大的 CPU 和 GPU（甚至超级计算）支持。</p>
+<p>基础游戏引擎开源后，具有实力的游戏公司一般都对外宣称拥有自己的游戏引擎。因此，要学好游戏开发，要点是强化游戏引擎知识，而不是简单的追随大厂如 EPIC（Unreal）、EA（Frostbite）这些产品。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p>游戏引擎核心部件几乎 100% 由 <strong>c</strong> 和 <strong>c++</strong> 实现。因此要进入游戏引擎开发的核心，<strong>c语言、数学、算法、计算机图形学</strong>是基础。 如果要深入 AR/VR，SLAM 、计算机视觉与理解等技术是重要内容。<br>
+因此游戏编程技术仅是游戏开发的一个方面，学好相关课程很重要。</p>
+</div>
+<p><strong>移动端游戏引擎</strong></p>
+<p>手机端3D游戏引擎几乎是 Unity3D 一家独大。Unity Technologies 在PC、游戏机平台的游戏大厂比，难以竞争。就借助一款 <a href="https://github.com/mono/mono">mono</a> 跨平台 .net 实现框架软件（类似java虚拟机），把它的游戏引擎部署到几乎任意的操作系统上，特别在手机平台上获得成功！</p>
+<p>众多的开发者倒逼 Unity 成为一家专业提供游戏引擎与资源服务的公司。与传统游戏引擎比 Unity 3D 有着强大的开发工具和比较完善的服务社区，不仅是游戏入门学习的首选，也是 3D 手游开发的最佳工具之一。</p>
+<p>Unity 的成功吸引了其他企业进入手游市场，其他包括：</p>
+<ul>
+<li>cocos 3d （cocos 2d 的扩展）</li>
+<li>Unreal</li>
+</ul>
+<p><strong>面向游戏设计师的游戏引擎</strong></p>
+<p>简单一些，就是几乎不用写代码（交互编程，可视化编程）的游戏引擎。常用于非计算机专业人员游戏入门、做游戏 demo 和 testing、编写 html5 小游戏等</p>
+<ul>
+<li>Construct2</li>
+<li>GameMaker: Studio</li>
+<li>GameMei</li>
+</ul>
+<p><strong>网页平台（HTML5）游戏引擎</strong></p>
+<p>具体说应该是 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL">WebGL</a> 开发的副产物，为展示新一代互联网图形基础设施而开发，并逐步走向流行。</p>
+<ul>
+<li>three.js  WebGL 官方效果展示项目</li>
+<li>babylon.js 目前发展较好的项目</li>
+</ul>
+<p><strong>开源游戏引擎</strong></p>
+<p>很多公司游戏引擎都是基于开源引擎而建，因此有必要了解它们</p>
+<ul>
+<li>Quake engine 系列</li>
+<li>OGRE</li>
+<li>Panda 3D</li>
+<li>Yake</li>
+</ul>
+<p>一些公司，开源了部分基础代码以获得同行信任，如：</p>
+<ul>
+<li>Unity 3D</li>
+<li>Torque</li>
+</ul>
+<h2 id="2游戏引擎核心-离散仿真">2、游戏引擎核心-离散仿真</h2>
+<p>游戏就是模拟世界或构建虚拟世界。用计算机技术呈现现实或虚拟世界的动态场景，统称“离散仿真系统”</p>
+<h3 id="21-离散仿真的程序直观">2.1 离散仿真的程序直观</h3>
+<p>这是一个简单的游戏世界，飞机打坦克的场景，如图所示：</p>
+<p><img src="../images/ch02/ch02-horizen-motion.jpg" alt=""></p>
+<p>为了呈现炮弹打击坦克的过程，</p>
+<p><img src="../images/ch02/ch02-computing-motion.png" alt=""></p>
+<p>需要不断计算炮弹的位置，并在屏幕上画出炮弹。当游戏的引擎每 1/60 秒计算出所有游戏对象的位置、形态，并在屏幕上画出来，我们就看到了如电影一般飞机打坦克的动态场景。</p>
+<p>每次计算，引擎必须检测炮弹是否与坦克发生碰撞，如果发生碰撞，则需产生<strong>碰撞事件</strong>供游戏程序进一步处理。</p>
+<p><strong>游戏循环</strong></p>
+<p>先看仿真系统底层运作的伪代码，在游戏引擎中称为游戏循环（Game Loop）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Initialize()
+</span></span><span class="line"><span class="cl">LoadContent()  //加载图片、语音等资源
+</span></span><span class="line"><span class="cl">WHILE not end of game DO {
+</span></span><span class="line"><span class="cl">    UpdateGameObjects(t) //创建、删除、修改游戏对象
+</span></span><span class="line"><span class="cl">    DrawGameObjects(t)   //绘制游戏对象
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">UnloadContent()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>难以置信的简单。微软 XNA 游戏引擎的基本框架就是这样，如图所示：</p>
+<p><img src="../images/ch02/ch02-game-loop.jpg" alt=""></p>
+<p>所有，XNA 游戏编程的模板如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">public</span> <span class="n">class</span> <span class="nl">Game1</span> <span class="p">:</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">Xna</span><span class="p">.</span><span class="n">Framework</span><span class="p">.</span><span class="n">Game</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">GraphicsDeviceManager</span> <span class="n">graphics</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SpriteBatch</span> <span class="n">spriteBatch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">public</span> <span class="nf">Game1</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">graphics</span> <span class="o">=</span> <span class="n">new</span> <span class="n">GraphicsDeviceManager</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Content</span><span class="p">.</span><span class="n">RootDirectory</span> <span class="o">=</span> <span class="s">&#34;Content&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">override</span> <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">()</span> <span class="p">{</span>        
+</span></span><span class="line"><span class="cl">            <span class="n">base</span><span class="p">.</span><span class="n">Initialize</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">override</span> <span class="kt">void</span> <span class="nf">LoadContent</span><span class="p">()</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="n">spriteBatch</span> <span class="o">=</span> <span class="n">new</span> <span class="n">SpriteBatch</span><span class="p">(</span><span class="n">GraphicsDevice</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">override</span> <span class="kt">void</span> <span class="nf">UnloadContent</span><span class="p">(){</span>           
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">override</span> <span class="kt">void</span> <span class="nf">Update</span><span class="p">(</span><span class="n">GameTime</span> <span class="n">gameTime</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>           
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">GamePad</span><span class="p">.</span><span class="n">GetState</span><span class="p">(</span><span class="n">PlayerIndex</span><span class="p">.</span><span class="n">One</span><span class="p">).</span><span class="n">Buttons</span><span class="p">.</span><span class="n">Back</span> <span class="o">==</span> <span class="n">ButtonState</span><span class="p">.</span><span class="n">Pressed</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">this</span><span class="p">.</span><span class="n">Exit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">base</span><span class="p">.</span><span class="n">Update</span><span class="p">(</span><span class="n">gameTime</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">protected</span> <span class="n">override</span> <span class="kt">void</span> <span class="nf">Draw</span><span class="p">(</span><span class="n">GameTime</span> <span class="n">gameTime</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">GraphicsDevice</span><span class="p">.</span><span class="n">Clear</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">CornflowerBlue</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">base</span><span class="p">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">gameTime</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>GraphicsDeviceManager 图形设备管理器，用于访问图形设备的通道。</li>
+<li>GraphicsDevice 图形设备。</li>
+<li>Sprite 精灵，绘制在屏幕上的的2D或3D图像，比如游戏场景中的一个怪兽就是一个Sprite。</li>
+<li>SpriteBatch 它使用同样的方法来渲染一组Sprite对象。</li>
+</ul>
+<p>既然游戏执行过程是固定的，但每步骤的具体内容是用户定义的，这就是“设计模式”教材上典型的 <strong>模板方法模式</strong>！</p>
+<div class="admonition note"><p class="admonition-title">模板方法模式</p>
+<p>模板方法（Template Method）模式的定义如下：定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。【参考来源 <a href="http://c.biancheng.net/view/1376.html">C语言中文网</a> 】</p>
+<p>游戏循环实现非常复杂，模板方法使得程序员在一般情况下仅需关注游戏对象 Update 实现即可。</p>
+</div>
+<p>尽管现代游戏引擎的游戏循环非常复杂，但作为开发者必须明白，所有复杂的代码均建立在这样简单的基础代码之上。</p>
+<div class="admonition warning"><p class="admonition-title">游戏循环与多线程</p>
+<p>游戏循环能只能单线程完成，单 CPU 能力与 GPU 能力对游戏软件最重要。因为：</p>
+<ul>
+<li>窗口设备相关句柄不是多线程安全的</li>
+<li>数据依赖关系的约束使得游戏资源创建、修改、渲染、卸载必须有序执行，例如：Draw阶段被Draw对象的属性不能改变，即与Update阶段不能同时进行；</li>
+</ul>
+</div>
+<h3 id="22-离散仿真与离散事件仿真">2.2 离散仿真与离散事件仿真</h3>
+<p>“Discrete”是离散，为了研究一个系统的动态，计算机必须在某个时间点计算系统状态。比如研究对象进入系统和离开系统的时间点，进入队列和离开队列的时间点，开始加工和完成加工的时间点等等。这些时间点在时间轴上构成离散而非连续的序列，系统状态仅在离散的时间点上被观察到发生变化。</p>
+<div class="admonition warning"><p class="admonition-title">离散与连续</p>
+<p>系统状态变化可能是离散的、也可能是连续的。<br>
+但游戏程序只能在离散的点上计算游戏对象，于是游戏引擎各种各样问题就产生了！</p>
+</div>
+<p><strong>离散仿真</strong></p>
+<p>为了研究系统动态，时间被分成为若干小的时间片，系统状态被这段时间内发生的系列活动而改变。称为基于活动的仿真（activity-based simulation）</p>
+<ul>
+<li><strong>时间轴（线）</strong> 为了解释或预测系统变化的规律，必须选择合适的时间轴并在上选择一组点观察或记录系统状态。不同系统时间轴选择不一样，如模拟古代气候变化，可能以千年为单位；研究微观世界，如化学反应则可能以纳秒为单位。对于游戏，可能有两个以上时间轴
+<ul>
+<li>游戏时间。即虚拟世界的时间系统，如：石器时代、铁器时代、火器时代、太空时代</li>
+<li>渲染时间。即游戏引擎的时间系统，通常用 Tick 表示从游戏开始游戏循环的次数。</li>
+</ul>
+</li>
+<li><strong>FPS（Frames PerSecond）</strong> 是视频游戏最重要的概念，它是每秒钟游戏循环执行 DrawGameObjects 的次数。如果低于 30次/秒，玩家则会看到明显的动作不流畅。在特定性能机器上，它是评价游戏优化的指标；在不同机器上，它是机器游戏性能的综合指标。</li>
+<li><strong>系统状态</strong>：某一时刻，系统中所有对象、及其属性与关联。</li>
+</ul>
+<p>离散仿真存在一些显而易见的问题：</p>
+<ul>
+<li><strong>跳帧</strong>。无论 UpdateGameObjects 或 DrawGameObjects 花费的时间过多，就会产生帧间隔超出给定时间问题。</li>
+<li><strong>穿越</strong>。可能失去两次计算之间存在重要的状态，例如：当炸弹速度很快时，在上一个时刻，计算到炸弹在坦克上面，接下来一个时刻炸弹已坦克下面，问题是坦克打中了吗？这时，不仅需要计算两个时刻对象状态（位置），而且要判断炸弹轨迹与坦克轨迹是否相交？然而，轨迹用直线表示，还是进一步内插补计算？</li>
+</ul>
+<p>这里仅给出游戏离散仿真中两个典型问题。你必须明白，无论游戏编程或引擎开发都需要认真学习相关知识，避免 “too young too naive”</p>
+<p><strong>离散事件仿真</strong></p>
+<p>早期游戏引擎最大的问题是硬件性能不足，游戏优化能力决定了游戏的成功。在硬件性能冗余、面向对象的时代，用 XNA 这样的引擎从头开始编写管理成百上千游戏对象的游戏是什么感觉？</p>
+<ul>
+<li>需要用代码和合适的数据结构组织游戏对象，包括创建、删除等</li>
+<li>需要用代码计算每个时刻游戏对象属性</li>
+<li>需要用代码确定绘制游戏对象的顺序</li>
+</ul>
+<p>程序员做2D小游戏时 “一切控制在手中” 的好感觉将荡然无存。因此，需要对游戏离散引擎进行改造，既要合适面向对象的编程，也要将游戏设计与优化工作自动化与工具化，在游戏执行性能可接受的条件下，使得游戏开发难度减低到普通程序员可以接受的程度。Unity 3d 在这方面工作使得游戏开发得到普及，EPIC（Unreal） 等大厂也积极跟进，谁也不乐意被开发者抛弃！</p>
+<div class="admonition info"><p class="admonition-title">Unity的技术</p>
+<p><code>C#</code> 是跨平台支持<code>反射</code>的语言中性能最好的。Unity 通过对游戏循环合理的包装，利用反射技术，使得用户仅需关注游戏对象更改的业务逻辑，定义游戏对象模板中指定的消息处理程序/方法，即可编出性能不错的游戏程序，使得游戏开发变得异常简单。</p>
+<p>2017年，《守望先锋》开发团队提出 ECS 构架，使得 <code>c</code> 和 <code>c++</code> 编游戏能相对容易，且保持高性能。</p>
+</div>
+<p><strong>离散事件仿真</strong>（Discrete Event Simulation，缩写为DES）：为了研究系统动态，系统中对象处理在内部（如对象状态改变产生事件）、外部事件，并在事件处理过程中进一步引发系统状态改变产生系列事件。称为基于事件的仿真（Events-based simulation）。与离散仿真不同，我们是在特定事件（条件）中观察并改变系统状态。</p>
+<p>现代游戏引擎一般都是离散仿真与离散事件仿真混合模型。先给出一个更接近现代游戏引擎的伪代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">initialize()
+</span></span><span class="line"><span class="cl">loadContent()
+</span></span><span class="line"><span class="cl">WHILE not end of game DO {
+</span></span><span class="line"><span class="cl">    FOREACH GameObject o In game DO {
+</span></span><span class="line"><span class="cl">        IF (o.fristUpdated) o.Start();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    FOREACH GameObject o In game DO {
+</span></span><span class="line"><span class="cl">        o.Update();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    FOREACH GameObject o In game DO {
+</span></span><span class="line"><span class="cl">        o.LastUpdate();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    drawGameObjects(t)   
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">unloadContent()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>尽管这个代码与实际代码差别很大，它体现了以下一些事实：</p>
+<ul>
+<li>注意方法的首字母大小写，小写表示内部方法，大写表示公有方法。显然，这时编程模板从游戏循环级别改为对象级别，即游戏对象有 Start 等方法</li>
+<li>游戏对象的数据结构是引擎管理的，用户可以用工具或代码（通过API）管理游戏对象。例如，用户通常不能直接析构游戏对象，因为你在某个对象的 Update 中析构一个游戏对象，导致其他对象的 Update 中引用该对象出现 Null 错误！</li>
+<li>游戏渲染自动化了，程序员并不需要干预渲染过程</li>
+<li>你可能会看到游戏对象模板中有 OnXXX(&hellip;) 这样的事件处理句柄。例如： OnCollision(&hellip;) 表示这个对象与其他对象碰撞时，该句柄被调用。因为当你使用与引擎集成的物理模块时，物理模块一旦发现游戏对象碰撞，就会自动触发它。类似的事件句柄很多，至于不同事件在什么时机执行，这是复杂的话题。</li>
+</ul>
+<p>现代游戏引擎由于要管理许多游戏对象，空间管理与性能优化无疑是巨大的挑战。所幸的是程序员编写游戏正在一步步变得更简单！</p>
+<h2 id="3unity-离散仿真引擎实现与应用">3、Unity 离散仿真引擎实现与应用</h2>
+<div class="admonition tip"><p class="admonition-title">提示</p>
+<p>Unity 的使用与操作细节请移步 Unity 用户手册，这里仅关注相关内容<br>
+本课程从 Unity 4.x 版开始，到 5.x 版，到 2017 版，以至今年 2020.x 版，许多内容都有不少差异。请以官方手册为准！</p>
+<p>今年使用 2020.1.4 版本！</p>
+</div>
+<ul>
+<li>官方用户手册 <a href="https://docs.unity3d.com/Manual/">Manual</a></li>
+<li><a href="https://docs.unity.cn/cn/current/Manual/index.html">中文手册</a></li>
+</ul>
+<div class="admonition warning"><p class="admonition-title">注意事项</p>
+<p>翻译总是落后技术发展的。</p>
+</div>
+<h3 id="31-unity-3d-操作快速入门">3.1 Unity 3D 操作快速入门</h3>
+<p><strong>1、了解 Unity 3D 基本界面</strong></p>
+<p>如果你是新手，先阅读 <a href="https://docs.unity3d.com/Manual/UnityOverview.html">Working in Unity</a></p>
+<p>安装完成后，创建一个 3D 项目。<a href="https://docs.unity3d.com/Manual/UsingTheEditor.html">Unity 主界面</a> 如图所示：</p>
+<p><img src="https://docs.unity3d.com/uploads/Main/Editor-Breakdown.png" alt="Learning the interface"></p>
+<ul>
+<li>（A）工具栏（Tools Bar）：工具。新手会用运行、停止即可</li>
+<li>（B）层次视图（Hierarchy Window）：<strong>内存中</strong> 游戏对象的组织。
+<ul>
+<li>游戏运行时需要的游戏对象</li>
+<li>参见 菜单 -&gt;  GameObject</li>
+</ul>
+</li>
+<li>（C）游戏视图（Game View）：游戏对象运行的窗口</li>
+<li>（D）场景视图（Scene View）：编辑游戏对象的窗口</li>
+<li>（E）属性视图（Inspector Window）：观察游戏对象和资源属性的地方
+<ul>
+<li>游戏运行时，可实时修改属性改变游戏对象行为，但不会影响设计内容</li>
+<li>参见 菜单 -&gt;  Component</li>
+</ul>
+</li>
+<li>（F）项目视图（Project Window）：管理游戏项目资源的地方。
+<ul>
+<li>创建游戏需要的材料A</li>
+<li>参见 菜单 -&gt; Assets -&gt; Create</li>
+</ul>
+</li>
+</ul>
+<p><strong>2、初识游戏对象与资源</strong></p>
+<p>任务是在游戏场景中放置一个物体（如 Cube）并赋予红色，运行游戏。</p>
+<div class="admonition example"><p class="admonition-title">操作 02-01 ，GameObject 练习</p>
+<ul>
+<li>使用 菜单 -&gt; GameObject -&gt; 3D Object -&gt; Cube  或 在层次视图点右键（上下文菜单 -&gt; 3D Object -&gt; Cube）
+<ul>
+<li>层次视图增加了 Cube 游戏对象， 同时我们在场景视图中看到了一个白色的正方型</li>
+</ul>
+</li>
+<li>选择 层次视图 中主摄像机对象（Main Camera）, 场景视图右下方就是摄像机拍摄的画面</li>
+<li>使用 菜单 -&gt; Assets -&gt; Create -&gt; Material 或 项目视图（Assets）的上下文菜单 -&gt; Create -&gt; Material
+<ul>
+<li>项目视图（Assets）下新增了一个白色的材料，点击它观察属性视图</li>
+<li>在属性视图找到 Albedo 并双击颜色板，出现一个 Color 窗口</li>
+<li>选择一个你喜欢的颜色，如红色</li>
+<li>项目视图（Assets）中该材料色彩变化</li>
+<li>重命名为 RedMaterial</li>
+</ul>
+</li>
+<li>拖动（Drag） RedMaterial 放落（Drop）Cube（层次视图或场景视图）上，Cube变成红色。</li>
+<li>点击工具栏 Play 按钮运行游戏，游戏视图出现（正是摄像机拍摄到的内容）</li>
+<li>再点 Play 按钮 终止游戏</li>
+</ul>
+</div>
+<p>基本概念：</p>
+<ul>
+<li><strong>游戏对象（GameObjects）</strong>，游戏程序空间中的事物，可能是 Empty（空，最有用的事物）、2D、3D、光线、摄像机等</li>
+<li><strong>游戏资源（Assets）</strong>，构造游戏对象、装饰游戏对象、配置游戏的物体和数据。即序列化的或存储格式的游戏对象或数据</li>
+</ul>
+<h3 id="32-unity-离散仿真引擎快速入门">3.2 Unity 离散仿真引擎快速入门</h3>
+<p><strong>1、游戏对象的表示</strong></p>
+<p>Unity 表达游戏中物体的编程对象主要涉及三种类:</p>
+<ul>
+<li><a href="https://docs.unity3d.com/ScriptReference/GameObject.html">GameObject</a>: Unity 场景中所有实体的基类</li>
+<li><a href="https://docs.unity3d.com/ScriptReference/Component.html">Component</a>: 能附加到游戏对象的部件的基类</li>
+<li>Component 的各种子类。包括空间与变换部件 <a href="https://docs.unity3d.com/ScriptReference/Transform.html">Transform</a>、各种 渲染部件<a href="https://docs.unity3d.com/ScriptReference/Renderer.html">Reander</a> ，脚本部件 <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehaviour</a> 的子类等等。</li>
+</ul>
+<p>它们之间的关系如图所示：</p>
+<p><img src="../images/ch02/ch02-gameobject-component.png" alt=""></p>
+<p>直观上，游戏对象继承非常直观，例如：96A主站坦克继承抽象坦克，抽象坦克继承游戏对象基类，似乎是天经地义的设计。
+然而，现实世界太复杂，（1）难以用继承机制描述各类事物；（2）多重继承太复杂；（3）继承、多态这种机制会导致对象行为变得异常复杂。为了保证引擎的通用性，我们用 Component 装饰游戏对象，赋予它各种能力。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p>游戏对象一般不能被继承！！！</p>
+</div>
+<p>这里，游戏对象用一组部件来表达不同的方面的要求，能更好满足游戏世界的复杂性，提升游戏对象的灵活性，便于与引擎协作。例如：游戏对象位置等由 Transform 管理，形态网格由  Mesh 管理， 绘制由 Render 等部件协作完成，行为则由 MonoBehaviour 的子类管理。这些部件，仅需要时才加入游戏对象的实例（实体）。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p><strong>组合优于继承</strong></p>
+</div>
+<p>为什么要这样设计？在设计模式的装饰模式器描述了这样的设计场景：“装饰器模式（Decorator Pattern）允许向一个现有的对象添加新的功能，同时又不改变其结构。” 动态地给一个对象添加一些额外的职责。就增加功能来说，装饰器模式相比生成子类更为灵活。</p>
+<p>这个设计充分体现了这条软件设计原则“组合优于继承”。然而，众多的部件对象也带来管理复杂性与性能优化问题。</p>
+<p>【注】装饰器模式的案例多数是该设计场景的特例，“Wrapper”模式。</p>
+<p>现在，做一些任务验证上图设计:</p>
+<div class="admonition example"><p class="admonition-title">操作 02-02 ，GameObject 与 Component 关系练习</p>
+<ul>
+<li>在层次视图选择 Cube 游戏对象</li>
+<li>在属性视图观察它有哪些部件？</li>
+<li>修改 Tranform 部件中 Postion 的 x，y，z。观察游戏对象在场景视图中的变化</li>
+<li>在属性视图点击 “添加部件（Add Component）” 按钮，&hellip; 有哪几大类部件？</li>
+<li>在层次视图选择 Cube 游戏对象，在属性视图观察它有哪些部件？</li>
+</ul>
+</div>
+<p><strong>2、赋予游戏对象行为</strong></p>
+<p>游戏对象行为是游戏对象的一个部件，都是脚本部件 <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehaviour</a> 的子类。</p>
+<p>下面的任务就是创建一个简单的脚本，并挂载到 Cube 对象。</p>
+<div class="admonition example"><p class="admonition-title">操作 02-03 ，c# Script 编写练习</p>
+<ul>
+<li>在资源视图创建一个脚本。上下文菜单 -&gt; Create -&gt; c# script</li>
+<li>修改脚本名称 FirstBeh。然后双击它，编辑它。</li>
+<li>修改代码如下：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">FisrtBeh</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;This Start!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Debug.Log(&#34;This Update!&#34;);	</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">OnEnable</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;This Enabled!&#34;</span><span class="p">);</span>	
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">OnDisable</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;This Disabled!&#34;</span><span class="p">);</span>	
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你可能注意到 FisrtBeh 是 MonoBehaviour 的子类。我们怎么知道引擎调用了哪些方法和事件呢？ MonoBehaviour 基类就是一个编程模板，Unity API 的 Messages 一节给出了它可以处理的引擎回调（callback）与事件句柄（OnXXX）。</p>
+<p>由于 Update 在每个游戏循环都会被调用，为了避免大量输出，所以暂时注释了。</p>
+<ul>
+<li>如果这个代码没有编译错误，现在可拖动（Drag）它到任何游戏对象（如 Cube）上，属性面板自动添加该部件。</li>
+<li>运行游戏</li>
+<li>Console 面板（control + shift + c）中，你看到消息顺序是 Enabled，Start。</li>
+<li>点击 Cube 属性面板最上面 checkbox，你得到消息 Disabled</li>
+<li>点击 Cube 属性面板最上面 checkbox，你得到消息 Enabled</li>
+<li>点击 FisrtBeh 部件前面 checkbox，你得到消息 Disabled</li>
+<li>点击 FisrtBeh 部件前面 checkbox，你到消息 Disabled</li>
+<li>结束游戏，你得到消息 Disabled</li>
+</ul>
+<p>修改代码，让 update 中语句执行， 重复上述过程。</p>
+</div>
+<div class="admonition warning"><p class="admonition-title">注意事项</p>
+<p>脚本文件名称必须与类名一致，否则 &hellip;</p>
+</div>
+<p><strong>3、游戏脚本对象方法与事件执行顺序</strong></p>
+<p>你可能想知道这些消息在游戏循环的什么时候发生，它们之间的顺序，Unity 官方手册这样描述了游戏循环、事件、引擎部件之间的关系：</p>
+<ul>
+<li><a href="https://docs.unity3d.com/Manual/ExecutionOrder.html">Order of Execution for Event Functions</a></li>
+</ul>
+<p>这是一张可怕的大图，对入门者极其不友好。知道以下事件就够用了：</p>
+<table>
+<thead>
+<tr>
+<th>事件名称</th>
+<th>执行条件或时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Awake</td>
+<td>当一个游戏对象实例被载入时Awake被调用，或者脚本构造时调用。</td>
+</tr>
+<tr>
+<td>Start</td>
+<td>第一次进入游戏循环时调用</td>
+</tr>
+<tr>
+<td>FixUpdate</td>
+<td>每个游戏循环，由物理引擎调用</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>所有 Start 调用完后，被游戏循环调用</td>
+</tr>
+<tr>
+<td>LastUpdate</td>
+<td>所有 Update 调用完后，被游戏循环调用</td>
+</tr>
+<tr>
+<td>OnGUI</td>
+<td>游戏循环在渲染过程中，场景渲染之后调用</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning"><p class="admonition-title">注意事项</p>
+<p>由于游戏对象与部件之间是组合关系，Compnonent 对象子类的构建、释放必须由对应 GameObject 完成。程序员不能创建它们</p>
+</div>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>为什么不能让程序员用 new 创建部件？</p>
+</div>
+<h3 id="33-游戏对象的组织预制与场景">3.3 游戏对象的组织、预制与场景</h3>
+<p><strong>1、用脚本创建 Primitive 游戏对象</strong></p>
+<div class="admonition example"><p class="admonition-title">操作 02-04 ，创建 Primitive 游戏对象</p>
+<ul>
+<li>修改 FirstBeh 类的 Start 方法，如图所示</li>
+</ul>
+<p><img src="../images/ch02/ch02-code-create-gameobject.png" alt=""></p>
+<ul>
+<li>运行游戏</li>
+<li>展开层次视图，找到创建的游戏对象</li>
+<li>终止游戏</li>
+<li>在层次视图中观察，运行期的变化都消失了！</li>
+</ul>
+</div>
+<p>菜单能作的工作，利用 API 编程也能做到！</p>
+<p><strong>2、游戏对象组合与预制</strong></p>
+<p>如果我们每次都从基础游戏对象构建游戏，这需要多少代码，而且不易于修改。我们可以把基本的游戏对象组合起来，制作成 <strong>预制</strong>，以后把预制当作一个游戏对象使用。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p><strong>预制（Prefabs）</strong>，文件存储的游戏对象与属性的组合，可一次性方便地加载到内存。</p>
+<p>如果说基本游戏对象是原材料，预制就是半成品。因此，预制的概念在 Unity 中及其重要，也是游戏制作最基础的知识！</p>
+</div>
+<p>下图就是本节的任务，制作一个座椅的预制</p>
+<p><img src="../images/ch02/ch02-prefabs.png" alt=""></p>
+<div class="admonition example"><p class="admonition-title">操作 02-05 ，创建 Prefabs</p>
+<ul>
+<li>将 Cube 命名为 table</li>
+<li>从菜单创建新的 Cube 游戏对象，并命名为 chair</li>
+<li>将 chair 拖动并放置在 table 之上，我们发现 chair 变为子对象</li>
+<li>改变 chair 位置（如 position.x = -2）；大小（如 scale.y = 0.2)</li>
+<li>采用复制粘贴，生成其他三个 chair 并修改位置</li>
+<li>【重要】将 table 拖动并放置 在 Assets 面板之上，就生成了一个 table 预制</li>
+<li>将 table 预制 拖动并放置 到层次视图，我们观察到座椅游戏对象同时生成了</li>
+<li>修改 table 的位置，chair 如何变化？</li>
+</ul>
+</div>
+<div class="admonition tip"><p class="admonition-title">提示</p>
+<p>在层次视图中，预制的颜色与普通游戏对象不同！！！</p>
+</div>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>父对象坐标与子对象坐标的关系（世界坐标、相对坐标）？</p>
+</div> 
+<p>事实上，<strong>游戏是预制好的对象的组合，代码是粘合它们的胶水，控制作这些事物的变化</strong></p>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>从面向对象设计角度，游戏对象在内存中树形组织结构，称为“组合模式（Composite Pattern）”。例如，行政区是一个抽象概念，国家、省、市、县都是行政区。这些行政区对象按树形结构组合，每个高级别的行政区都由几个低级别的行政区组合构成。</p>
+</div>
+<p>许多同学（包括网上绝大多数博客）都从编程特征来理解设计模式，而不像设计模式作者们那样从现实社会设计问题中去理解，忽视具体问题的业务场景与上下问。23 种面向对象设计模式的强大，就是这么多年来大家都觉得足够用了！</p>
+<p><strong>3、游戏场景、预制与资源</strong></p>
+<p><strong>游戏场景的保存与恢复</strong></p>
+<p>与戏剧一样，一个游戏由一个与多个场景（Scenes）。场景中包含背景、静态游戏对象与动态游戏对象。Unity 场景视图就是场景中所有事物的可视化设计器。层次视图则是从对象的角度，描述了游戏对象树林这种数据结构。</p>
+<div class="admonition example"><p class="admonition-title">操作 02-06 ，创建与恢复 Scene</p>
+<ul>
+<li>菜单 -&gt; File -&gt; Save Scenes</li>
+<li>将设计好的场景起名 TestScene，这时在资源中看到 Unity 图标的场景</li>
+<li>在当前设计场景中，添加、删除或修改游戏对象</li>
+<li>双击资源中场景图标，选不保存当前场景，这是场景恢复到保存时的状态</li>
+</ul>
+</div> 
+<p><strong>资源、预制与场景</strong></p>
+<p>到开游戏项目资源所在的目录，例如： <code>D:\mywork\unity\New Unity Project 2\Assets</code></p>
+<p><img src="../images/ch02/ch02-resources-files.png" alt=""></p>
+<p>发现每个游戏资源都对应了响应的文件。因此，资源是存在的硬盘的文件。</p>
+<ul>
+<li>脚本（.cs）。用文本编辑器修改它，属性编辑器中代码会同步更新哦！</li>
+<li>材料（.mat）, 预制（.frefab）, 场景（.unity）</li>
+</ul>
+<p>对于 Unity 预知和场景都是一样的文件。预制是游戏对象及其树上所有对象的文本定义（可以翻译成任何文本，如 YAML，XML，JSON]）;场景是场景中所有游戏对象的文本定义。默认它们以压缩格式保存。</p>
+<p>【高级话题】文本化资源文件 <a href="https://docs.unity3d.com/Manual/TextSceneFormat.html">Text-Based Scene Files</a></p>
+<h3 id="34-游戏对象动态构建">3.4 游戏对象动态构建</h3>
+<p>游戏代码的基本任务是根据资源动态加载游戏对象，并控制它们。本次的任务是掌握用代码创建游戏对象的基本技巧。</p>
+<p>首先创建如下代码资源 <code>LoadBeh</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">LoadBeh</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="n">Transform</span> <span class="n">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Load Resources</span>
+</span></span><span class="line"><span class="cl">		<span class="n">GameObject</span> <span class="n">newobj</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">&lt;</span><span class="n">Transform</span><span class="p">&gt;</span> <span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="n">transform</span><span class="p">).</span><span class="n">gameObject</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">newobj</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span> <span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">Random</span><span class="p">.</span><span class="n">Range</span> <span class="p">(-</span><span class="m">5</span><span class="p">,</span> <span class="m">5</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="admonition warning"><p class="admonition-title">注意事项</p>
+<p>随着版本更新，Unity 越来越喜欢使用模板，可能导致部分版本不兼容。例如：Instantiate 方法的定义 <code>public static T Instantiate(T original, Transform parent);</code></p>
+</div>
+<div class="admonition example"><p class="admonition-title">操作 02-07 ，从预制创建游戏对象</p>
+<ul>
+<li>在仅场景中仅保留摄像机和光源</li>
+<li>菜单 -&gt; GameObject -&gt; Create Empty</li>
+<li>将空（PlaceHolder）游戏对象命名为 init</li>
+<li>将 LoadBeh 拖放至 init</li>
+<li>init 的属性面板多出一个 Load Beh（Script） 的组件，有一个属性 res</li>
+<li>将 table 预制拖放至 res 属性</li>
+<li>运行游戏</li>
+</ul>
+</div>
+<p>这时，我们将观察到座椅随机出现在 Game 视图中。</p>
+<div class="admonition example"><p class="admonition-title">编程练习 02-08，使用砖块构建一面5*10 的墙</p>
+<p>编程要求与提示：</p>
+<ul>
+<li>阅读 <a href="https://docs.unity3d.com/ScriptReference/Object.Instantiate.html">Instantiate 方法 API</a> 中的案例</li>
+<li>使用 Cube 制作一个长方形带材料的预制 brick</li>
+<li>编写一段代码 BuildWall 生成 5*10 的墙</li>
+</ul>
+</div>
+<h2 id="4小结">4、小结</h2>
+<ul>
+<li>离散仿真引擎原理
+<ul>
+<li>离散仿真与游戏循环</li>
+<li>离散事件仿真（DES）</li>
+</ul>
+</li>
+<li>Unity 离散仿真引擎实现
+<ul>
+<li>游戏对象表示：游戏部件（装饰模式）</li>
+<li>游戏对象组合（组合模式）</li>
+<li>游戏脚本（模板模式）</li>
+<li>预制与资源</li>
+<li>游戏对象的动态构建</li>
+</ul>
+</li>
+</ul>
+<h2 id="5作业与练习">5、作业与练习</h2>
+<p><strong>Unity 常用资源</strong></p>
+<ul>
+<li>Manual  <a href="https://docs.unity3d.com/Manual/index.html">https://docs.unity3d.com/Manual/index.html</a></li>
+<li>中文参考 <a href="https://docs.unity.cn/cn/current/Manual/index.html">https://docs.unity.cn/cn/current/Manual/index.html</a></li>
+<li>UML 绘图工具 <a href="http://www.umlet.com/changes.htm">http://www.umlet.com/changes.htm</a></li>
+</ul>
+<p><strong>作业内容</strong></p>
+<p>1、简答题</p>
+<ul>
+<li>解释 游戏对象（GameObjects） 和 资源（Assets）的区别与联系。</li>
+<li>下载几个游戏案例，分别总结资源、对象组织的结构（指资源的目录组织结构与游戏对象树的层次结构）</li>
+<li>编写一个代码，使用 debug 语句来验证 <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehaviour</a> 基本行为或事件触发的条件
+<ul>
+<li>基本行为包括 Awake() Start() Update() FixedUpdate() LateUpdate()</li>
+<li>常用事件包括 OnGUI() OnDisable() OnEnable()</li>
+</ul>
+</li>
+<li>查找脚本手册，了解 <a href="https://docs.unity3d.com/ScriptReference/GameObject.html">GameObject</a>，Transform，Component 对象
+<ul>
+<li>分别翻译官方对三个对象的描述（Description）</li>
+<li>描述下图中 table 对象（实体）的属性、table 的 Transform 的属性、 table 的部件
+<ul>
+<li>本题目要求是把可视化图形编程界面与 Unity API 对应起来，当你在 Inspector 面板上每一个内容，应该知道对应 API。</li>
+<li>例如：table 的对象是 GameObject，第一个选择框是 activeSelf 属性。</li>
+</ul>
+</li>
+<li>用 UML 图描述 三者的关系（请使用 UMLet 14.1.1 stand-alone版本出图）</li>
+</ul>
+</li>
+<li>资源预设（Prefabs）与 对象克隆 (clone)
+<ul>
+<li>预设（Prefabs）有什么好处？</li>
+<li>预设与对象克隆 (clone or copy or Instantiate of Unity Object) 关系？</li>
+<li>制作 table 预制，写一段代码将 table 预制资源实例化成游戏对象</li>
+</ul>
+</li>
+</ul>
+<p>2、 编程实践，小游戏</p>
+<ul>
+<li>游戏内容： 井字棋 或 贷款计算器 或 简单计算器 等等</li>
+<li>技术限制： 仅允许使用 <strong><a href="https://docs.unity3d.com/Manual/GUIScriptingGuide.html">IMGUI</a></strong> 构建 UI</li>
+<li>作业目的：
+<ul>
+<li>了解 OnGUI() 事件，提升 debug 能力</li>
+<li>提升阅读 API 文档能力</li>
+</ul>
+</li>
+</ul>
+<p>3、思考题【选做】</p>
+<ul>
+<li>微软 XNA 引擎的 Game 对象屏蔽了游戏循环的细节，并使用一组虚方法让继承者完成它们，我们称这种设计为“模板方法模式”。
+<ul>
+<li>为什么是“模板方法”模式而不是“策略模式”呢？</li>
+</ul>
+</li>
+<li>将游戏对象组成树型结构，每个节点都是游戏对象（或数）。
+<ul>
+<li>尝试解释组合模式（Composite Pattern / 一种设计模式）。</li>
+<li>使用 BroadcastMessage() 方法，向子对象发送消息。你能写出 BroadcastMessage() 的伪代码吗?</li>
+</ul>
+</li>
+<li>一个游戏对象用许多部件描述不同方面的特征。我们设计坦克（Tank）游戏对象不是继承于GameObject对象，而是 GameObject 添加一组行为部件（Component）。
+<ul>
+<li>这是什么设计模式？</li>
+<li>为什么不用继承设计特殊的游戏对象？</li>
+</ul>
+</li>
+</ul>
+<p><strong>作业提交要求</strong></p>
+<ul>
+<li>仅能用博客或在线文档提交作业，建议使用 Gitee 提交代码和作业。<strong>不能使用docx、pdf等需要下载阅读的格式</strong></li>
+<li>deadline （通常1周内）</li>
+</ul>
+<p> </p>
+<p><a href="./">返回目录</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/03-space-and-motion/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">三、空间与运动</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/x1-uml-notation/">
+            <span class="next-text nav-default">附件一、UML符号与面向对象的设计</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>六、物理系统与碰撞 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="It was awful tasting medicine, but I guess the patient needed it. Sometimes life hits you in the head with a brick. Don&amp;rsquo;t lose faith &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 课程内容 资源与代码下载 1、物理引擎基础 这是《守望先锋" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/06-physics-and-collision/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="六、物理系统与碰撞" />
+<meta property="og:description" content="It was awful tasting medicine, but I guess the patient needed it. Sometimes life hits you in the head with a brick. Don&rsquo;t lose faith &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 课程内容 资源与代码下载 1、物理引擎基础 这是《守望先锋" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/06-physics-and-collision/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-10-11T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="六、物理系统与碰撞">
+<meta itemprop="description" content="It was awful tasting medicine, but I guess the patient needed it. Sometimes life hits you in the head with a brick. Don&rsquo;t lose faith &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 课程内容 资源与代码下载 1、物理引擎基础 这是《守望先锋"><meta itemprop="datePublished" content="2020-10-11T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="7717">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="六、物理系统与碰撞"/>
+<meta name="twitter:description" content="It was awful tasting medicine, but I guess the patient needed it. Sometimes life hits you in the head with a brick. Don&rsquo;t lose faith &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：4-6 * 45 min 课程内容 资源与代码下载 1、物理引擎基础 这是《守望先锋"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">六、物理系统与碰撞</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-11 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#课程内容">课程内容</a></li>
+        <li><a href="#1物理引擎基础">1、物理引擎基础</a>
+          <ul>
+            <li><a href="#11-物理引擎">1.1 物理引擎</a></li>
+            <li><a href="#12-物理引擎的实现">1.2 物理引擎的实现</a></li>
+            <li><a href="#13-物理引擎基础知识">1.3 物理引擎基础知识</a></li>
+          </ul>
+        </li>
+        <li><a href="#2unity-物理引擎实现">2、Unity 物理引擎实现</a>
+          <ul>
+            <li><a href="#21-常用物理组件">2.1 常用物理组件</a></li>
+            <li><a href="#22-离散引擎引发的计算问题">2.2 离散引擎引发的计算问题</a></li>
+            <li><a href="#23-物理引擎编程与使用">2.3 物理引擎编程与使用</a></li>
+            <li><a href="#24-中级技术-势能与场">2.4 中级技术-势能与场</a></li>
+          </ul>
+        </li>
+        <li><a href="#3面向对象的编程---设计模式对象的组织结构">3、面向对象的编程 - 设计模式：对象的组织结构</a></li>
+        <li><a href="#4小结">4、小结</a></li>
+        <li><a href="#5作业与练习">5、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>It was awful tasting medicine, but I guess the patient needed it. Sometimes life hits you in the head with a brick. Don&rsquo;t lose faith</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<p><em>预计时间：4-6 * 45 min</em></p>
+<p> </p>
+<h2 id="课程内容">课程内容</h2>
+<p><img src="../images/game-architecture-physics.png" alt=""></p>
+<p><a href="https://github.com/pmlpml/unity3d-learning/tree/ex-physics">资源与代码下载</a></p>
+<h2 id="1物理引擎基础">1、物理引擎基础</h2>
+<p>这是《守望先锋》游戏的一段场景。作为暴雪出品的首款团队射击游戏，自然要展现让玩家沉浸在超越真实世界的感官之美（如同验证音乐发烧器材，放些砸碎玻璃瓶瓶的声效一般）。《守望先锋》里很多物品都可以成为射击的对象，瓦斯罐、灭火器甚至是足球，并且会有不同的效果。</p>
+<p><img src="../images/ch06/over-watch.gif" alt=""></p>
+<p>图片来源：<a href="https://www.newyx.net/gl/384535_1.htm">《守望先锋》物理效果动图展示</a></p>
+<p>这个游戏场景涉及哪些技术呢？光照贴图、<strong>物理引擎</strong>、动画、粒子系统等。</p>
+<h3 id="11-物理引擎">1.1 物理引擎</h3>
+<p><strong>1、游戏世界运动分类</strong></p>
+<p><strong>运动学（Kinematics）</strong>，从几何的角度（指不涉及物体本身的物理性质和加在物体上的力) 描述和研究物体位置随时间的变化规律的力学分支。点的运动学研究点的运动方程、轨迹、位移、速度、加速度等运动特征，以及在不同空间中的变换。运动学是理论力学的一个分支学科，它是运用几何学的方法来研究物体的运动。</p>
+<ul>
+<li>不考虑外部力作用下的运动</li>
+<li>将一个物体作为几何部件，抽象为质点运动模型</li>
+<li>仅考虑物体位置、速度、角度 …</li>
+<li>研究方法：代数，如：线性代数</li>
+</ul>
+<p><strong>动力学（Dynamics）</strong>，它主要研究作用于物体的力与物体运动的关系。动力学的研究对象是运动速度远小于光速的宏观物体。动力学的研究以牛顿运动定律为基础；牛顿运动定律的建立则以实验为依据。动力学是牛顿力学或经典力学的一部分，但自20世纪以来，动力学又常被人们理解为侧重于工程技术应用方面的一个力学分支。</p>
+<p>在游戏物理引擎中，主要是刚体动力学。主要包括质点系动力学的基本定理，由动量定理、动量矩定理、动能定理以及由这三个基本定理推导出来的其他一些定理。动量、动量矩和动能（见能）是描述质点、质点系和刚体运动的基本物理量。</p>
+<ul>
+<li>考虑外部力对物体运动的影响</li>
+<li>包括重力、阻力、摩擦力等，以及物体的重量和形状，甚至弹性物体</li>
+<li>通常将一个物体当作刚体</li>
+<li>模拟物体在现实世界中的运动</li>
+</ul>
+<p><strong>2、物理引擎职责与作用</strong></p>
+<p><strong>物理引擎(Physics Engine)</strong> 是一个软件组件，它将游戏世界对象赋予现实世界物理属性（重量、形状等），并抽象为刚体（Rigid）模型（也包括滑轮、绳索等），使得游戏物体在力的作用下，仿真现实世界的运动及其之间的碰撞过程。即在牛顿经典力学模型基础之上，通过简单的 API 计算游戏物体的运动、旋转和碰撞，现实的运动与碰撞的效果。</p>
+<p>使用物理引擎，游戏开发者仅需考虑给游戏物体赋予形状（假设为均匀分布）和力，在游戏引擎驱动下自动完成运动与碰撞的计算。</p>
+<h3 id="12-物理引擎的实现">1.2 物理引擎的实现</h3>
+<p>随着技术的进步，作为典型密集计算场景，物理引擎逐步形成了两大流派，分别对应以 NVIDIA 为代表的 PhysX 和 以 Intel + AMD 为代表的 Havok 两大平台。</p>
+<p><img src="../images/ch06/ch06-icon-physix.png" alt=""></p>
+<p><a href="https://www.geforce.com/hardware/technology/physx/">PhysX 技术</a> 目前是多数游戏引擎支持的平台。以下是官方的介绍</p>
+<blockquote>
+<p>如果没有精准的物理效果模拟，即使再华丽的游戏也会显得静态而沉闷呆板。PhysX 技术可利用 GPU 的处理能力来执行复杂的物理效果计算。「无主之地 2 (Borderlands 2)」以及「地铁: 更后光芒 (Metro: Last Light)」等流行游戏均采用 PhysX 技术，该技术可为游戏带来充满动感的破坏效果、基于粒子的流体效果以及逼真的动画，令游戏变得栩栩如生。</p>
+</blockquote>
+<p><img src="../images/ch06/ch06-icon-havok.png" alt=""></p>
+<p><a href="https://www.havok.com/products/">Kavok</a> 也是部分开源的物理引擎，也是被广泛支持的引擎。被 Intel 收购后，Havok特别针对多核多线程 CPU 进行优化。多线程 CPU 的普及以及Havok Physics引擎本身的高效率特点，使得 Havok 仅仅依靠 CPU 计算就能达到很好的物理模拟效果。</p>
+<h3 id="13-物理引擎基础知识">1.3 物理引擎基础知识</h3>
+<p><strong>1、物理引擎学习与使用</strong></p>
+<p>物理引擎的使用可能是最简单的。你要做的事情可能就是将力作用在游戏物体上。</p>
+<p>尽管你不必学习物理引擎原理与算法，如</p>
+<ul>
+<li>物理引擎涉及复杂的运动学知识</li>
+<li>碰撞计算与优化</li>
+</ul>
+<p>为了有效使用物理引擎，你需要：</p>
+<ul>
+<li>了解物理运动的基本知识</li>
+<li>理解游戏离散仿真产生的特殊现象，避免游戏失真</li>
+<li>了解可能导致性能问题的方面，使得游戏更加流畅</li>
+</ul>
+<p><strong>2、概念与建模</strong></p>
+<p><strong>刚体（Rigid body）</strong></p>
+<p>刚体是指在运动中和受力作用后，形状和大小不变，而且内部各点的相对位置不变的物体。</p>
+<ul>
+<li>绝对刚体实际上是不存在的，只是一种理想模型，因为任何物体在受力作用后，都或多或少地变形，如果变形的程度相对于物体本身几何尺寸来说极为微小，在研究物体运动时变形就可以忽略不计。</li>
+<li>齿轮、绳索、滑轮不属于刚体，但属于该引擎。因此：物理引擎不只是刚体</li>
+</ul>
+<p><strong>运动的点模型</strong></p>
+<p>将物体的运动作为一个点，则一个如图物体</p>
+<p><img src="../images/ch06/ch06-point-model.png" alt="">：</p>
+<ul>
+<li>具有质量</li>
+<li>具有中心</li>
+<li>具有质心（不考虑形状）
+<ul>
+<li>假设1：物体是均质的</li>
+<li>假设2：中心与质心重合</li>
+</ul>
+</li>
+<li>物体作用力分解为：
+<ul>
+<li>作用中心点上的 <strong>力（Force）</strong></li>
+<li>围绕中心点旋转的 <strong>力矩（Torque）</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>碰撞与物体几何形状</strong></p>
+<p>当有形状的物体发生碰撞时：</p>
+<ul>
+<li>使用点模型？</li>
+<li>必须计算在哪个点产生碰撞，并计算力和力矩</li>
+</ul>
+<p>可计算碰撞的物体：</p>
+<ul>
+<li>必须是 <strong>（Convex）物体</strong>
+<ul>
+<li>如何判定</li>
+</ul>
+</li>
+<li>必须是三角形表示的多面体（三角网格）
+<ul>
+<li>2D：物体分解为若干三角形</li>
+<li>3D：凸物体表面用三角形，分解为四面体表示</li>
+</ul>
+</li>
+<li>如果是 Concave 物体
+<ul>
+<li>必须分解为多个凸物体组合</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch06/ch06-convex-cancave.png" alt=""></p>
+<h2 id="2unity-物理引擎实现">2、Unity 物理引擎实现</h2>
+<p>要产生令人信服的物理行为，游戏中的物体必须正确加速，并受到碰撞、重力和其他力的影响。Unity的内置物理引擎为您提供了处理物理模拟的组件。只需几个参数设置，您就可以创建以现实方式被动行为的对象(例如，它们将被碰撞和跌落移动，但不会自己开始移动)。通过从脚本中控制物理，您可以为对象提供车辆、机器甚至一块织物的动态。</p>
+<p>Unity 内置物理引擎建立在 <strong>PhysX</strong> 基础之上。</p>
+<h3 id="21-常用物理组件">2.1 常用物理组件</h3>
+<ul>
+<li>Rigidbody 刚体组件
+<ul>
+<li>点运动模型相关属性</li>
+<li>响应力和力矩</li>
+</ul>
+</li>
+<li>Collider 碰撞器
+<ul>
+<li>物体碰撞与碰撞检测属性</li>
+<li>碰撞现状一般不是物体形状</li>
+</ul>
+</li>
+<li>Mesh 网格
+<ul>
+<li>物体形状属性</li>
+</ul>
+</li>
+<li>Joint 连接器（自学）</li>
+<li>其他</li>
+<li>衣服、常力、用户定义的力场等等</li>
+</ul>
+<p><strong>1、角色控制器</strong></p>
+<p>第一人称或第三人称游戏中的角色通常需要一些基于碰撞的物理效果，这样角色就不会跌穿地板或穿过墙壁。但是，通常情况下，角色的加速度和移动在物理上并不真实，因此角色可以不受动量影响而几乎瞬间加速、制动和改变方向。</p>
+<p><a href="https://docs.unity.cn/cn/current/Manual/class-CharacterController.html">角色控制器 (Character Controller)</a> 主要用于第三人称玩家控制或者是不使用<strong>刚体</strong>物理组件的第一人称玩家控制。</p>
+<p><img src="https://docs.unity.cn/cn/current/uploads/Main/CharacterControllerWindow.jpg" alt=""></p>
+<div class="admonition example"><p class="admonition-title">操作 06-01，观察角色控制器相关组件</p>
+<ol>
+<li>导入 <code>Fantasy Skybox</code> 资源包，加载 demo 场景</li>
+<li>导入标准资源包的 Characters</li>
+<li>分别将第一人称、第三人称预制添加到游戏场景</li>
+<li>观察角色控制器相关物理组件</li>
+</ol>
+</div>
+<p><strong>2、刚体</strong></p>
+<p><a href="https://docs.unity.cn/cn/current/Manual/class-Rigidbody.html">刚体 (Rigidbody)</a>使游戏对象的行为方式受物理控制。刚体可以接受力和扭矩，产生逼真的移动。</p>
+<p>为游戏对象添加刚体: 菜单 -&gt; component -&gt; physics -&gt; rigidbody</p>
+<p><img src="https://docs.unity.cn/cn/current/uploads/Main/Inspector-Rigidbody.png" alt=""></p>
+<p>必须掌握的属性：</p>
+<ul>
+<li>质量 mass</li>
+<li>阻力 Drag</li>
+<li>角阻力</li>
+<li>使用重力</li>
+<li>是运动学控制。表示该物体是静态的，不受力影响</li>
+<li>内插值。 官网说法当运动急动时需要插值</li>
+<li>碰撞检测。默认是离散检查。高速物体需要连续检测</li>
+<li>控制运动自由度。</li>
+</ul>
+<p><strong>3、常量力与力矩</strong></p>
+<ul>
+<li>系统默认的力作用在刚体重心
+<ul>
+<li>力矩，产生旋转</li>
+<li>力与运动</li>
+</ul>
+</li>
+<li>𝑓 ⃑=𝑚 ∗ 𝑎 ⃑</li>
+</ul>
+<p>为物体添加<a href="https://docs.unity.cn/cn/current/Manual/class-ConstantForce.html">恒定力</a>: 菜单  -&gt; component  -&gt;  physics  -&gt;  constant force</p>
+<p><img src="https://docs.unity.cn/cn/current/uploads/Main/Inspector-ConstantForce.png" alt=""></p>
+<ul>
+<li>力（Force）是一个作用在重心的向量</li>
+<li>力矩（Torque）是产生角加速度的力</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">操作 06-02，验证力与刚体运动</p>
+<p>在项目中</p>
+<ol>
+<li>自由落体
+<ul>
+<li>添加一个 cube</li>
+<li>为 cube 添加刚体，使用重力</li>
+<li>运行（观察物体自由落体）</li>
+</ul>
+</li>
+<li>与静态物体碰撞
+<ul>
+<li>使用 地面 或 plane 使得 y=0；并使 cube 的 y=3</li>
+<li>运行（观察到 cube 落在 地面或plane 上）</li>
+</ul>
+</li>
+<li>力的作用
+<ul>
+<li>Cube 添加 Force 组件</li>
+<li>设置力 y=9.8 或 y=10</li>
+<li>运行（请问系统默认 g=9.8 或 10 ）</li>
+<li>设置力 f=(10,0,0)</li>
+<li>运行（观察由于碰撞产生的旋转）</li>
+</ul>
+</li>
+</ol>
+</div>
+<p><strong>4、碰撞(Collider)组件</strong></p>
+<p><a href="https://docs.unity.cn/cn/current/Manual/CollidersOverview.html">碰撞体 (Collider)</a> 组件定义对象的形状以便用于物理碰撞。碰撞体是不可见的，其形状不需要与对象的网格完全相同，事实上，粗略近似方法通常更有效，在游戏运行过程中难以察觉。</p>
+<p>碰撞的效果不仅受形状的影响，而且受到物体的<a href="https://docs.unity.cn/cn/current/Manual/class-PhysicMaterial.html">物理材料</a>的影响，产生摩擦力和反弹效果。</p>
+<ul>
+<li>有形物体的属性
+<ul>
+<li>一个 mesh 组件</li>
+<li>一个或多个 Collider 组件</li>
+</ul>
+</li>
+</ul>
+<p>Collider 常见类型</p>
+<ul>
+<li>基本碰撞器
+<ul>
+<li>Box Collider</li>
+<li>Sphere Collider</li>
+<li>Capsule Collider</li>
+</ul>
+</li>
+<li>复杂碰撞器
+<ul>
+<li>Mesh Collider</li>
+<li>Wheel Collider</li>
+<li>Terrain Collider</li>
+</ul>
+</li>
+</ul>
+<p><strong>5、复合碰撞体(Compound Collider)</strong></p>
+<p>Mesh 碰撞器是万能的？</p>
+<ul>
+<li>Too young！能做碰撞计算的只能是 <strong>凸的</strong>！！</li>
+<li>处于性能的考虑，基本碰撞器是最有效的</li>
+<li>但是：… …</li>
+</ul>
+<p><a href="https://docs.unity.cn/cn/current/Manual/class-Rigidbody.html">复合碰撞体</a>是原始碰撞体的组合，共同作为单个刚体。如果模型在性能方面过于复杂或成本过高而无法精确模拟，因此希望使用简单的近似值以最佳方式模拟形状的碰撞，复合碰撞体将派上用场。要创建复合碰撞体，请创建碰撞对象的子对象，然后将碰撞体组件添加到每个子对象。这样就能轻松独立定位、旋转和缩放每个碰撞体。可以通过许多原始碰撞体和/或凸面网格碰撞体构建复合碰撞体。</p>
+<p><img src="https://docs.unity.cn/cn/current/uploads/Main/CompoundCollider.jpg" alt=""></p>
+<p>在上图中，游戏对象 Gun Model 附加了一个刚体，使用多个原始碰撞体作为子游戏对象。当刚体父对象由于受力而移动时，子碰撞体会随之移
+动。原始碰撞体将与环境的网格碰撞体碰撞，而父刚体将根据所受的力以及其子碰撞体与场景中其他碰撞体的交互方式来改变自己的移动方式。</p>
+<ul>
+<li>复合（组合）物体
+<ul>
+<li>复杂形状分解</li>
+<li>用变换组合</li>
+<li>组合1：？
+<ul>
+<li>仅 Root 对象拥有刚体，并拥有多个基本碰撞器</li>
+</ul>
+</li>
+<li>组合2：？
+<ul>
+<li>Root对象拥有刚体，每个对象拥有基本碰撞器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>6、碰撞体相互作用</strong></p>
+<p>碰撞体彼此之间的相互作用根据刚体组件的配置不同而不同。三个重要的概念</p>
+<ul>
+<li>静态碰撞体 (Static Collider)（即完全没有附加任何刚体）</li>
+<li>刚体碰撞体 (Rigidbody Collider)</li>
+<li>运动刚体碰撞体 (Kinematic Rigidbody Collider)。</li>
+</ul>
+<p><a href="https://docs.unity.cn/cn/current/Manual/CollidersOverview.html">碰撞操作矩阵</a></p>
+<p><img src="../images/ch06/collider-interaction.png" alt=""></p>
+<p><strong>7、碰撞事件(Collision Events)与脚本</strong></p>
+<p>碰撞消息与事件</p>
+<ul>
+<li>消息
+<ul>
+<li>OnCollisionEnter，OnCollisionExit，OnCollisionStay</li>
+</ul>
+</li>
+<li>事件与碰撞结构
+<ul>
+<li>处理消息的行为（脚本）接收该物体上刚体/碰撞器发出的消息</li>
+<li>例如：</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">CollisionRev</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">OnCollisionEnter</span><span class="p">(</span><span class="n">Collision</span> <span class="n">collision</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;Collision @ &#34;</span> <span class="p">+</span> <span class="n">Time</span><span class="p">.</span><span class="n">frameCount</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;GameObject is :&#34;</span> <span class="p">+</span> <span class="n">collision</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">collider</span><span class="p">)</span> <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;Collider belong to :&#34;</span> <span class="p">+</span> <span class="n">collision</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">collision</span><span class="p">.</span><span class="n">rigidbody</span><span class="p">)</span> <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;Rigidbody belong to :&#34;</span> <span class="p">+</span> <span class="n">collision</span><span class="p">.</span><span class="n">rigidbody</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">foreach</span> <span class="p">(</span><span class="n">ContactPoint</span> <span class="n">contact</span> <span class="k">in</span> <span class="n">collision</span><span class="p">.</span><span class="n">contacts</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Debug</span><span class="p">.</span><span class="n">DrawRay</span> <span class="p">(</span><span class="n">contact</span><span class="p">.</span><span class="n">point</span><span class="p">,</span> <span class="n">contact</span><span class="p">.</span><span class="n">normal</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">white</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="admonition example"><p class="admonition-title">操作 06-03，碰撞器组合与事件接收</p>
+<ul>
+<li>碰撞与事件
+<ul>
+<li>实验对象：plane，cube（刚体），事件接收程序</li>
+<li>plane + 接收程序的输出？cube + 接收程序的输出？</li>
+</ul>
+</li>
+<li>组合碰撞器
+<ul>
+<li>实验对象：plane,  cube1(0,0,0), cube2(1,1,0)(red), root(0,3,0) 是 cube 的容器，事件接收程序</li>
+<li>实验 cube 自由落体与 plane 碰撞</li>
+<li>组合1
+<ul>
+<li>root 是刚体，cube 有碰撞器</li>
+</ul>
+</li>
+<li>组合2
+<ul>
+<li>root 是刚体，且有两个碰撞器， cube 碰撞器</li>
+</ul>
+</li>
+<li>组合3
+<ul>
+<li>root 不是刚一组不太平滑的点
+近似算法，Δt越大则偏差越大（求解器内部做插值）
+Δt要尽可能相等，否则就会感到跳跃
+体，cube各自拥有刚体和碰撞器</li>
+</ul>
+</li>
+<li>事件接收器挂载不同物体，并观察现象</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch06/ex-composed.png" alt=""></p>
+</div>
+<h3 id="22-离散引擎引发的计算问题">2.2 离散引擎引发的计算问题</h3>
+<p><strong>1、运动轨迹的近似与积累误差问题</strong></p>
+<ul>
+<li>线性动态：以简单抛物线为例
+<ul>
+<li>力: F(p,t)</li>
+<li>p: 当前位置</li>
+<li>t: 当时时间</li>
+</ul>
+</li>
+<li>物理 Update 的公式</li>
+</ul>
+<p><img src="../images/ch06/ch06-parabola-formula.png" alt=""></p>
+<p><img src="../images/ch06/ch06-parabola-trail.png" alt=""></p>
+<ul>
+<li>结果
+<ul>
+<li>一组不太平滑的点</li>
+<li>近似算法，Δt越大则偏差越大</li>
+<li>Δt要尽可能相等，否则就会感到跳跃</li>
+</ul>
+</li>
+<li>引擎设计
+<ul>
+<li>刚体 (Rigidbody) 组件，支持插值计算</li>
+<li>脚本，使用 FixedUpdate 函数操作物理引擎涉及的游戏对象</li>
+</ul>
+</li>
+</ul>
+<p><strong>2、线性动态计算问题</strong></p>
+<p>又称为 <strong>动画综合症 – Flipbook Syndrome</strong></p>
+<p>当你用慢动作播放运动…</p>
+<p><img src="../images/ch06/ch06-flip-syndrome.png" alt=""></p>
+<p>当旋转运动比较快…</p>
+<p><img src="../images/ch06/ch06-flip-syndrome-rotate.png" alt=""></p>
+<ul>
+<li>常用解决方案
+<ul>
+<li>在每个计算帧做内插值(p0,p01,p02,p03…p1)</li>
+<li>做旋转误差补偿，内插值会使物体抖动哦。
+<ul>
+<li>Rigidbody.Interpolate 刚体的插值参数（外插值，预测下一个位置消除抖动）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>3、碰撞计算问题</strong></p>
+<ul>
+<li>Tunneling(穿越效应)
+<ul>
+<li>当物体运动足够快</li>
+<li>或物体又小又快</li>
+<li>如：射击的子弹</li>
+<li>快速转动臂膀</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch06/ch06-collider-tunneling.png" alt=""> 
+<img src="../images/ch06/ch06-collider-tunneling-more.png" alt=""></p>
+<p>不了解这些问题，后果很严重！ 又例如：</p>
+<ul>
+<li>常用解决方案
+<ul>
+<li>刚体碰撞检测属性</li>
+</ul>
+<ol>
+<li>连续检测（a）</li>
+<li>连续动态检测（b）</li>
+<li>Wheel动态碰撞（c）</li>
+</ol>
+</li>
+</ul>
+<p><img src="../images/ch06/ch06-collider-ccd.png" alt=""></p>
+<p>更多官方<a href="https://docs.unity.cn/cn/current/Manual/ContinuousCollisionDetection.html">连续碰撞检测 (CCD)</a>技术说明</p>
+<h3 id="23-物理引擎编程与使用">2.3 物理引擎编程与使用</h3>
+<p><strong>1、基本事项</strong></p>
+<ul>
+<li>Fixed-update
+<ul>
+<li>修改物理引擎相关组件属性，请使用Fixed-Update</li>
+<li>确保物理引擎计算间隔稳定</li>
+</ul>
+</li>
+<li>根据场景需要设置刚体属性
+<ul>
+<li>内插值、外插值的使用</li>
+<li>连续检测方法</li>
+<li>特殊情况，用射线碰撞替代子弹碰撞</li>
+</ul>
+</li>
+<li>复合物体
+<ul>
+<li>父子对象不能同时拥有刚体</li>
+</ul>
+</li>
+<li>其他
+<ul>
+<li>不要逐帧移动一个静态碰撞器</li>
+<li>不要同时使用物理运动与运动学移动物体</li>
+</ul>
+</li>
+</ul>
+<p><strong>2、刚体编程</strong></p>
+<p><a href="https://docs.unity.cn/cn/current/ScriptReference/Rigidbody.html">刚体组件</a>脚本 API：</p>
+<ul>
+<li>
+<p>刚体与力</p>
+<ul>
+<li>Rigidbody 脚本 API，让您能够向对象施加力，并以逼真的物理效果对其进行控制。例如，可以根据车轮施加的力来指定汽车的行为。根据这些信息，物理引擎可以处理汽车运动的大多数其他方面，因此汽车可进行逼真的加速并适当地响应碰撞。</li>
+</ul>
+</li>
+<li>
+<p>使用 FixedUpdate 函数</p>
+<ul>
+<li>在脚本中，建议使用 FixedUpdate 函数来施加力和更改 Rigidbody 设置（而不是使用 Update，Update 用于大多数其他帧更新任务）。这样做的原因是物理更新在测量的时间步骤中执行，而时间步骤与帧更新不一致。FixedUpdate 在每次进行物理更新前调用，因此在该函数中做出的任何更改都将直接处理。</li>
+</ul>
+</li>
+<li>
+<p>“慢动作”现象</p>
+<ul>
+<li>刚开始使用 Rigidbody 时，新手常常会遇到游戏物理效果似乎以“慢动作”运行的问题。这实际上是您的模型使用了不适当的缩放导致的。</li>
+</ul>
+</li>
+<li>
+<p>主要变量属性</p>
+<ul>
+<li>速度（velocity ）角速度（angular velocity）</li>
+<li>质心（center of mass）
+<ul>
+<li>物体中心（坐标原点）与质心一致是特例</li>
+<li>特别是组合物体，设置质心会使运动效果更真实</li>
+</ul>
+</li>
+<li>自定义内插值步数（solver iteration count）
+<ul>
+<li>提高/降低计算轨迹精度</li>
+</ul>
+</li>
+<li>刚体休眠（sleep）
+<ul>
+<li>设置最低速度，减少引擎计算量</li>
+</ul>
+</li>
+<li>限制运动自由度</li>
+</ul>
+</li>
+<li>
+<p>对刚体施力或力矩</p>
+<ul>
+<li>RigidBody.AddForce(Vector3 force, ForceMode mode);</li>
+<li>RigidBody.AddForceAtPosition(Vector3 force, Vector3 position, ForceMode mode);</li>
+<li>… …</li>
+</ul>
+</li>
+<li>
+<p>力的模式(ForceMode)</p>
+</li>
+</ul>
+<p><img src="../images/ch06/ch06-force-mode.png" alt=""></p>
+<div class="admonition example"><p class="admonition-title">编程 06-04，使用代码产生重力</p>
+<ul>
+<li>阅读 <a href="https://docs.unity.cn/cn/current/ScriptReference/Rigidbody.AddForce.html">Rigidbody.AddForce</a> API</li>
+<li>修改案例代码，挂载到带有刚体的物体后，产生重力效果</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">AddForce</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">float</span> <span class="n">thrust</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">Rigidbody</span> <span class="n">rb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rb</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">FixedUpdate</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rb</span><span class="p">.</span><span class="n">AddForce</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">forward</span> <span class="p">*</span> <span class="n">thrust</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+<div class="admonition warning"><p class="admonition-title">注意事项，如何瞬移刚体</p>
+<p>刚体组件提供</p>
+<ul>
+<li>MovePosition (position : Vector3)</li>
+<li>MoveRotation (rot : Quaternion)</li>
+</ul>
+<p>它们会在本帧物理引擎计算结束后执行。（新版本 API 似乎没有这样说明了）</p>
+</div>
+<p><strong>2、碰撞编程</strong></p>
+<p>碰撞涉及</p>
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/ScriptReference/Collider.html">碰撞器 Collider</a>及其子类；</li>
+<li><a href="https://docs.unity.cn/cn/current/ScriptReference/Collision.html">Collision</a> 类包含有关接触点、冲击速度等的信息；</li>
+<li>碰撞消息（进入，退出，碰撞中）与处理</li>
+</ul>
+<p>碰撞器重要属性与方法</p>
+<ul>
+<li>Collider.attachedRigidbody 碰撞体附加到的刚体</li>
+<li>Collider.ClosestPoint 碰撞（最接近的）点</li>
+<li>Collider.Raycast 针对特定对象的射线碰撞，可减碰撞计算时间</li>
+</ul>
+<p>碰撞消息及处理</p>
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/ScriptReference/Collider.OnCollisionEnter.html">进入</a>，第一次接触</li>
+</ul>
+<p>官方示例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExampleClass</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">Transform</span> <span class="n">explosionPrefab</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">OnCollisionEnter</span><span class="p">(</span><span class="n">Collision</span> <span class="n">collision</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ContactPoint</span> <span class="n">contact</span> <span class="p">=</span> <span class="n">collision</span><span class="p">.</span><span class="n">contacts</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Quaternion</span> <span class="n">rot</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">FromToRotation</span><span class="p">(</span><span class="n">Vector3</span><span class="p">.</span><span class="n">up</span><span class="p">,</span> <span class="n">contact</span><span class="p">.</span><span class="n">normal</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Vector3</span> <span class="n">pos</span> <span class="p">=</span> <span class="n">contact</span><span class="p">.</span><span class="n">point</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Instantiate</span><span class="p">(</span><span class="n">explosionPrefab</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">rot</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><a href="https://docs.unity.cn/cn/current/ScriptReference/Collider.OnCollisionExit.html">退出</a>，最后一次接触</li>
+<li><a href="https://docs.unity.cn/cn/current/ScriptReference/Collider.OnCollisionStay.html">碰撞中</a></li>
+</ul>
+<p><strong>3、碰撞器 – 作为触发器</strong></p>
+<ul>
+<li>触发器（Trigger）
+<ul>
+<li>一种碰撞盒，产生与运动无关的碰撞，并触发事件</li>
+<li>用 Is Trigger 属性表示是否触发器</li>
+</ul>
+</li>
+<li>刚体碰撞器
+<ul>
+<li>刚体的碰撞盒是近似形状（运动计算性能与效果折中）</li>
+<li>普通游戏角色的碰撞器仅是胶囊模型</li>
+<li>除了部分物理仿真应用，并不需要精确模型</li>
+<li>不同刚体的碰撞盒不能相交（不能穿透）</li>
+<li>需要进行物理计算</li>
+</ul>
+</li>
+<li>触发器
+<ul>
+<li>碰撞计算是高效的（成批算的！）</li>
+<li>很多应用的碰撞不需要物理影响运动</li>
+<li>触发器可以放在任意物体，任意位置</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">要点：刚体碰撞消息 PK 触发器消息</p>
+<p>官方说明：<a href="https://docs.unity.cn/cn/current/Manual/CollidersOverview.html">碰撞体</a></p>
+</div>
+<p>案例研究：子弹“爆头”的实现</p>
+<ul>
+<li>在角色头部位置添加矩形或胶囊碰撞器并作为触发器</li>
+<li>高速子弹使用射线检测与该碰撞盒碰撞。（多数游戏就是这样做的，子弹就是给你看的）</li>
+<li>低速子弹则使用 <strong>CCD技术</strong> 检测碰撞</li>
+</ul>
+<div class="admonition tip"><p class="admonition-title">打靶游戏：本章作业研究</p>
+<p><img src="../images/ch06/ch06-example-arrow.png" alt=""></p>
+<ul>
+<li>靶标对象
+<ul>
+<li>Root</li>
+<li>Target（显示网格）</li>
+<li>trigger 1..5（一圈一个，计分用）</li>
+</ul>
+</li>
+<li>箭对象
+<ul>
+<li>Root（射中后，变为运动学刚体）</li>
+<li>箭头（射中后，箭头会 disabled）</li>
+<li>箭身（射中后，箭身插在靶标上）</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>触发器与碰撞器的选择，案例</p>
+<ul>
+<li>飞碟游戏中飞碟
+<ul>
+<li>触发器，胶囊体，如果碰撞后飞碟立即回收</li>
+<li>碰撞器，胶囊体，期望物体落地后弹跳一会</li>
+</ul>
+</li>
+<li>《反恐精英CS》玩家角色
+<ul>
+<li>碰撞器，胶囊</li>
+<li>触发器，头部球/或长方体</li>
+</ul>
+</li>
+<li>天空飞行的鸟
+<ul>
+<li>碰撞器，矩形体（可变，展翅与死后不展翅不一样）</li>
+</ul>
+</li>
+<li>炮塔
+<ul>
+<li>碰撞器，胶囊体用于物体主体子对象</li>
+<li>触发器，胶囊体用于攻击范围子对象</li>
+</ul>
+</li>
+<li>子弹
+<ul>
+<li>触发器，方体。条件，遇到任何物体立即回收</li>
+</ul>
+</li>
+</ul>
+<p><strong>4、碰撞计算原理与过程</strong></p>
+<p><img src="../images/ch06/ch06-collision-aabb.png" alt=""></p>
+<ul>
+<li>Axis-Aligned Bound Box(AABB)
+<ul>
+<li>计算简单，高效</li>
+<li>与事实差异大</li>
+</ul>
+</li>
+<li>物理碰撞计算过程
+<ul>
+<li>AABB碰撞</li>
+<li>物体碰撞</li>
+</ul>
+</li>
+<li>Collider的重要属性与方法
+<ul>
+<li>bound</li>
+<li>ClosestPointOnBounds  用来计算受到爆炸伤害点数</li>
+<li>Raycast 用来加速计算碰撞</li>
+</ul>
+</li>
+</ul>
+<p><strong>5、其他注意事项</strong></p>
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/Manual/class-MeshCollider.html">Mesh Collider</a> 网格碰撞器
+<ul>
+<li>能不用就不用（性能考虑）</li>
+<li>只有凸的网格能与网格碰撞</li>
+<li>任意网格可以与基本碰撞盒碰撞
+注意物体设计大小</li>
+<li>Unity 空间单位 1 大约 1米，所以人高大约2</li>
+<li>物体缩小、放大会影响性能</li>
+</ul>
+</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">编程 06-05，爆炸效果</p>
+<ul>
+<li>设计四个物体在 plane 上</li>
+<li>从高空掉落一物体，在地面发生爆炸</li>
+<li>产生炸飞的效果</li>
+</ul>
+<p><img src="../images/ch06/ch06-collision-explosion.png" alt=""></p>
+<p>参考代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Explosion</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">OnCollisionEnter</span><span class="p">(</span><span class="n">Collision</span> <span class="n">col</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//如果碰撞物是上方落下的小球，进行爆炸处理</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">col</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">name</span> <span class="p">==</span> <span class="s">&#34;Sphere&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//定义爆炸半径</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">float</span> <span class="n">radius</span> <span class="p">=</span> <span class="m">3.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//定义爆炸位置为炸弹位置</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Vector3</span> <span class="n">explosionPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//这个方法用来反回球型半径之内（包括半径）的所有碰撞体collider[]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Collider</span><span class="p">[]</span> <span class="n">colliders</span> <span class="p">=</span> <span class="n">Physics</span><span class="p">.</span><span class="n">OverlapSphere</span><span class="p">(</span><span class="n">explosionPos</span><span class="p">,</span> <span class="n">radius</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">            <span class="c1">//遍历返回的碰撞体，如果是刚体，则给刚体添加力</span>
+</span></span><span class="line"><span class="cl">            <span class="k">foreach</span> <span class="p">(</span><span class="n">Collider</span> <span class="n">hit</span> <span class="k">in</span> <span class="n">colliders</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">hit</span><span class="p">.</span><span class="n">rigidbody</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">hit</span><span class="p">.</span><span class="n">rigidbody</span><span class="p">.</span><span class="n">AddExplosionForce</span><span class="p">(</span><span class="m">600</span><span class="p">,</span> <span class="n">explosionPos</span><span class="p">,</span> <span class="n">radius</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//销毁炸弹和小球</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Destroy</span><span class="p">(</span><span class="n">col</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+<h3 id="24-中级技术-势能与场">2.4 中级技术-势能与场</h3>
+<p>势能与场（Potential Fields）是游戏智能的重要组成，也是物理系统要做的重要任务。常见案例：</p>
+<ul>
+<li>追踪</li>
+<li>捕获</li>
+<li>导航</li>
+</ul>
+<p><img src="../images/ch06/ch06-potential-fields-circle.png" alt=""></p>
+<ul>
+<li>现实世界的场
+<ul>
+<li>重力场</li>
+<li>引力</li>
+<li>电磁力场</li>
+<li>… …</li>
+</ul>
+</li>
+<li>社会中的场
+<ul>
+<li>吸引力
+-（食物）诱惑力</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">场的本质</p>
+<p>力在空间中的分布。场使运动更真实与智能</p>
+</div>
+<p>例如：捕鱼</p>
+<p><img src="../images/ch06/ch06-potential-fields-fish.png" alt=""></p>
+<p>不同设计方案的对比</p>
+<ul>
+<li>设计轨迹方程</li>
+<li>设计力场图</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">编程 06-06，吸引力与场</p>
+<ul>
+<li>平面上有若干白色小球体，随机摆放</li>
+<li>有一红色小球按一定轨迹移动（给一个初始速度）</li>
+<li>在红色小球一定范围内，白色小球按某个概率受到吸引（变黄）并追随移动，它们之间距离越近这个引力越大。</li>
+<li>当黄色小球发现追不上，则会放弃而变白</li>
+</ul>
+<p>网上的参考代码（不一定满足题目要求）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Magnetic</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">LayerMask</span> <span class="n">m_MagneticLayers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">Vector3</span> <span class="n">m_Position</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">float</span> <span class="n">m_Radius</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">float</span> <span class="n">m_Force</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">FixedUpdate</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Collider</span><span class="p">[]</span> <span class="n">colliders</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Rigidbody</span> <span class="n">rigidbody</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">colliders</span> <span class="p">=</span> <span class="n">Physics</span><span class="p">.</span><span class="n">OverlapSphere</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+</span> <span class="n">m_Position</span><span class="p">,</span> <span class="n">m_Radius</span><span class="p">,</span> <span class="n">m_MagneticLayers</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">foreach</span> <span class="p">(</span><span class="n">Collider</span> <span class="n">collider</span> <span class="k">in</span> <span class="n">colliders</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">rigidbody</span> <span class="p">=</span> <span class="p">(</span><span class="n">Rigidbody</span><span class="p">)</span> <span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">GetComponent</span> <span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="n">Rigidbody</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">rigidbody</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>    
+</span></span><span class="line"><span class="cl">            <span class="n">rigidbody</span><span class="p">.</span><span class="n">AddExplosionForce</span> <span class="p">(</span><span class="n">m_Force</span> <span class="p">*</span> <span class="p">-</span><span class="m">1</span><span class="p">,</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+</span> <span class="n">m_Position</span><span class="p">,</span> <span class="n">m_Radius</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">OnDrawGizmosSelected</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Gizmos</span><span class="p">.</span><span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">red</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Gizmos</span><span class="p">.</span><span class="n">DrawWireSphere</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+</span> <span class="n">m_Position</span><span class="p">,</span> <span class="n">m_Radius</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+<h2 id="3面向对象的编程---设计模式对象的组织结构">3、面向对象的编程 - 设计模式：对象的组织结构</h2>
+<p>结构型模式描述如何将类或对象按某种布局组成更大的结构的一般方式。</p>
+<p>结构型模式分为以下 7 种：</p>
+<ul>
+<li><strong>代理（Proxy）模式</strong>：为某对象提供一种代理以控制对该对象的访问。即客户端通过代理间接地访问该对象，从而限制、增强或修改该对象的一些特性。</li>
+<li><strong>适配器（Adapter）模式</strong>：将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。</li>
+<li><strong>桥接（Bridge）模式</strong>：将抽象与实现分离，使它们可以独立变化。它是用组合关系代替继承关系来实现的，从而降低了抽象和实现这两个可变维度的耦合度。</li>
+<li><strong>装饰（Decorator）模式</strong>：动态地给对象增加一些职责，即增加其额外的功能。</li>
+<li><strong>外观（Facade）模式</strong>：为多个复杂的子系统提供一个一致的接口，使这些子系统更加容易被访问。</li>
+<li><strong>享元（Flyweight）模式</strong>：运用共享技术来有效地支持大量细粒度对象的复用。</li>
+<li><strong>组合（Composite）模式</strong>：将对象组合成树状层次结构，使用户对单个对象和组合对象具有一致的访问性。</li>
+</ul>
+<p>有些同学问，proxy 与 facade 一直傻傻分不清？ 这证明你学的不错啊！</p>
+<p><strong>1、业务需求</strong></p>
+<p>我们学完物理运动，现在的需求是：</p>
+<ul>
+<li>不想放弃 CCActionManager</li>
+<li>新建 PhysisActionManager</li>
+</ul>
+<p>新的设计如下图：</p>
+<p><img src="../images/ch06/ch06-pattern-adapter.png" alt=""></p>
+<p><strong>2、Adapter 模式</strong></p>
+<ul>
+<li>什么是 Adapter 模式？
+<ul>
+<li>？</li>
+</ul>
+</li>
+<li>Adapter 模式使用场景
+<ul>
+<li>你设计了电商网站，它有一个实用简单同一的支付接口，现在这个接口要对接工行、农行、… 、微信、支付宝、财付通、…的接口。你明白设计如何应对业务变化的吗？</li>
+<li>在游戏中有哪些场景会用到 Adapter 呢？</li>
+<li>。。。?</li>
+</ul>
+</li>
+</ul>
+<h2 id="4小结">4、小结</h2>
+<ul>
+<li>物理引擎基础
+<ul>
+<li>力与运动、物体碰撞的抽象</li>
+<li>Unity 物理系统的刚体、碰撞组件使用</li>
+<li>离散系统动画综合症、穿越效应
+<ul>
+<li>产生条件、原理、解决方案</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>物理引擎编程
+<ul>
+<li>重心、力的使用</li>
+<li>触发器的作用</li>
+<li>碰撞器、触发器的综合应用</li>
+<li>力场与智能</li>
+</ul>
+</li>
+<li>面向对象设计技巧
+<ul>
+<li>Adapter 模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="5作业与练习">5、作业与练习</h2>
+<p>1、改进飞碟（Hit UFO）游戏：</p>
+<ul>
+<li>游戏内容要求：
+<ol>
+<li>按 <em>adapter模式</em> 设计图修改飞碟游戏</li>
+<li>使它同时支持物理运动与运动学（变换）运动</li>
+</ol>
+</li>
+</ul>
+<p>2、打靶游戏（<strong>可选作业</strong>）：</p>
+<ul>
+<li>游戏内容要求：
+<ol>
+<li>靶对象为 5 环，按环计分；</li>
+<li>箭对象，射中后要插在靶上
+<ul>
+<li><strong>增强要求</strong>：射中后，箭对象产生颤抖效果，到下一次射击 或 1秒以后</li>
+</ul>
+</li>
+<li>游戏仅一轮，无限 trials；
+<ul>
+<li><strong>增强要求</strong>：添加一个风向和强度标志，提高难度</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="../images/ch06/archery.gif" alt=""></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/07-model-and-animation/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">七、模型与动画</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/05-interaction-with-gameworld/">
+            <span class="next-text nav-default">五、与游戏世界交互</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>附录 X3-07、方法扩展、Lambda 表达式 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="1、类方法的扩展 1.1 初识类扩展 你可能觉得 C# 的 Random 类提供的方法不够用。如果想提供一些特殊随机数产生方法，你可以用以下方法扩展它： 1 2 3 4 5 6 7 8 9" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/x3-07-method-extend-lambda/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="附录 X3-07、方法扩展、Lambda 表达式" />
+<meta property="og:description" content="1、类方法的扩展 1.1 初识类扩展 你可能觉得 C# 的 Random 类提供的方法不够用。如果想提供一些特殊随机数产生方法，你可以用以下方法扩展它： 1 2 3 4 5 6 7 8 9" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/x3-07-method-extend-lambda/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-05T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="附录 X3-07、方法扩展、Lambda 表达式">
+<meta itemprop="description" content="1、类方法的扩展 1.1 初识类扩展 你可能觉得 C# 的 Random 类提供的方法不够用。如果想提供一些特殊随机数产生方法，你可以用以下方法扩展它： 1 2 3 4 5 6 7 8 9"><meta itemprop="datePublished" content="2020-09-05T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="1583">
+<meta itemprop="keywords" content="附件,C#," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="附录 X3-07、方法扩展、Lambda 表达式"/>
+<meta name="twitter:description" content="1、类方法的扩展 1.1 初识类扩展 你可能觉得 C# 的 Random 类提供的方法不够用。如果想提供一些特殊随机数产生方法，你可以用以下方法扩展它： 1 2 3 4 5 6 7 8 9"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">附录 X3-07、方法扩展、Lambda 表达式</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-05 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1类方法的扩展">1、类方法的扩展</a>
+          <ul>
+            <li><a href="#11-初识类扩展">1.1 初识类扩展</a></li>
+            <li><a href="#12-扩展方法的应用">1.2 扩展方法的应用</a></li>
+          </ul>
+        </li>
+        <li><a href="#2lambda-表达式">2、Lambda 表达式</a>
+          <ul>
+            <li><a href="#21-lambda-表达式案例">2.1 Lambda 表达式案例</a></li>
+            <li><a href="#22-lambda-表达式语法">2.2 Lambda 表达式语法</a></li>
+          </ul>
+        </li>
+        <li><a href="#3dotween-unity-引擎的实现原理">3、DoTween Unity 引擎的实现原理</a>
+          <ul>
+            <li><a href="#31-dotween-简介">3.1 DoTween 简介</a></li>
+            <li><a href="#32-domove-的实现思路">3.2 DOMove 的实现思路</a></li>
+            <li><a href="#33-domove-的实现代码">3.3 DOMove 的实现代码</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="1类方法的扩展">1、类方法的扩展</h2>
+<h3 id="11-初识类扩展">1.1 初识类扩展</h3>
+<p>你可能觉得 C# 的  <a href="http://msdn.microsoft.com/zh-cn/library/system.random(v=VS.100).aspx">Random</a> 类提供的方法不够用。如果想提供一些特殊随机数产生方法，你可以用以下方法扩展它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">extend_method_test</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//This is Extened Method, The first parameter beging with (this Type name, args)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="n">NextBool</span><span class="p">(</span><span class="k">this</span> <span class="n">System</span><span class="p">.</span><span class="n">Random</span> <span class="n">random</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">random</span><span class="p">.</span><span class="n">NextDouble</span><span class="p">()</span> <span class="p">&gt;</span> <span class="m">0.5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">NewBehaviourScript</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">        <span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="p">.</span><span class="n">Random</span> <span class="n">rand</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Random</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="n">print</span> <span class="p">(</span><span class="n">rand</span><span class="p">.</span><span class="n">NextBool</span> <span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">        <span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="admonition info"><p class="admonition-title">信息</p>
+<p>扩展方法必须是静态类中的静态方法，它们的第一个参数指定该方法作用于哪个类型，并且该参数以 this 修饰符为前缀。cs 编译器会自动将该方法编译到该类的方法表中。</p>
+</div>
+<ul>
+<li>将上述代码挂载到任意游戏对象上，就可以在 console 窗口看到输出。</li>
+</ul>
+<h3 id="12-扩展方法的应用">1.2 扩展方法的应用</h3>
+<p>当你需要对 C# 或 unity 的类做一些共性的扩展时，你仅需要将这些静态类的 cs 文件拖入项目编译。</p>
+<p>一些常见的扩展方法应用。具体参考：<a href="http://www.cnblogs.com/ldp615/archive/2009/08/07/1541404.html">c# 扩展方法奇思妙用</a></p>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>使用 继承机制 与 扩展方法机制 各有哪些优缺点？</p>
+</div>
+<h2 id="2lambda-表达式">2、Lambda 表达式</h2>
+<h3 id="21-lambda-表达式案例">2.1 Lambda 表达式案例</h3>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions">lambda 表达式</a> 是一个<a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/anonymous-methods">匿名函数</a>，在 C# 中使用它来创建 <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates">delegates</a> 或 <a href="http://msdn.microsoft.com/library/fb1d3ed8-d5b0-4211-a71f-dd271529294b">expression tree</a> 类型。通过使用 lambda 表达式，可以编写可作为参数传递或作为函数调用的值返回的本地函数。Lambda 表达式对编写 LINQ 查询表达式特别有用。</p>
+<p>要创建一个lambda表达式，可以在lambda运算符左侧指定输入参数（如果有的话）<code>=&gt;</code>，然后将表达式或语句块放在另一侧。例如，lambda 表达式 <code>x =&gt; x * x</code> 指定一个已命名的参数 x 并返回 x 平方值。您可以将此表达式分配给委托类型，如以下示例所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">delegate</span> <span class="kt">int</span> <span class="n">del</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">);</span> <span class="c1">//define delegate type</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">LambdaTest</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">del</span> <span class="n">myDelegate</span> <span class="p">=</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span> <span class="p">*</span> <span class="n">x</span><span class="p">;</span>  <span class="c1">//define anonymous function</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="n">myDelegate</span><span class="p">(</span><span class="m">5</span><span class="p">);</span> <span class="c1">//j = 25</span>
+</span></span><span class="line"><span class="cl">		<span class="n">print</span> <span class="p">(</span><span class="n">j</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22-lambda-表达式语法">2.2 Lambda 表达式语法</h3>
+<p><strong>1、表达式 Lambdas</strong></p>
+<p>语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(input-parameters) =&gt; expression
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">x</span> <span class="p">==</span> <span class="n">y</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>2、语句 Lambdas</strong></p>
+<p>语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(input-parameters) =&gt; { statement; }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">delegate</span> <span class="k">void</span> <span class="n">TestDelegate</span><span class="p">(</span><span class="kt">string</span> <span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">TestDelegate</span> <span class="n">del</span> <span class="p">=</span> <span class="n">n</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="kt">string</span> <span class="n">s</span> <span class="p">=</span> <span class="n">n</span> <span class="p">+</span> <span class="s">&#34; World&#34;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">                          <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>通用代理与泛型</strong></p>
+<p>每次都定义代理多麻烦！ 微软定义了 <code>Func</code> 和 <code>Action</code> 及其<a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/covariance-contravariance/using-variance-for-func-and-action-generic-delegates">泛型代理</a>，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">delegate</span> <span class="k">void</span> <span class="n">Action</span><span class="p">&lt;</span><span class="k">in</span> <span class="n">T1</span><span class="p">,</span> <span class="k">in</span> <span class="n">T2</span><span class="p">&gt;(</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T1</span> <span class="n">arg1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">T2</span> <span class="n">arg2</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样，一个简单的三元匿名函数可以表达为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl">  <span class="n">Action</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="kt">bool</span><span class="p">&gt;</span> <span class="n">sendToLog</span> <span class="p">=</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">value</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">doLog</span><span class="p">)</span> <span class="p">=&gt;</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">doLog</span><span class="p">)</span> <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;Logging out &#34;</span> 
+</span></span><span class="line"><span class="cl">            <span class="p">+</span> <span class="k">value</span> <span class="p">+</span> <span class="s">&#34; and &#34;</span> 
+</span></span><span class="line"><span class="cl">            <span class="p">+</span> <span class="n">description</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 Unity 中典型应用场景如程序：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">private</span> <span class="n">IEnumerator</span> <span class="n">waitThenCallback</span><span class="p">(</span><span class="kt">float</span> <span class="n">time</span><span class="p">,</span> <span class="n">Action</span> <span class="n">callback</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="n">WaitForSeconds</span><span class="p">(</span><span class="n">time</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="n">callback</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">splashScreen</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">StartCoroutine</span><span class="p">(</span><span class="n">waitThenCallback</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> 
+</span></span><span class="line"><span class="cl">         <span class="p">{</span> <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;Five seconds have passed!&#34;</span><span class="p">);</span> <span class="p">}));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="admonition question"><p class="admonition-title">思考</p>
+<p>函数回调 和 接口回调 的区别与联系？它们的适用场景？</p>
+</div>
+<p>更多参考微软手册 <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/anonymous-functions">Anonymous Functions</a></p>
+<h2 id="3dotween-unity-引擎的实现原理">3、DoTween Unity 引擎的实现原理</h2>
+<h3 id="31-dotween-简介">3.1 DoTween 简介</h3>
+<p><a href="http://dotween.demigiant.com/">Dotween</a> 是 Unity 2D 方法使用的运动引擎，用于动画编程。</p>
+<ul>
+<li>请进入官方网站 <a href="http://dotween.demigiant.com/">Dotween</a></li>
+</ul>
+<p>它通过对 Unity 类扩展，实现了如下功能，官方实例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="c1">// Move a transform to position 1,2,3 in 1 second</span>
+</span></span><span class="line"><span class="cl"><span class="n">transform</span><span class="p">.</span><span class="n">DOMove</span><span class="p">(</span><span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> <span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Scale the Y of a transform to 3 in 1 second</span>
+</span></span><span class="line"><span class="cl"><span class="n">transform</span><span class="p">.</span><span class="n">DOScaleY</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Pause a transform&#39;s tween</span>
+</span></span><span class="line"><span class="cl"><span class="n">transform</span><span class="p">.</span><span class="n">DOPause</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在的任务是运用学到的知识实现上述功能。好难？？？</p>
+<h3 id="32-domove-的实现思路">3.2 DOMove 的实现思路</h3>
+<p>要实现 transform 类扩展，显然必须实现如下代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">exciting_programming</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">static</span> <span class="n">Transform</span> <span class="n">DoMove</span><span class="p">(</span><span class="k">this</span> <span class="n">Transform</span> <span class="n">transform</span><span class="p">,</span> <span class="n">Vector3</span> <span class="n">target</span><span class="p">,</span> <span class="kt">float</span> <span class="n">time</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//ToDo What?</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">transform</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题是如何实现 transform 的 update 呢？ 让我们来看一段代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">exciting_programming</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Construct a MonoBehaviour coroutine method ！！！</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">static</span> <span class="n">IEnumerator</span> <span class="n">DoMove</span><span class="p">(</span><span class="k">this</span> <span class="n">MonoBehaviour</span> <span class="n">mono</span><span class="p">,</span> <span class="n">Transform</span> <span class="n">trans</span><span class="p">,</span> <span class="n">Vector3</span> <span class="n">target</span><span class="p">,</span> <span class="kt">float</span> <span class="n">time</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(</span><span class="kt">float</span> <span class="n">f</span> <span class="p">=</span> <span class="m">1f</span><span class="p">;</span> <span class="n">f</span> <span class="p">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">f</span> <span class="p">-=</span> <span class="m">0.1f</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//just like call update()</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">yield</span> <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">static</span> <span class="n">Transform</span> <span class="n">DoMove</span><span class="p">(</span><span class="k">this</span> <span class="n">Transform</span> <span class="n">transform</span><span class="p">,</span> <span class="n">Vector3</span> <span class="n">target</span><span class="p">,</span> <span class="kt">float</span> <span class="n">time</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">MonoBehaviour</span> <span class="n">mono</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponents</span><span class="p">&lt;</span><span class="n">MonoBehaviour</span><span class="p">&gt;</span> <span class="p">()</span> <span class="p">[</span><span class="m">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="n">mono</span><span class="p">.</span><span class="n">StartCoroutine</span> <span class="p">(</span><span class="n">mono</span><span class="p">.</span><span class="n">DoMove</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">time</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">transform</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">NewBehaviourScript</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">        <span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">transform</span><span class="p">.</span><span class="n">DoMove</span> <span class="p">(</span><span class="k">new</span> <span class="n">Vector3</span> <span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="m">1.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>神奇的 coroutine 啊，程序竟然正确打印出 10 个时间了， 请解释上述代码！</p>
+<h3 id="33-domove-的实现代码">3.3 DOMove 的实现代码</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">exciting_programming</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="k">static</span> <span class="n">IEnumerator</span> <span class="n">DoMove</span><span class="p">(</span><span class="k">this</span> <span class="n">MonoBehaviour</span> <span class="n">mono</span><span class="p">,</span> <span class="n">Transform</span> <span class="n">trans</span><span class="p">,</span> <span class="n">Vector3</span> <span class="n">target</span><span class="p">,</span> <span class="kt">float</span> <span class="n">time</span><span class="p">,</span> <span class="n">Action</span> <span class="n">callback</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Vector3</span> <span class="n">distance</span> <span class="p">=</span> <span class="n">target</span> <span class="p">-</span> <span class="n">trans</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kt">float</span> <span class="n">f</span> <span class="p">=</span> <span class="n">time</span><span class="p">;</span> <span class="n">f</span> <span class="p">&gt;=</span> <span class="m">0.0f</span><span class="p">;</span> <span class="n">f</span> <span class="p">-=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//just like call update()</span>
+</span></span><span class="line"><span class="cl">			<span class="n">trans</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">distance</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//Debug.Log (Time.deltaTime);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">yield</span> <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">};</span>
+</span></span><span class="line"><span class="cl">		<span class="n">callback</span> <span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="k">static</span> <span class="n">Transform</span> <span class="n">DoMove</span><span class="p">(</span><span class="k">this</span> <span class="n">Transform</span> <span class="n">transform</span><span class="p">,</span> <span class="n">Vector3</span> <span class="n">target</span><span class="p">,</span> <span class="kt">float</span> <span class="n">time</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">MonoBehaviour</span> <span class="n">mono</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponents</span><span class="p">&lt;</span><span class="n">MonoBehaviour</span><span class="p">&gt;</span> <span class="p">()</span> <span class="p">[</span><span class="m">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="n">mono</span><span class="p">.</span><span class="n">StartCoroutine</span> <span class="p">(</span><span class="n">mono</span><span class="p">.</span><span class="n">DoMove</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">MonoBehaviour</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&#34;end of moving it!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}));</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">transform</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">DoMoveIt</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">transform</span><span class="p">.</span><span class="n">DoMove</span> <span class="p">(</span><span class="k">new</span> <span class="n">Vector3</span> <span class="p">(</span><span class="m">1.0f</span><span class="p">,</span> <span class="m">1.0f</span><span class="p">,</span> <span class="m">1.0f</span><span class="p">),</span> <span class="m">1.0f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个程序非常不错，使用了 <strong>方法扩展、协程、lambda 表达式</strong> 等技术。既然运动可以表达为协程，那么一个物体的运动如何管理起来？如果你做到了这一点，iTweent 的实现不是菜吗？</p>
+<p>不知不觉间，你已拥有了做这样牛叉组件的能力，是不是有所感悟！</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%99%84%E4%BB%B6/">附件</a>
+          <a href="/tags/c/">C#</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/x1-uml-notation/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">附件一、UML符号与面向对象的设计</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/01-nature-of-game/">
+            <span class="next-text nav-default">一、游戏的本质</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

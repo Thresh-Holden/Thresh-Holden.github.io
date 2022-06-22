@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>附录 X3-06、协程与Unity - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="1、进程、线程与协程 进程（Process）是执行中的程序，是操作系统管理、分配资源（CPU、内存、IO等）的单位。简单的，进程运行在由操作系" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/x3-06-coroutine/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="附录 X3-06、协程与Unity" />
+<meta property="og:description" content="1、进程、线程与协程 进程（Process）是执行中的程序，是操作系统管理、分配资源（CPU、内存、IO等）的单位。简单的，进程运行在由操作系" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/x3-06-coroutine/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-12-20T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-12-20T00:00:00+08:00" />
+
+<meta itemprop="name" content="附录 X3-06、协程与Unity">
+<meta itemprop="description" content="1、进程、线程与协程 进程（Process）是执行中的程序，是操作系统管理、分配资源（CPU、内存、IO等）的单位。简单的，进程运行在由操作系"><meta itemprop="datePublished" content="2020-12-20T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-12-20T00:00:00+08:00" />
+<meta itemprop="wordCount" content="1742">
+<meta itemprop="keywords" content="附件,C#," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="附录 X3-06、协程与Unity"/>
+<meta name="twitter:description" content="1、进程、线程与协程 进程（Process）是执行中的程序，是操作系统管理、分配资源（CPU、内存、IO等）的单位。简单的，进程运行在由操作系"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">附录 X3-06、协程与Unity</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-12-20 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1进程线程与协程">1、进程、线程与协程</a></li>
+        <li><a href="#2c-的协程机制-与-unity">2、C# 的协程机制 与 Unity</a>
+          <ul>
+            <li><a href="#21-c-生成器模式与-yield-关键字">2.1 C# 生成器模式与 yield 关键字</a></li>
+            <li><a href="#22-unity-协程实现与游戏循环">2.2 Unity 协程实现与游戏循环</a></li>
+          </ul>
+        </li>
+        <li><a href="#3unity-协程的应用">3、Unity 协程的应用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="1进程线程与协程">1、进程、线程与协程</h2>
+<blockquote>
+<p>进程（Process）是执行中的程序，是操作系统管理、分配资源（CPU、内存、IO等）的单位。简单的，进程运行在由操作系统提供的虚拟计算机上，进程之间是隔离的，进程间只能通过管道、共享文件、网络相互通讯。具体见操作系统教程</p>
+</blockquote>
+<blockquote>
+<p>线程（Thread）是进程中并发执行的函数（任务），有自己的栈和上下文环境，是操作系统能够进行资源调度的最小单位。一个进程至少有一个线程（main），应用线程可直接由操作系统线程库管理，也可由编程语言提供的库调度，线程之间共享进程的所拥有的资源。多线程可跟好的利用多CPU资源，但协同机制大大提升了编程难度</p>
+</blockquote>
+<blockquote>
+<p>协程（Coroutine）是一个有应用程序自己调度的并发函数，有自己的栈和上下文环境，采用 <strong>非抢占式调度</strong>。协程的优势是避免了频繁线程调度的开销，单线程也能产生并发效果，由于在一个线程中能仅能有一个协程执行，减少的资源冲突。它功能虽然很像线程，但是必须由编译或用户编程代码切换线程。维基百科的解释是：协同程序是一种计算机程序组件，它通过允许暂停和恢复执行，将子程序泛化以实现无优先级的多任务处理。协同程序非常适合实现类似的程序组件，如协作任务、异常、事件循环、迭代器、无限列表和管道。</p>
+</blockquote>
+<blockquote>
+<p>go-routine 或 fiber 是协程，它们有一个单线程或多线程的调度器调度，当协程被挂起后自动执行其他协程。</p>
+</blockquote>
+<h2 id="2c-的协程机制-与-unity">2、C# 的协程机制 与 Unity</h2>
+<h3 id="21-c-生成器模式与-yield-关键字">2.1 C# 生成器模式与 yield 关键字</h3>
+<p>C# 使用生成器（Generator）模式协同机制，一个函数使用 yield 关键字产生一个对象的序列，通过 IEnumerator 接口对象遍历这个序列。以下是 Unity 中的一个脚本，它管理了 Generator 函数的两个实例，并调度它们运行。代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">CoroutineDemo</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">private</span> <span class="n">IEnumerator</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">gen1</span><span class="p">,</span><span class="n">gen2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">gen1</span> <span class="p">=</span> <span class="n">Generator</span> <span class="p">(</span><span class="m">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">gen2</span> <span class="p">=</span> <span class="n">Generator</span> <span class="p">(</span><span class="m">100</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">print</span> <span class="p">(</span><span class="s">&#34;exec start work or not ?&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">gen1</span><span class="p">.</span><span class="n">MoveNext</span> <span class="p">())</span>
+</span></span><span class="line"><span class="cl">			<span class="n">print</span> <span class="p">(</span><span class="s">&#34;gen1: &#34;</span> <span class="p">+</span> <span class="n">gen1</span><span class="p">.</span><span class="n">Current</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">gen2</span><span class="p">.</span><span class="n">MoveNext</span> <span class="p">())</span>
+</span></span><span class="line"><span class="cl">			<span class="n">print</span> <span class="p">(</span><span class="s">&#34;gen2: &#34;</span> <span class="p">+</span> <span class="n">gen2</span><span class="p">.</span><span class="n">Current</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">IEnumerator</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">Generator</span><span class="p">(</span><span class="kt">int</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">print</span> <span class="p">(</span><span class="s">&#34;start work! &#34;</span> <span class="p">+</span> <span class="n">start</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">yield</span> <span class="k">return</span> <span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;=</span> <span class="m">10</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">print</span> <span class="p">(</span><span class="s">&#34;next work! &#34;</span> <span class="p">+</span> <span class="n">start</span> <span class="p">+</span> <span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="k">yield</span> <span class="k">return</span> <span class="n">start</span> <span class="p">+</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请运行以上代码。</p>
+<p><strong>语法</strong></p>
+<ul>
+<li>C# 的协程就是一个函数。函数必须返回实现迭代器接口（<a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerator?view=netframework-4.8">IEnumerator</a>）的匿名对象（协程上下文）</li>
+<li>协程函数必须使用 <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield">yield</a> 关键字返回一个值（yield return value）或 终止协程（yield break）</li>
+</ul>
+<p><strong>创建协程</strong></p>
+<ul>
+<li>编译器确定一个函数是协程，编译后协程函数执行过程是：
+<ul>
+<li>在堆上创建协程上下文对象和函数实例（栈），并不执行代码</li>
+<li>返回协程上下文（包含协程ID，将执行函数代码指针，当前返回值，函数实例的栈指针等）对象引用给调用者。</li>
+</ul>
+</li>
+<li>案例中，start 函数中创建了两个 Generator 协程，并返回了它们的上下文对象
+<ul>
+<li>这时函数并没有执行</li>
+<li>每个协程实例在堆中有独立的函数栈，并压入了参数</li>
+<li>代码指针指向首行代码</li>
+<li>当前返回值为默认值或 null</li>
+</ul>
+</li>
+<li>由于 Generator 函数没有执行，所以先打印 <code>exec start work or not ?</code></li>
+</ul>
+<p><strong>调度、执行协程</strong></p>
+<ul>
+<li>案例中，update 函数在调度并执行协程</li>
+<li>上下文对象实现了 IEnumerator 接口
+<ul>
+<li>当调用 MoveNext() 方法后，该协程执行直到遇到 yield 或 协程结束（yield break）</li>
+<li>yield 语句的任务是将 return value 写入上下文对象当前值，代码指针指向下一行</li>
+<li>程序返回调度程序</li>
+</ul>
+</li>
+<li>调度程序根据上下文对象返回值决定下一次调度</li>
+</ul>
+<p>表面上，两个 Generator 函数是并发的，但执行顺序是代码控制的（多线程调度器执行顺序不一定有序）。</p>
+<ul>
+<li>这个<a href="https://blog.csdn.net/bdss58/article/details/74779606">博客</a> 给出了 python、nodejs、golang 生成器的实现</li>
+</ul>
+<h3 id="22-unity-协程实现与游戏循环">2.2 Unity 协程实现与游戏循环</h3>
+<p>现在阅读 MonoBehaviour 的 <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html">StartCoroutine 方法</a>就很清晰了。</p>
+<ul>
+<li>StartCoroutine 将协程的上下文添加到该行为协程管理器中</li>
+<li>游戏循环会驱动该行为中协程的执行</li>
+</ul>
+<p>Unity 引擎预定义一些协程返回值，我们可以从 <a href="https://docs.unity3d.com/Manual/ExecutionOrder.html">Execution Order of Event Functions</a> 中找到它们：</p>
+<ul>
+<li>yield null The coroutine will continue after all Update functions have been called on the next frame.</li>
+<li>yield WaitForSeconds Continue after a specified time delay, after all Update functions have been called for the frame</li>
+<li>yield WaitForFixedUpdate Continue after all FixedUpdate has been called on all scripts</li>
+<li>yield WWW Continue after a WWW download has completed.</li>
+<li>yield StartCoroutine Chains the coroutine, and will wait for the MyFunc coroutine to complete first.</li>
+</ul>
+<p>在游戏循环 Physics 阶段的最后处理</p>
+<ul>
+<li>yield WaitForFixedUpdate</li>
+</ul>
+<p>在游戏循环 GameLogic 阶段的开始依次处理：</p>
+<ul>
+<li>yield null</li>
+<li>yield WaitForSeconds</li>
+<li>yield WWW Continue</li>
+</ul>
+<p>在游戏循环 End of frame 阶段</p>
+<ul>
+<li>yield WaitForEndOfFrame</li>
+</ul>
+<p>当然你可以自己定义协程执行条件，仅需要继承 <a href="https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html">CustomYieldInstruction</a></p>
+<h2 id="3unity-协程的应用">3、Unity 协程的应用</h2>
+<p>官方文档 <a href="https://docs.unity3d.com/Manual/Coroutines.html">Coroutines</a> 可以管理动作过程，如 Fading。</p>
+<p>一个疑问用 update 不是挺方便？</p>
+<p>事实是 Coroutines 有生命周期的（从创建到函数执行结束），而且是每个协程都是独立的函数实例。如果游戏对象的基本动作都用协程管理？。。。</p>
+<p>不错！<a href="http://dotween.demigiant.com/">Dotweem</a> 这个产品就是这样思考的！</p>
+<p>协程、方法扩展、Lambda 表达式 等编程技巧，让 Unity 编程产生了梦幻般的效果。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-12-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E9%99%84%E4%BB%B6/">附件</a>
+          <a href="/tags/c/">C#</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/x3-05-reflection/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">附录 X3-05、反射 与 Unity</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/11-data-driven-design/">
+            <span class="next-text nav-default">第11章、数据驱动的设计</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

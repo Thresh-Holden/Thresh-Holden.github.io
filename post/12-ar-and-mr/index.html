@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>第12章、AR/MR 技术 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="So keep looking until you find it. Don&amp;rsquo;t settle. &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 1、AR/MR 概述 什么是“真实”？你如何定义“真实”，如果你说的是你看到的、摸到的、感受到的一切，那么“真" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/12-ar-and-mr/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="第12章、AR/MR 技术" />
+<meta property="og:description" content="So keep looking until you find it. Don&rsquo;t settle. &mdash; Steve Jobs, Stanford Report, June 14, 2005 1、AR/MR 概述 什么是“真实”？你如何定义“真实”，如果你说的是你看到的、摸到的、感受到的一切，那么“真" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/12-ar-and-mr/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-11-20T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-11-20T00:00:00+08:00" />
+
+<meta itemprop="name" content="第12章、AR/MR 技术">
+<meta itemprop="description" content="So keep looking until you find it. Don&rsquo;t settle. &mdash; Steve Jobs, Stanford Report, June 14, 2005 1、AR/MR 概述 什么是“真实”？你如何定义“真实”，如果你说的是你看到的、摸到的、感受到的一切，那么“真"><meta itemprop="datePublished" content="2020-11-20T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-11-20T00:00:00+08:00" />
+<meta itemprop="wordCount" content="4638">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="第12章、AR/MR 技术"/>
+<meta name="twitter:description" content="So keep looking until you find it. Don&rsquo;t settle. &mdash; Steve Jobs, Stanford Report, June 14, 2005 1、AR/MR 概述 什么是“真实”？你如何定义“真实”，如果你说的是你看到的、摸到的、感受到的一切，那么“真"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">第12章、AR/MR 技术</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-11-20 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1armr-概述">1、AR/MR 概述</a>
+          <ul>
+            <li><a href="#11-什么是-armr">1.1 什么是 AR/MR？</a></li>
+            <li><a href="#12-ar技术">1.2 AR技术</a></li>
+            <li><a href="#13-ar与游戏创新">1.3 AR与游戏创新</a></li>
+          </ul>
+        </li>
+        <li><a href="#2ar-sdk-与应用">2、AR SDK 与应用</a></li>
+        <li><a href="#3作业与练习">3、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>So keep looking until you find it. Don&rsquo;t settle.</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<h2 id="1armr-概述">1、AR/MR 概述</h2>
+<p>什么是“真实”？你如何定义“真实”，如果你说的是你看到的、摸到的、感受到的一切，那么“真实”不过是大脑给你的电子信号而已。如果你感兴趣虚拟现实这个话题，建议阅读“<a href="http://tech.sina.com.cn/zl/post/detail/it/2016-03-31/pid_8505592.htm">沉浸式虚拟现实中，什么是虚拟什么是现实？</a>”</p>
+<h3 id="11-什么是-armr">1.1 什么是 AR/MR？</h3>
+<p>什么是 AR？让我们先看一个简单应用：</p>
+<p><img src="../images/ch12/ar-take-photo.png" alt=""></p>
+<p>这是华为某手机发布会的现场，当用户拍到一个心形手势，对应位置会出现一个几个（虚拟的）心组成的动画。你喜欢这个效果吗？</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Augmented_reality">增强现实</a></strong>（Argumented Reality (AR)）是一种将真实世界信息和虚拟世界信息“无缝”集成的新技术，是把原本在现实世界的一定时间空间范围内很难体验到的实体信息(视觉信息,声音,味道,触觉等),通过电脑等科学技术，模拟仿真后再叠加，将虚拟的信息应用到真实世界，被人类感官所感知，从而达到超越现实的感官体验。</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Mixed_reality">混合现实</a></strong>(Mixed reality (MR)) 有时被称为超现实（hybrid reality），是真实和虚拟世界的合并，产生新的可视化环境，物理和数字对象实时共存且在其中交互。混合现实不仅发生在物理世界或虚拟世界中，而是融合了现实和虚拟现实，通过身临其境的技术包含增强现实和增强虚拟。</p>
+<p><strong>VR，AR，MR的区别</strong></p>
+<ul>
+<li>VR，玩家可以通过各种交互技术进入虚拟世界，与虚拟世界事物交互。</li>
+<li>AR，把虚拟世界的物体叠加在现实世界的影像或视频中的物体上，玩家在现实的背景上与虚拟世界物体互动。</li>
+<li>MR，将现实世界事物实时在虚拟世界中重构，这些现实物体、虚拟物体与玩家三者互动。</li>
+</ul>
+<p><img src="images/ch12/vr-ar-mr-oculus-hololens.png" alt=""></p>
+<p>上图中，左边是设备（Oculus），VR 要造一个世界给用户，它是头罩。右边设备（HoloLens），AR 是在现有世界中叠加虚拟事物，它是一个眼镜或者是（摄像头+显示器）。VR 和 AR  有着本质的区别：<strong>VR是创造现实；AR是超越现实</strong>。 实际应用中，我们对 AR 和 MR 技术通常是不区分，简称 AR/MR 技术。</p>
+<h3 id="12-ar技术">1.2 AR技术</h3>
+<p>于其说介绍 AR 技术，不如说 <strong>AR 坑有多深</strong>。了解了“坑”才能知道世界之大，激励我们努力学习，不断攀登科学高峰。</p>
+<p>如果你是技术控，请先阅读科普文章 <em><a href="https://zhuanlan.zhihu.com/p/21450518">凌海滨 从计算机视觉的角度漫谈增强现实</a></em></p>
+<p><strong>1、增强现实技术流程</strong></p>
+<p>按照Ronald Azuma在1997年的总结，增强现实系统一般具有三个主要特征：虚实结合，实时交互，和三维配准（又称注册、匹配或对准）。近二十年过去了，AR已经有了长足的发展，系统实现的重心和难点也随之变化，但是这三个要素基本上还是AR系统中不可或缺的。</p>
+<p><img src="../images/ch12/ar-process.png" alt=""></p>
+<p>上图描绘了一个典型的AR系统的概念流程。从真实世界出发，经过数字成像，然后系统通过影像数据和传感器数据一起对三维世界进行感知理解，同时得到对三维交互的理解。3D交互理解的目的是告知系统要“增强”的内容。</p>
+<p>在AR的技术流程中，中间的对于环境和交互的精准理解就是目前的瓶颈了。上图中间的基于多模态（简单说就是影像+传感器）的环境和交互理解，是两个充满了各种或明或暗的坑的领域，足以让很多假的猛士知难而退。</p>
+<p><strong>2、环境和交互理解的难点和机会</strong></p>
+<p>那么，真的猛士将会直面什么样惨淡和淋漓的坑群呢？下面我们来共同赏析几个常见坑型：</p>
+<p>1、环境坑：据说人的脑细胞里面大多数都是用来处理和理解双眼所获取的视觉信息的，很多我们惊鸿一瞥就能理解和感知的东西得益于我们强大的脑处理能力。各种环境变化对视觉信息的影响我们不但能轻松应对，有时还能加以利用。比如我们的认知能力对光照明暗的变化相当的鲁棒；比如我们可以通过阴影来反推三维关系。而这些对于计算机（确切些说是计算机视觉算法）来说都是不折不扣的坑或者大坑。总的来说，成像环境的变化常常计算机视觉算法以及AR带来很大的挑战，所以我把相关的坑统称环境坑。</p>
+<p>2、学术坑：对于环境和交互的理解重建基本上属于计算机视觉的范畴，计算机视觉是一个有着半个世纪积累的领域，和AR相关的学术成果可以成吨来计。夸张一点的说，每篇都有坑，区别只在大小深浅明暗。从实用的解决方案的角度来看学术论文，尤其是新的论文，一定要小心其中的设定和有些话外的信息，多想一下诸如该算法是否对光照敏感，是否可能在手机端达到实时，等等。简单的建议是：对于一篇计算机视觉的论文，未有相关经验的观众请在有相关训练的成熟观众陪伴下谨慎观看。</p>
+<p>3、上帝坑：上帝是谁？当然就是用户了。上帝的坑当然得长得有创意，常常激起开发者灵光一动恍然大哭的欲望。比如上帝说，要能判别视频中人的性别，80%的准确度，100万。哇，你是不是感动的热泪盈眶（仁慈的上帝啊），用各种时髦的方法轻松超额10%搞定。可是，交货的时候上帝说你这个系统咋认不出我们家小baby的性别啊！Oh my God，你是不是又激动得想哭了。和环境坑比较像，CV的算法很多时候是需要有假设的，强烈的假设。那怎么办呢？上帝总是正确的，所以唯一的办法就是尽早教育上帝让他更加正确：需要苦口婆心地尽早和用户科普以及尽量明确定义需求，防范坑于未成。还不行的话咋办？上帝啊，请再加点工钱吧。</p>
+<p>其实还有其他类型的坑，比如开源代码坑，这里就不详述了。那么，这么一个充满忧患的领域，为什么又会有那么多追随呢？最重要的原因就是巨大的应用前景和钱景了。往小了说，很多具体的应用领域（比如游戏）都已经成功地引入了AR的元素；往大了说，AR的终极形态可能从根本上改变当前的非自然人机交互模式（请脑补微软Win95的成功和现在的HoloLens）。上面说的那些坑，在很多是应用上，是可能避免的或者可能填得不那么深的。<strong>总的来说，一个好的AR应用往往是需要算法工程实现、产品设计、内容制作等方面的深度结合。</strong></p>
+<p><strong>3、AR入行与修行</strong></p>
+<p>国家每年有大量科技经费投入支持 AR 核心设备，以及在教育、医疗、文化娱乐、交通等领域的应用，虽然各种 AR SDK 不断出现并完善，VR/AR依然是火热的技术与应用的创新领域。尽管现有一些产品，已能满足做一些有趣的事情，但要成为产品就需要大量高端人才参与研发。</p>
+<p>这里就 AR 技术给出相关课程:</p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>内容/难点</th>
+<th>课程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>识别</td>
+<td>从场景中识别制定的事物 / 光照、遮挡</td>
+<td>计算机图像处理</td>
+</tr>
+<tr>
+<td>跟踪</td>
+<td>跟踪视频中的物体，配准 / 运动</td>
+<td>计算机视觉</td>
+</tr>
+<tr>
+<td>3D 度量</td>
+<td>获取像素点深度信息</td>
+<td>  </td>
+</tr>
+<tr>
+<td>3D 建模</td>
+<td>在识别的基础上，建立对应的模型 / 缺失补全</td>
+<td>计算机图形学等</td>
+</tr>
+<tr>
+<td>语义理解</td>
+<td>识别物体行为的语义 / 语境</td>
+<td>模式识别/机器学习</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>其他相关课程：《人工智能》、《数据挖掘》</li>
+<li>基础课程：《线性代数》《数值分析》《信号处理》</li>
+</ul>
+<p>（请编程大神自己对照，然后补脑。付出越大，机遇越多！）</p>
+<h3 id="13-ar与游戏创新">1.3 AR与游戏创新</h3>
+<p>早在1990年，增强现实（AR）技术就已经被提出，直到2016年任天堂发布的游戏《精灵宝可梦GO》，让AR技术真正的进入到数百万智能手机用户的生活中。</p>
+<p>AR 三大顶级企业：<strong>苹果</strong>、<strong>谷歌</strong>和<strong>微软</strong>。但这不是巨头垄断的行业，有无数创新企业！</p>
+<p>例如：苹果公司，2017年5月份发布了其增强现实（AR）的开发工具ARKit,并在AR技术领域申请了多项专利。不仅如此，苹果还大量收购其他有增强现实（AR）技术的公司。例如 Iphone X 的 3D 摄像头，智能无线耳机等等</p>
+<p><img src="../images/drf/advanced.png" alt=""> todo</p>
+<p>至今，除了《精灵宝可梦GO》，被人们广泛接受的 AR 游戏并不多。原因是多方面，技术、经济性、可玩性。。。知乎上的讨论<a href="https://www.zhihu.com/question/65792332">AR和VR适合哪些类型的游戏？</a>，需要进一步总结。</p>
+<p><strong>1、真实地图寻宝、冒险、对战类</strong></p>
+<p><strong>2、符号、动作识别类</strong></p>
+<p><strong>3、虚拟按钮休闲小游戏类</strong></p>
+<h2 id="2ar-sdk-与应用">2、AR SDK 与应用</h2>
+<p>1、 主流AR SDK
+(1) 视辰的EasyAR</p>
+<pre><code>* 比较年轻，15年推出第一版
+
+* 目前只能识别图片
+
+* 支持大部分主流平台
+
+* 入门门槛低，使用简单，适合新手
+
+* 本地服务丰富，云支持强大
+
+* 支持国产，未来可期
+</code></pre>
+<p><img src="../images/ch12/easy-ar-introduction1.png" alt="">
+<img src="../images/ch12/easy-ar-introduction2.png" alt="">
+(2) PTC的Vuforia</p>
+<pre><code>* 发展时间长，功能强大
+
+* 使用人数多，技术支持强
+
+* 云管理数据库，随时下载
+
+* 支持平台多，从大众到小众
+
+* 有免费版本，但有水印
+</code></pre>
+<p><img src="../images/ch12/vuforia-features1.png" alt="">
+<img src="../images/ch12/vuforia-features1.png" alt=""></p>
+<p>2、 vuforia使用</p>
+<pre><code>* 注册登录(https://developer.vuforia.com/)
+
+(1)注册登录后可见如下开发管理界面
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop1.png" alt=""></p>
+<pre><code>(2)创建证书，用于获取License Key。Vuforia在Unity中需要相应的Key对SDK进行配置，否则无法使用。
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop2-1.png" alt="">
+<img src="../images/ch12/vuforia-develop2-2.png" alt=""></p>
+<pre><code>(3)创建目标数据库,用于对所有Target及其特征数据进行管理和保存
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop3-1.png" alt="">
+<img src="../images/ch12/vuforia-develop3-2.png" alt=""></p>
+<pre><code>(4)Vuforia要求将特定识别的目标提前上传至数据库进行特征提取。目标有多种类型，此处选择image，以对单幅图像进行识别。
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop4-1.png" alt="">
+<img src="../images/ch12/vuforia-develop4-2.png" alt="">
+<img src="../images/ch12/vuforia-develop4-3.png" alt=""></p>
+<pre><code>(5)创建Unity新项目,在Vuforia官网中下载Unity扩展包并导入项目中
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop5-1.png" alt="">
+<img src="../images/ch12/vuforia-develop5-2.png" alt=""></p>
+<pre><code>(6)以unity package形式从Target Manger页面下载目标数据库并导入项目
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop6-1.png" alt="">
+<img src="../images/ch12/vuforia-develop6-2.png" alt=""></p>
+<pre><code>(7)删除场景中原有的摄像机，并拖入Vuforia的ARCamera预制体，此时运行项目，可以看到场景为摄像头实景
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop7-1.png" alt=""></p>
+<pre><code>(8)从ARCamera的检视面板中打开Vuforia配置文件，将证书管理器中获取的Key写入配置文件同时激活相应数据集
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop8-1.png" alt="">
+<img src="../images/ch12/vuforia-develop8-2.png" alt=""></p>
+<pre><code>(9)将准备好的龙模型挂载到ImageTarget下作为子对象，调整模型大小后运行项目，结果如下：
+</code></pre>
+<p><img src="../images/ch12/vuforia-develop9-1.png" alt="">
+<img src="../images/ch12/vuforia-develop9-2.png" alt="">
+<img src="../images/ch12/vuforia-develop9-1.gif" alt=""></p>
+<pre><code>* 额外追踪
+
+通过对ImageTarget进行设置，即使目标在摄像头外也能维持场景
+</code></pre>
+<p><img src="../images/ch12/vuforia-extend-tracking1.png" alt="">
+<img src="../images/ch12/vuforia-extend-tracking2.png" alt="">
+<img src="../images/ch12/vuforia-extend-tracking3.png" alt=""></p>
+<pre><code>* 脚本处理
+</code></pre>
+<p><img src="../images/ch12/script_processing1.png" alt=""></p>
+<pre><code>上述简单案例，可以在不进行任何编码情况下实现最基础的AR运用。整个过程不需要任何计算机视觉的知识，ARCamera自动对ImageTarget进行检测，且通过其挂载事件脚本对模型渲染与否进行处理。
+</code></pre>
+<p><img src="../images/ch12/script_processing2.png" alt=""></p>
+<pre><code>脚本在Start()初始化的过程中对另一组件Image Target Behavior脚本获取，并通过其将当前类注册为事情处理器，使得可以通过ITrackableEventHandler接口的OnTrackableStateChange函数接收到目标检测状态的变化。
+</code></pre>
+<p><img src="../images/ch12/script_processing3.png" alt=""></p>
+<pre><code>当前状态为检测、追踪或额外追踪时，OnTrackingFound()获取ImageTarget下所有模型的渲染及碰撞器组件并启用，显示模型；否则，OnTrackingLost()将目标下所有模型的渲染及碰撞器组件关闭，模型消失。
+
+* Virtual Button
+
+对于不同类型Target的识别已经足以让游戏变得酷炫，然而Vuforia还可以使用virtual button功能让虚拟与现实的交互变得更加的丰富。virtual button是Vuforia中唯一一个可交互的组件，玩家可以通过摄像头用手指触碰虚拟按钮，从而触发相应的动作或事件，开发者可以利用这个功能创造出很多有趣的应用。接下来便在前述案例的基础上，加入虚拟按钮让dragon飞起来。
+
+(1)将Vuforia的Virtual button预制体挂载到ImageTarget下作为子对象，同时调整至合适大小和位置。为了使虚拟按钮可见，可以在按钮下添加相应大小的平面并附着材质
+</code></pre>
+<p><img src="../images/ch12/vuforia-virtual-button1.png" alt="">
+<img src="../images/ch12/vuforia-virtual-button2.png" alt=""></p>
+<pre><code>(2)创建脚本，对IVuforiaButtonEventHandler接口进行实现，以对虚拟按钮的按下与释放事件进行监听并处理，挂载到ImageTarget下并对变量进行指定
+</code></pre>
+<p><img src="../images/ch12/vuforia-virtual-button3.png" alt=""></p>
+<pre><code>(3)由于dragon已经具有Animator组件，直接在脚本中进行获取，并在相应的按钮事件中对飞行与降落的动画分别进行触发
+</code></pre>
+<p><img src="../images/ch12/vuforia-virtual-button4.png" alt=""></p>
+<p><img src="../images/ch12/vuforia-virtual-button5.gif" alt=""></p>
+<pre><code>* small terrain
+
+它可以对图片进行识别，依据图片参数在图片所在平面生成地表网格，同时对地表范围内的实物进行持续的追踪检测，生成相应大小的长方体包围盒。
+</code></pre>
+<p><img src="../images/ch12/vuforia-small-terrain1.png" alt="">
+<img src="../images/ch12/vuforia-small-terrain2.png" alt=""></p>
+<h2 id="3作业与练习">3、作业与练习</h2>
+<p>1、 图片识别与建模</p>
+<p>2、 虚拟按键小游戏</p>
+<p>3、开发城市定向越野运动 MR 游戏【可选】</p>
+<ul>
+<li>游戏要求：
+<ul>
+<li>准备：
+<ul>
+<li>选择为每个用户准备一套拼图图片（含干扰图片），按一定策略发布到目标位置（随机位置偏移）</li>
+<li>越野地图一张</li>
+</ul>
+</li>
+<li>开始游戏：
+<ul>
+<li>玩家在起点，用手机在起点附近，捕捉图片并显示第二个目标</li>
+<li>然后每到一个目标位置，捕捉与前面捕捉的图片可拼接的图片，拼接成功，则显示下一个目标</li>
+</ul>
+</li>
+<li>游戏结束：
+<ul>
+<li>玩家到达终点的时间最短者胜</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-11-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/10-intelligent/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">十、游戏智能</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/13-multiplayer-and-networking/">
+            <span class="next-text nav-default">第13章、多人游戏与网络</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

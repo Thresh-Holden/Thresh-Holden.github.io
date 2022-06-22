@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>九、UI系统 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="You can&amp;rsquo;t connect the dots looking forward; you can only connect them looking backwards &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 资源下载 资源商店，Game Jam Menu Template 资源商店，Unity Samples: UI 深入csharp 协程 和 Unity 对" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/09-ui/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="九、UI系统" />
+<meta property="og:description" content="You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards &mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 资源下载 资源商店，Game Jam Menu Template 资源商店，Unity Samples: UI 深入csharp 协程 和 Unity 对" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/09-ui/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-11-20T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-11-20T00:00:00+08:00" />
+
+<meta itemprop="name" content="九、UI系统">
+<meta itemprop="description" content="You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards &mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 资源下载 资源商店，Game Jam Menu Template 资源商店，Unity Samples: UI 深入csharp 协程 和 Unity 对"><meta itemprop="datePublished" content="2020-11-20T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-11-20T00:00:00+08:00" />
+<meta itemprop="wordCount" content="8048">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="九、UI系统"/>
+<meta name="twitter:description" content="You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards &mdash; Steve Jobs, Stanford Report, June 14, 2005 课程内容与资源 资源下载 资源商店，Game Jam Menu Template 资源商店，Unity Samples: UI 深入csharp 协程 和 Unity 对"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">九、UI系统</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-11-20 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#课程内容与资源">课程内容与资源</a></li>
+        <li><a href="#1unity-ui-技术概述">1、Unity UI 技术概述</a>
+          <ul>
+            <li><a href="#11-unity-gui-简介">1.1 Unity GUI 简介</a></li>
+            <li><a href="#12-imgui-过时了">1.2 IMGUI 过时了？</a></li>
+            <li><a href="#13-ugui-的产生与优势">1.3 UGUI 的产生与优势</a></li>
+          </ul>
+        </li>
+        <li><a href="#2ugui-基础">2、UGUI 基础</a>
+          <ul>
+            <li><a href="#21-画布">2.1 画布</a></li>
+            <li><a href="#22-ui-布局基础">2.2 UI 布局基础</a></li>
+            <li><a href="#23-ui-组件与元素">2.3 UI 组件与元素</a></li>
+            <li><a href="#24-圆形遮罩动画富文本血条">2.4 圆形遮罩、动画、富文本、血条</a></li>
+          </ul>
+        </li>
+        <li><a href="#3screen-space---overlay-案例研究">3、Screen Space - Overlay 案例研究</a>
+          <ul>
+            <li><a href="#31-菜单与事件响应机制">3.1 菜单与事件响应机制</a></li>
+            <li><a href="#32-菜单结构与布局layout">3.2 菜单结构与布局（layout）</a></li>
+            <li><a href="#33-代码组织">3.3 代码组织</a></li>
+          </ul>
+        </li>
+        <li><a href="#4camera-ui-案例研究">4、Camera UI 案例研究</a>
+          <ul>
+            <li><a href="#41-多摄像机与3d菜单">4.1 多摄像机与3D菜单</a></li>
+            <li><a href="#42-画中画与-ui-光效">4.2 画中画与 UI 光效</a></li>
+            <li><a href="#43-事件编程与dragdrop">4.3 事件编程与Drag&amp;Drop</a></li>
+          </ul>
+        </li>
+        <li><a href="#5小结">5、小结</a></li>
+        <li><a href="#6作业与练习">6、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>You can&rsquo;t connect the dots looking forward; you can only connect them looking backwards</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<h2 id="课程内容与资源">课程内容与资源</h2>
+<p><img src="../images/game-architecture-ui.png" alt=""></p>
+<p><strong>资源下载</strong></p>
+<ol>
+<li>
+<p>资源商店，<em><a href="https://assetstore.unity.com/packages/essentials/game-jam-menu-template-40465">Game Jam Menu Template</a></em></p>
+</li>
+<li>
+<p>资源商店，<em><a href="https://assetstore.unity.com/packages/essentials/unity-samples-ui-25468">Unity Samples: UI</a></em></p>
+</li>
+</ol>
+<p><strong>深入csharp</strong></p>
+<ul>
+<li><a href="../x3-06-coroutine">协程 和 Unity</a></li>
+<li><a href="../x3-07-method-extend-lambda">对象方法扩展 和 Dotween 的实践</a></li>
+</ul>
+<p><em>预计时间：4-6 * 45 min</em></p>
+<h2 id="1unity-ui-技术概述">1、Unity UI 技术概述</h2>
+<h3 id="11-unity-gui-简介">1.1 Unity GUI 简介</h3>
+<p>UI 即 User Interface（用户界面）的简称。在许多软件中，采用狭义的概念，特指窗体、面板、按钮、文本框等人们熟悉的人机交互元素，及其组织与风格（也称皮肤）。Unity UI 系统采用上述狭义概念。</p>
+<p>Unity 目前支持三套完全不同风格的 UI 系统：</p>
+<ul>
+<li>4.0 及以前 - IMGUI（Immediate Mode GUI）及时模式图形界面。它是代码驱动的 UI 系统，没有图形化设计界面，只能在 OnGUI 阶段用 GUI 系列的类绘制各种 UI 元素，因此 UI元素只能浮在游戏界面之上。</li>
+<li>5.0 及以后 - Unity GUI /  UGUI 是面向对象的 UI 系统。所有 UI 元素都是游戏对象，友好的图形化设计界面， 可在场景渲染阶段渲染这些 UI 元素。</li>
+<li>2018.3 及以后 - UXML（unity 扩展标记语言）。基于 IMGUI 的 AXML 包装，方便移动应用开发者入门。</li>
+</ul>
+<h3 id="12-imgui-过时了">1.2 IMGUI 过时了？</h3>
+<p>IMGUI 的存在符合游戏编程的传统，即使在今天它依然没有被官方宣判为遗留（将要淘汰的）系统（Legacy Systems）。在修改模型，渲染模型这样的经典游戏循环编程模式中，在渲染阶段之后，绘制 UI 界面无可挑剔（参考<a href="https://docs.unity3d.com/Manual/ExecutionOrder.html">Execution Order of Event Functions</a>）。这样的编程即避免了 UI 元素保持在屏幕最前端，又有最佳的执行效率，一切控制掌握在程序员手中，这对早期计算和存储资源贫乏的游戏设备来说，更是弥足珍贵。当然，早年 UI 交互手段就是绘制图片和文本，检测输入事件等基本任务。</p>
+<p>按 Unity 官方说法，IMGUI 主要用于以下<a href="https://docs.unity3d.com/Manual/GUIScriptingGuide.html">场景</a>：</p>
+<ul>
+<li>在游戏中创建调试显示工具</li>
+<li>为脚本组件创建自定义的 Inspector 面板。</li>
+<li>创建新的编辑器窗口和工具来扩展 Unity 环境。</li>
+</ul>
+<p>IMGUI系统通常不打算用于玩家可能使用并与之交互的普通游戏内用户界面。为此，应该使用 Unity 的基于 GameObject 的 UGUI 系统。</p>
+<p>显然，如果不做复杂的界面，如下代码简单易用的代码是程序员喜欢的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">IMGUITest</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">OnGUI</span> <span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Make a background box</span>
+</span></span><span class="line"><span class="cl">		<span class="n">GUI</span><span class="p">.</span><span class="n">Box</span><span class="p">(</span><span class="k">new</span> <span class="n">Rect</span><span class="p">(</span><span class="m">10</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">100</span><span class="p">,</span><span class="m">90</span><span class="p">),</span> <span class="s">&#34;Loader Menu&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// Make the first button. If it is pressed, Application.Loadlevel (1) will be executed</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="n">GUI</span><span class="p">.</span><span class="n">Button</span><span class="p">(</span><span class="k">new</span> <span class="n">Rect</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">40</span><span class="p">,</span><span class="m">80</span><span class="p">,</span><span class="m">20</span><span class="p">),</span> <span class="s">&#34;Level 1&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// Make the second button.</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="n">GUI</span><span class="p">.</span><span class="n">Button</span><span class="p">(</span><span class="k">new</span> <span class="n">Rect</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">70</span><span class="p">,</span><span class="m">80</span><span class="p">,</span><span class="m">20</span><span class="p">),</span> <span class="s">&#34;Level 2&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Application</span><span class="p">.</span><span class="n">LoadLevel</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因此，掌握了解 IMGUI 是非常必要：</p>
+<ul>
+<li>新手 UI 入门容易，帮助新手理解引擎的游戏循环</li>
+<li>高级程序员，创建在线调试环境</li>
+<li>工具开发者，定义 Unity 新的编程工具</li>
+</ul>
+<h3 id="13-ugui-的产生与优势">1.3 UGUI 的产生与优势</h3>
+<p>随着游戏开发的普及，为了让设计师也能参与参与程序开发，从简单的地图编辑器、菜单编辑器等工具应运而生。设计师甚至不需要程序员帮助，使用这些工具就可直接创造游戏元素，乃至产生游戏程序。除此之外，现代游戏 UI 必须要满足以下要求：</p>
+<ul>
+<li>跨设备执行，自动适应不同分辨率</li>
+<li>UI 元素与游戏场景融为一体的交互</li>
+<li>支持复杂的布局</li>
+<li>多摄像机支持</li>
+</ul>
+<p>以至于即使优秀的程序员在现代 UI 面前，传统代码驱动的 UI 面临开发效率低下，难以调试等问题。 对于 Unity 平台， 当 <a href="http://www.tasharen.com/?page_id=140">NGUI</a>: Next-Gen UI kit 的出现使得不依赖 Unity Pro 功能，使用所见即所得（WYSIWYG）设计工具，集成了 tweening 运动管理系统， 可以制作多数 2D 游戏，直接威胁了 Unity 的生意。 Unity 最终高薪聘了 NGUI 的主设计师，最终又分道扬镳，于是就有了 UGUI，青出于蓝而胜于蓝！</p>
+<p>UGUI 的优势：</p>
+<ul>
+<li>所见即所得（WYSIWYG）设计工具</li>
+<li>支持多模式、多摄像机渲染</li>
+<li>面向对象</li>
+</ul>
+<h2 id="2ugui-基础">2、UGUI 基础</h2>
+<p>本部分内容主要来自官方手册。  请参考 <a href="https://docs.unity.cn/cn/2018.4/Manual/UISystem.html">UI 系统</a></p>
+<h3 id="21-画布">2.1 画布</h3>
+<p>画布（Cavas）是绘图区域, 同时是 ui 元素的容器。 容器中 ui 元素及其子 UI 元素都将绘制在其上。 拥有Canvas组件的游戏对象都有一个画布，它空间中的子对象，如果是 UI 元素将渲染在画布上。</p>
+<p>画布区域在场景视图中显示为矩形。这使得定位UI元素变得非常容易，无需随时显示游戏运行视图。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p>UI元素采用像素单位表示位置和尺寸。</p>
+</div>
+<p><strong>1、UI元素的绘制顺序</strong></p>
+<p>画布中的UI元素按照它们在层次结构中出现的顺序绘制。如果两个UI元素重叠，后面的元素将出现在较早的元素之上。因此，最后一个孩子显示在最上面。</p>
+<p>要更改哪些元素出现在其他元素的顶部，通过拖动它们在 Hierarchy 视图中的位置。这顺序也可以通过 Transform 组件的方法在脚本中控制。 如：SetAsFirstSibling，SetAsLastSibling 和SetSiblingIndex。</p>
+<p><strong>2、渲染模式</strong></p>
+<p>画布组件有渲染模式（Render Mode）设置，可用于使其在屏幕空间（Screen Space）或世界空间（World Space）中渲染。</p>
+<p><strong>屏幕空间 - 叠加（Screen Space - Overlay）</strong></p>
+<p>将UI元素放置在场景顶部渲染的屏幕，画布会自动更改大小匹配屏幕。Canvas 默认中心点为屏幕中心！</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/GUI_Canvas_Screenspace_Overlay.jpg" alt=""></p>
+<p><strong>屏幕空间 - 相机（Screen Space - Camera）</strong></p>
+<p>画布放在制定的渲染摄像机前，如 100 的位置，画布会自动匹配为屏幕分辨率，Canvas 默认中心点为屏幕中心！。在此模式下，画布放置在指定 <strong>摄像机</strong> 前面的给定距离处。UI 元素由此摄像机渲染，这意味着摄像机设置会影响 UI 的外观。如果摄像机设置为 <strong>正交视图</strong> ，则 UI 元素将以透视图渲染，透视失真量可由摄像机 <strong>视野</strong> 控制。
+<img src="https://docs.unity.cn/cn/2018.4/uploads/Main/GUI_Canvas_Screenspace_Camera.jpg" alt=""></p>
+<p><strong>世界空间（World Space）</strong></p>
+<p>画布行为与场景中的其他任何对象一样，UI元素将放置在其他对象的前面或后面渲染。<strong>画布大小和位置任意设置</strong>，这对于意在成为世界一部分的用户界面非常有用，这种界面也称为“叙事界面”。</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/GUI_Canvas_Worldspace.jpg" alt=""></p>
+<p><strong>3、测试渲染模式</strong></p>
+<div class="admonition example"><p class="admonition-title">操作 09-01，渲染模式练习</p>
+<ul>
+<li>菜单 GameObject -&gt; UI -&gt; Button</li>
+</ul>
+<p>在游戏对象层次视图中出现 Canvas 和 EventSystem。</p>
+<ul>
+<li>展开 Canvas 看到 Buttion</li>
+<li>展开 Button 看到 Text</li>
+<li>菜单 GameObject -&gt; 3D Object -&gt; Cube 添加 Cube 作为参考物</li>
+<li>检查、设置以下对象属性
+<ul>
+<li>Main Camera 的 Position = （0，1，-10）</li>
+<li>Canvas::Button 的 （PosX,PosY,PosZ） = (0,0,0)</li>
+<li>Cube 的 Position = （0，<strong>0.5</strong>，0）</li>
+</ul>
+</li>
+<li>使用鼠标中间滚轮在场景视图中缩小，直到看到整个画布，中间有一个 Button</li>
+</ul>
+<p>研究渲染模式：</p>
+<ul>
+<li>选择 Canvas 对象的 Inspector 面板中 Canvas 组件
+<ul>
+<li>设置 Render Mode 为 Screen Space - Overlay</li>
+</ul>
+</li>
+</ul>
+<p>在 Game 视图中，看到按钮覆盖在 Cube 上。</p>
+<ul>
+<li>选择 Canvas 对象的 Inspector 面板中 Canvas 组件
+<ul>
+<li>设置 Render Mode 为 Screen Space - Camera</li>
+<li>设置 Render Camera 为 Main Camera</li>
+</ul>
+</li>
+</ul>
+<p>结果在  Game 视图中，看到按钮在 Cube 后面。</p>
+<ul>
+<li>选择 Main Camera
+<ul>
+<li>在  Camera 组件面板中修改 Field of View</li>
+</ul>
+</li>
+</ul>
+<p>在 Game 视图中，Cube 变化大小，而按钮保持不变。</p>
+<ul>
+<li>切换到 Scene 视图</li>
+<li>在  Camera 组件面板中修改 Field of View</li>
+</ul>
+<p>观察到画布随着视口自动改变大小。</p>
+<p><img src="images/drf/ichat.png" alt=""> Cube 变化大小，按钮保持不变。 为什么？</p>
+</div>
+<h3 id="22-ui-布局基础">2.2 UI 布局基础</h3>
+<p>每个UI元素都被表示为一个矩形，为了相对于 Canvas 和 其他 UI 元素实现定位，Unity 在 Transform 基础上定义了 RectTransform （矩形变换） 支持矩形元素在 2/3D 场景中变换。</p>
+<p><strong>1、矩形工具</strong></p>
+<p>Unity 在界面上提供了工具以方便修改 UI 元素的变换参数。</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/GUI_Rect_Tool_Button.png" alt=""></p>
+<p>提供了移动、旋转、比例、矩形四个工具。该图选择了矩形工具的工具栏按钮</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/GUI_Pivot_Local_Buttons.png" alt=""></p>
+<p>在选择矩形工具时，设置为“旋转”和“局部”视图，通常便于操作</p>
+<p><strong>2、矩形变换</strong></p>
+<p><strong>矩形变换</strong> 像常规变换一样具有位置，旋转和比例，但它也具有宽度和高度表示矩形的尺寸。</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/UI_RectTransform.png" alt=""></p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p>矩形位置和尺寸请使用像素，以匹配素材！</p>
+</div>
+<p>以下是矩形变换的重要概念：</p>
+<p><strong>Pivot/旋转点/轴心</strong>：旋转点在场景视图中显示为蓝色圆圈。用规范化坐标表示位置，如 （0.5,0.5）表示矩形的中心。</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/UI_PivotRotate.png" alt=""></p>
+<p>修改 Rotation 属性，矩形围绕此点旋转。</p>
+<p><strong>Anchors/锚点</strong>：锚点在场景视图中显示为四个小三角形手柄（四叶花）。每个叶子位置对应矩形的四个顶点。当描点随父对象变换时，矩形的顶点与对应的锚点<strong>相对位置必须保持不变</strong>。</p>
+<div class="admonition example"><p class="admonition-title">操作 09-02，锚点练习</p>
+<ul>
+<li>将场景视图设为 2D 模式</li>
+<li>使用鼠标中间滚轮在场景视图中缩小，直到看到整个画布，中间有一个 Button</li>
+<li>将 Canvas 的 Reader 设为 World Space，以便改变父对象（画布）的大小</li>
+</ul>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/UI_Anchored1.gif" alt=""></p>
+<p>UI元素锚定到父项的中心。该元素保持到中心的固定偏移量。</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/UI_Anchored2.gif" alt=""></p>
+<p>UI元素锚定在父级的右下角。该元素保持右下角的固定偏移量。</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/UI_Anchored3.gif" alt=""></p>
+<p>左侧角落的UI元素锚定在父代的左下角，右侧角落锚定在右下角。元素的角落保持固定的偏移到他们各自的锚点。</p>
+<p><img src="https://docs.unity.cn/cn/2018.4/uploads/Main/UI_Anchored4.gif" alt=""></p>
+<p>具有左角的UI元素锚定到距离父元素左侧一定百分比的点，右角点锚定到距父矩形右侧一定百分比的点。</p>
+</div>
+<div class="admonition example"><p class="admonition-title">操作练习?</p>
+<p>如何实现父元素与子元素等比缩放？</p>
+</div>
+<p><strong>3、锚点预设</strong></p>
+<p>在 Inspector 面板中，可以在 Rect Transform 组件的左上角找到 Anchor Preset 按钮。点击该按钮会弹出 Anchor Presets 下拉菜单。</p>
+<p><img src="https://docs.unity3d.com/uploads/Main/UI_AnchorPreset.png" alt=""></p>
+<h3 id="23-ui-组件与元素">2.3 UI 组件与元素</h3>
+<p>UI 部件都是用 Script 开发的自定义组件。包括在 UI、Layout 和 Rendering 等分类中。</p>
+<p><strong>1、可视化组件</strong></p>
+<p><a href="https://docs.unity.cn/cn/2018.4/Manual/UIVisualComponents.html">可视化组件</a>，在组件 UI 分类中，包括：</p>
+<ul>
+<li>Text：显示的文本的文本区域。可以设置字体，字体样式，字体大小以及文本是否具有丰富的文本功能。</li>
+<li>Image：显示图片的区域。可以设置<strong>GUI精灵</strong>、色彩。
+<ul>
+<li>图像 <strong>9切片</strong></li>
+</ul>
+</li>
+<li>Raw Image：原始图像采用纹理，进行 UV 矩形贴图。</li>
+<li>Mask：Mask不是一个可见的UI控件。遮罩将子元素限制（即“掩蔽”）为父元素的形状。如果孩子比父控件大，那么只有适合父节点遮罩的部分是可见的。</li>
+<li>Effects：应用各种简单的效果，例如简单的投影或轮廓。</li>
+</ul>
+<p><strong>2、UI 交互元素</strong></p>
+<p>UI 交互元素是 GameObject，它拥有 UI 交互组件、UI可视化组件、及相关组件的组合，以及一些 UI 子元素构成，以方便用户在设计场景中创建交互界面。</p>
+<p>例如：Button 元素，除了 UI 必须拥有的 RectTransform 和 Canvas renderer 外，还有 Image 和 Button 组件，以及一个 Text 子元素。</p>
+<ul>
+<li>Button</li>
+<li>Toggle</li>
+<li>Toggle Group</li>
+<li>Slider</li>
+<li>Scrollbar</li>
+<li>Dropdown</li>
+<li>Input Field</li>
+<li>Scroll Rect (Scroll View)</li>
+</ul>
+<p>详细信息，参见官方 <a href="https://docs.unity.cn/cn/2018.4/Manual/UIInteractionComponents.html">UI 元素</a></p>
+<h3 id="24-圆形遮罩动画富文本血条">2.4 圆形遮罩、动画、富文本、血条</h3>
+<p>圆形遮罩、动画、富文本、血条等都是菜单制作，初步理解 Text，Image，RowImage，Mask 等的基本使用技巧。</p>
+<p><strong>1、圆形遮罩</strong></p>
+<p>准备一个可爱动物卡通头像，例如：<img src="../images/ch09/cartoon-face.png" alt=""></p>
+<p>任务是使用 Mask 遮罩制作圆形头像</p>
+<div class="admonition example"><p class="admonition-title">操作 09-03，Mask 练习</p>
+<ul>
+<li>准备一个新项目</li>
+<li>将 png 图片拖入 assets 视图，作为 texture</li>
+<li>层次视图 context 菜单 -&gt; UI -&gt; Panel 创建 Panel</li>
+<li>在 Panel 下添加 RawImage 元素</li>
+<li>将图片拖入 RawImage 的 Texture 插槽</li>
+<li>场景选择 2D 视图，并缩放至看到整个画布</li>
+<li>选择 Panel 对象
+<ul>
+<li>在 RectTansform 组件选择预制描点 （middle，center）</li>
+<li>用 Rect 工具，将 Panel 与图片大小一致</li>
+<li>添加 Mask 组件</li>
+<li>选择 Image 组件，选择 Source Image 为 Knob</li>
+</ul>
+</li>
+<li>选择 Game 场景，如图效果</li>
+</ul>
+<p><img src="../images/ch09/cartoon-face-result.png" alt=""></p>
+</div>
+<p>网上有许多 Mask 的技术，例如：<a href="https://www.jianshu.com/p/1d9d439c28fa">使用透明度实现Mask遮罩的Unity Shader</a></p>
+<p><strong>2、录制动画</strong></p>
+<div class="admonition example"><p class="admonition-title">操作 09-04，动画练习</p>
+<ul>
+<li>选择 RawImage</li>
+<li>在视图 Animation 中，点 create 系统在该对象上创建了动画组件、动画控制器、动画文件
+<ul>
+<li>add property 按钮，选择 Archored Position</li>
+</ul>
+</li>
+<li>选择 Scene 视图，移动 RawImage 到 Panel 左边</li>
+<li>选择 Animation 视图，在 0s 位置添加关键帧
+<ul>
+<li>将播放位置红线放置在最后</li>
+</ul>
+</li>
+<li>选择 Scene 视图，移动 RawImage 到 Panel 右边</li>
+<li>选择 Animation 视图，在最后位置添加关键帧</li>
+<li>选择运行动画，结束</li>
+</ul>
+</div>
+<p>走马灯效果！</p>
+<p>动画与按钮的集成，参见官方 <a href="https://docs.unity.cn/cn/2018.4/Manual/UIAnimationIntegration.html">动画集成</a></p>
+<p><strong>3、富文本</strong></p>
+<p>为了显示格式复杂的文字，Unity 提供了 <strong>类似HTML</strong> 标签，控制字体、字号、颜色。</p>
+<ul>
+<li>在 Canvas 下添加 Text 元素</li>
+<li>在 Text 组件输入： <code>We are &lt;color=green&gt;green&lt;/color&gt; with envy</code></li>
+</ul>
+<p>详细参见官方 <a href="https://docs.unity.cn/cn/2018.4/Manual/StyledText.html">Rich Text</a></p>
+<p><strong>4、简单血条</strong></p>
+<p>任务是给动画人物 Ethan 添加 Health Bar。</p>
+<div class="admonition example"><p class="admonition-title">操作 09-05，health bar 练习</p>
+<ul>
+<li>菜单 Assets -&gt; Import Package -&gt; Characters 导入资源</li>
+<li>在层次视图，Context 菜单  -&gt; 3D Object -&gt; Plane 添加 Plane 对象</li>
+<li>资源视图展开 Standard Assets :: Charactors :: ThirdPersonCharater :: Prefab</li>
+<li>将 ThirdPersonController 预制拖放放入场景，改名为 Ethan</li>
+<li>检查以下属性
+<ul>
+<li>Plane 的 Transform 的 Position = (0,0,0)</li>
+<li>Ethan 的 Transform 的 Position = (0,0,0)</li>
+<li>Main Camera 的 Transform 的 Position = (0,1,-10)</li>
+</ul>
+</li>
+<li>运行检查效果</li>
+<li>选择 Ethan 用上下文菜单 -&gt; UI -&gt; Canvas, 添加画布子对象</li>
+<li>选择 Ethan 的 Canvas，用上下文菜单 -&gt; UI -&gt; Slider 添加滑条作为血条子对象</li>
+<li>运行检查效果</li>
+<li>选择 Ethan 的 Canvas，在 Inspector 视图
+<ul>
+<li>设置 Canvas 组件 Render Mode 为 World Space</li>
+<li>设置 Rect Transform 组件 (PosX，PosY，Width， Height) 为 (0,2,160,20)</li>
+<li>
+<ul>
+<li>设置 Rect Transform 组件 Scale （x,y） 为  (0.01,0.01)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>运行检查效果，应该是头顶 Slider 的 Ethan，用键盘移动 Ethan，观察</li>
+</ul>
+<p><img src="images/ch09/ethan-slider.png" alt=""></p>
+<ul>
+<li>展开 Slider
+<ul>
+<li>选择 Handle Slider Area，禁灰（disable）该元素</li>
+<li>选择 Background，禁灰（disable）该元素</li>
+<li>选择 Fill Area 的 Fill，修改 Image 组件的 Color 为 红色</li>
+</ul>
+</li>
+<li>选择 Slider 的 Slider 组件
+<ul>
+<li>设置 MaxValue 为 100</li>
+<li>设置 Value 为 75</li>
+</ul>
+</li>
+<li>运行检查效果，发现血条随人物旋转</li>
+</ul>
+<p>给 Canvas 添加以下脚本 LookAtCamera.cs</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">LookAtCamera</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">this</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">LookAt</span> <span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>功能的实现，不一定意味任务完成。在场景中添加一个 Cube，让 Ethan 藏在 Cube 后面，血条暴露了行踪哦！</p>
+</div>
+<p>怎么办？在线等&hellip; 请用一句话描述你的决解方案</p>
+<div class="admonition tip"><p class="admonition-title">提示</p>
+<p>性能、性能、性能，重要的事情说三次</p>
+</div>
+<p>如果你在生产中使用上述血条，足以证明你是入门级别程序员。为了显示血条，每个图片从 pixel 单位映射到 world space，再投影到摄像机空间，在变成屏幕空间（pixel 单位）。这需要多少算力？</p>
+<p>因此，能用 Srceen Space 解决的问题绝不用 World Space， 能用 Overlay 解决问题绝不用 Camera！</p>
+<p>而血条恰恰是 Srceen Space - Overlay 能决解的哦！提示，阅读脚本手册 RectTransform</p>
+<p>参考资源：<a href="http://blog.manapebbles.com/world-space-overlay-camera-in-unity/">Faking World Space for monster health bars in Unity</a></p>
+<h2 id="3screen-space---overlay-案例研究">3、Screen Space - Overlay 案例研究</h2>
+<p>Game Jam Menu Template 是一个入门级别的 2D 菜单模板。请下载并导入资源。</p>
+<h3 id="31-菜单与事件响应机制">3.1 菜单与事件响应机制</h3>
+<ul>
+<li>展开资源 Game Jam Menu Template :: Prefabs</li>
+<li>将 UI 预制 拖入层次菜单</li>
+</ul>
+<p>运行，发现菜单按钮不起作用</p>
+<ul>
+<li>添加事件系统，context 菜单 -&gt; UI -&gt; EventSystem</li>
+</ul>
+<p>运行，菜单可以运行，并响应按钮 mouseover 等效果，以及 click 事件</p>
+<p><strong>1、EventSystem 的作用</strong></p>
+<p>按官方手册，EventSystem 在一个场景中 <strong>有且仅能有一个</strong>，它将游戏操纵杆、键盘、鼠标、触摸屏、触摸屏与 UI 对象交互事件，如 Click，MouseMOver，DragEnter 等等，传递给游戏对象对应的行为组件。</p>
+<p><strong>2、响应事件</strong></p>
+<p>按钮元素有一个 button 部件，它相当与该对象的控制器，控制消息的传递、自己及子对象属性的统一管理。这似乎是 Unity 的一个设计习惯，即一个功能独立的元素，必然有一个对应名字的组件作为控制。例如：ThirdPersonController 预制的根游戏对象，对应的控制是 Third Person User Controller 组件。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p>将客户端与事物内部复杂性隔离的对象，统称门面（Facade）对象。在 GoF 中，称为<strong>门面（Facade）模式</strong></p>
+<p><strong>门面模式应用场景</strong></p>
+<ul>
+<li>为复杂子系统提供一个简单接口</li>
+<li>提高子系统的独立性</li>
+<li>在层次化结构中，可以使用Facade模式定义系统中每一层的入口。</li>
+</ul>
+</div>
+<p><strong>Button 组件</strong></p>
+<p>下图是 Quit 按钮的 Button 组件</p>
+<p><img src="../images/ch09/button-component-quit.png" alt=""></p>
+<p>其中：</p>
+<ul>
+<li>Interactable：是否允许交互，效果是禁灰</li>
+<li>Transition：交互事件发生时的行为，这里选项有 None（无行为）、Color Tint（变颜色）、Sprite Swap（还图片）、Animation（动画），详细设置见 <a href="https://docs.unity.cn/cn/2018.4/Manual/script-SelectableTransition.html">Transition Options</a></li>
+<li>Navigation</li>
+<li>Events: button 只支持 OnClick，用户可添加指定的消息函数。表示为：<code>游戏对象(行为或组件.方法)</code> 图中是 <code>UI(QuitApplication.Quit)</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">QuitApplication</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="k">void</span> <span class="n">Quit</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//If we are running in a standalone build of the game</span>
+</span></span><span class="line"><span class="cl">	<span class="cp">#if UNITY_STANDALONE</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//Quit the application</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Application</span><span class="p">.</span><span class="n">Quit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="err">#</span><span class="n">endif</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">//If we are running in the editor</span>
+</span></span><span class="line"><span class="cl">	<span class="cp">#if UNITY_EDITOR</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//Stop playing the scene</span>
+</span></span><span class="line"><span class="cl">		<span class="n">UnityEditor</span><span class="p">.</span><span class="n">EditorApplication</span><span class="p">.</span><span class="n">isPlaying</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="err">#</span><span class="n">endif</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是常用的退出游戏的代码，可以处理编辑环境。</p>
+<p><strong>3、响应更多类型事件（Event Trigger）</strong></p>
+<p>事件触发器 (Event Trigger) 从事件系统接收事件，当收到事件时调用已注册的函数。事件系统<a href="https://docs.unity3d.com/Manual/SupportedEvents.html">支持的事件</a>。</p>
+<p>例如：以下操作使得你点击 Title 时也能退出：</p>
+<ul>
+<li>选择 UI :: MenuPanel :: Title 游戏对象</li>
+<li>Inspector 面板添加事件触发器，Add Component -&gt; Event -&gt; Event Trigger
+<ul>
+<li>Add New Event Type 为 Pointer Click</li>
+<li>添加事件处理函数 UI(QuitApplication.Quit)</li>
+</ul>
+</li>
+<li>检查 Canvas Group 组件 Blocks Raycast 为 选中</li>
+</ul>
+<p>运行菜单，发现点击 Game Title 也能退出游戏！</p>
+<div class="admonition warning"><p class="admonition-title">注意事项</p>
+<p>模块独立准则。一个独立的模块应不能依赖模块以外的数据或程序。</p>
+</div>
+<p>因此，本案例中子对象依赖 UI 游戏对象的代码，这个子对象就不再是独立的了。</p>
+<h3 id="32-菜单结构与布局layout">3.2 菜单结构与布局（layout）</h3>
+<p><strong>1、菜单结构与窗口组织</strong></p>
+<p>菜单通常由一个 Canvas 和 若干 Panel 组成的，所有 UI 元素组成一个树形结构。</p>
+<p><img src="../images/ch09/jmt-structure.png" alt=""></p>
+<p>其中：MenuPanel 是主菜单，OptionsPanel 和 PausePanel 是两个隐藏的窗口。</p>
+<p><strong>了解 Panel</strong></p>
+<div class="admonition example"><p class="admonition-title">操作 09-06，Panel 容器练习</p>
+<ul>
+<li>创建一个新场景，保存 Game Jam Menu Template 场景如 jmt。</li>
+<li>在层次视图，创建一个 Panel，不就是一个 Image 组件和 Canvas Renderer</li>
+<li>切换到 Game 视图</li>
+</ul>
+<p>怎么灰蒙蒙的？</p>
+<ul>
+<li>修改 Image 组件 color 为 <code>#FFFFFF00</code> (无色透明)</li>
+</ul>
+<p><a href="https://docs.unity3d.com/Manual/class-CanvasRenderer.html">Canvas Renderer</a> 是所有 UI 元素的灵魂伴侣。按官方说法，尽管它没有暴露任何属性，但可以控制通过脚本独立控制该区域的 Render 能力。</p>
+<ul>
+<li>在 Panel 添加组件 Add Component -&gt; layout -&gt; Canvas Group</li>
+</ul>
+<p><a href="https://docs.unity3d.com/Manual/class-CanvasGroup.html">Canvas Group</a> 它可以控制容器及其子对象的 Alpha 通道，交互，射线碰撞，免得你一一设置。</p>
+<ul>
+<li>在 Panel 下用上下问菜单添加一个 button</li>
+<li>选择 Panel</li>
+<li>切换到 Game 视图</li>
+<li>修改 Panel(Canvas group) 的 ALpha 分别为 0，0.5，1</li>
+</ul>
+<p>按钮从不可见，到半透明，到完全显示</p>
+</div>
+<p><strong>模态窗口与非模态窗口</strong></p>
+<p>游戏引擎不可能实现一个复杂的窗口系统，也没有必要做这样的窗口系统。</p>
+<p><strong>模态窗口</strong>就是在顶部的窗口且不可失去焦点，除非你关闭它，例如对话框。</p>
+<p>因此，模态窗口最简单的方法就是仅保留一个 Panel 活动。如果要出现几个窗口，一个窗口模态，则模态窗口是 Canvas 下最后一个子对象，且其他窗口的 Canvas Group 是不可输入 和 射线 交互。</p>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>如果需要多个窗口同时出现，怎么办？</p>
+</div>
+<p><strong>2、自动布局</strong></p>
+<p>除了用 anchor 手动布局外，也可以使用<a href="https://docs.unity3d.com/Manual/comp-UIAutoLayout.html">自动布局组件</a>。例如 UI :: MenuPanel :: MenuButton (Vertical layout Group)</p>
+<ul>
+<li>内容尺寸适配（Content Size Fitter）</li>
+<li>布局元素（Layout Element）</li>
+<li>水平布局组（Horizontal Layout Group）</li>
+<li>垂直布局组（Vertical Layout Group）</li>
+<li>网格布局组（Grid Layout Group）</li>
+</ul>
+<h3 id="33-代码组织">3.3 代码组织</h3>
+<p>在 Game Jam Menu Template :: Scripts 目录下共有 8 段代码，除了 SetAudioLevels 挂载在 OptionsPanel 上，其他都挂在了 UI 这个 root 对象上。</p>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>为什么 QuitApplication 作者不挂在 Quit 按钮上？这样做好吗？</p>
+</div>
+<h2 id="4camera-ui-案例研究">4、Camera UI 案例研究</h2>
+<p>Sample UI 是 Unity 新 UI 的 demo 版本以展示取代 NGUI 的强大能力。你可以从中学到高级布局、多摄像机、drag &amp; Drap、RenderTexture、光线渲染等技术，使得菜单拥有 3D 游戏的技术，如粒子等。</p>
+<p>Sample UI 共有 7 个场景案例：</p>
+<ul>
+<li>Menu 3D</li>
+<li>Layout Groups</li>
+<li>RenderTexture</li>
+<li>Lighting</li>
+<li>Drag And Drop</li>
+<li>Draggable Panel</li>
+<li>Controls （Overlay Model）</li>
+</ul>
+<h3 id="41-多摄像机与3d菜单">4.1 多摄像机与3D菜单</h3>
+<p>观察 Menu 3D 效果：</p>
+<ul>
+<li>加载场景 Sample UI :: Scene :: Menu 3D</li>
+<li>运行</li>
+<li>左右摇摆鼠标，点击 Setting 按钮， 点击 Back 按钮</li>
+<li>最后点击 Quit 按钮</li>
+</ul>
+<p><strong>1、菜单结构与摄像机设置</strong></p>
+<p>在层次视图，展开菜单，如图所示</p>
+<p><img src="../images/ch09/sampleui-menu3d-structure.png" alt=""></p>
+<p>其中：Canvas 是菜单，SF Scene Elements 表示游戏元素。</p>
+<p>对比 Main Camera 和 GUI Camera 游戏对象的 Camera 组件的设置</p>
+<ul>
+<li>Clear Flags 属性分别为 Skybox 和  Don&rsquo;t Clear</li>
+<li>Culling Mask 属性分别为 Everything 和 UI</li>
+<li>Depth 属性分别为 -1 和 0</li>
+</ul>
+<p>这三个属性说明 GUI Camera 覆盖 Main Camera 显示内容。</p>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<ul>
+<li>Canvas 组件的 Render Mode 属性 和 Render Camera</li>
+<li>游戏对象显示 黑色、蓝色、灰色 的含义</li>
+</ul>
+</div>
+<p><strong>2、3D 菜单设置初步</strong></p>
+<p>不使用 SF 预制，设置如图要求菜单：</p>
+<p><img src="../images/ch09/sampleui-menu3d-ex.png" alt=""></p>
+<div class="admonition example"><p class="admonition-title">操作 09-07，3D 布局练习</p>
+<ul>
+<li>在 scene 视图选择 2D 模式</li>
+<li>选择 矩阵工具</li>
+<li>在 MainMenu 添加 Panel 命名为 MyWindow
+<ul>
+<li>设置 MyWindow 的 Rest Transform 组件</li>
+<li>设置 MyWindow 的 Image 组件</li>
+<li>添加脚本 TiltWindow</li>
+</ul>
+</li>
+</ul>
+<p>MyWindow 设置参数如图所示：</p>
+<p><img src="../images/ch09/sampleui-menu3d-setting.png" alt=""></p>
+<p>请完成剩余设置，包括动画按钮</p>
+</div>
+<h3 id="42-画中画与-ui-光效">4.2 画中画与 UI 光效</h3>
+<p>RenderTexture 场景实现了画中画和 UI 效果。实现要点包括：</p>
+<ul>
+<li>使用了 3 个摄像机
+<ul>
+<li>Main Camera 在 defalut 层
+<ul>
+<li>Clear Flag 为 skybox</li>
+<li>Culling Mask 为不包含 UI 层</li>
+<li>Depth 为 -1</li>
+<li>Position Z 为 -100</li>
+</ul>
+</li>
+<li>RT Camera 在 defalut 层
+<ul>
+<li>Clear Flag 为 Solid Color</li>
+<li>Culling Mask 为 为不包含 UI 层</li>
+<li>Depth 为 0</li>
+<li>Position Z 为 0</li>
+<li>*<em>Target Texture</em> 为 RenderTexture</li>
+</ul>
+</li>
+<li>UI Camera 在 UI 层
+<ul>
+<li>Clear Flag 为 Depth Only</li>
+<li>Culling Mask 为 UI 层</li>
+<li>Depth 为 1</li>
+<li>Position Z 为 -300</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Canvas 设置
+<ul>
+<li>Render Mode 为 <strong>world space</strong></li>
+<li>Position Z 为 0</li>
+<li>子游戏对象 RawImage
+<ul>
+<li>它的纹理属性是 <strong>RenderTexture</strong>，即 RTCamra 渲染的结果在这里显示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Extra Light 在 UI 层
+<ul>
+<li>Position 投射在 Canvas 右下角</li>
+</ul>
+</li>
+</ul>
+<p>按相机渲染顺序：</p>
+<ul>
+<li>Main Camera 先显示背景</li>
+<li>RT Camera 渲染结果保存在 RenderTexture 资源中</li>
+<li>UI Camera 渲染 UI 层菜单，覆盖在背景上
+<ul>
+<li>RawImage 显示 RT Camera 的结果</li>
+</ul>
+</li>
+</ul>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>从相机、UI的设置，讲述如下案例实现方案：</p>
+<p>在某对战游戏中，需要设计狙击步枪上的瞄准镜。<br>
+<img src="../images/ch09/arming-rt-render.png" alt=""></p>
+</div>
+<h3 id="43-事件编程与dragdrop">4.3 事件编程与Drag&amp;Drop</h3>
+<p>Drag And Drop 场景展示拖放效果；Draggable Panel 场景展示需改面板尺寸。</p>
+<p>Drag And Drop 场景给了两个代码 DragMe 和 DropMe。</p>
+<p>Dragme 的部分代码，Dragme 的代码与官方手册 <a href="https://docs.unity3d.com/ScriptReference/EventSystems.IDropHandler.html">IDropHandler</a> 的代码几乎一致：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">DragMe</span> <span class="p">:</span> <span class="n">MonoBehaviour</span><span class="p">,</span> <span class="n">IBeginDragHandler</span><span class="p">,</span> <span class="n">IDragHandler</span><span class="p">,</span> <span class="n">IEndDragHandler</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>IDropHandler 等接口都实现了 EventsSystem.IEventSystemHandler 的接口。按 Unity 官方解释，MonoBehaviour 实现 IEventSystemHandler 接口的接口都会自动纳入 Unity 引擎的调度，会接收到 Standalone Input Module 等模块发送的事件。</p>
+<p>拖动基本流程是：</p>
+<ul>
+<li>OnBeginDrag 初始化拖动的图标</li>
+<li>OnDrag 修改图标位置</li>
+<li>OnEndDrag 释放资源</li>
+</ul>
+<div class="admonition info"><p class="admonition-title">信息</p>
+<p>具体实现，参见师兄作业<a href="https://blog.csdn.net/pmlpml">UGUI 实现Inventory(背包系统)</a>！</p>
+</div>
+<h2 id="5小结">5、小结</h2>
+<ul>
+<li>Unity 3 种 UI</li>
+<li>画布</li>
+<li>三种渲染方式的区别，优缺点</li>
+<li>UI布局</li>
+<li>UI元素</li>
+<li>菜单案例研究</li>
+</ul>
+<h2 id="6作业与练习">6、作业与练习</h2>
+<p><strong>以下作业五选一：</strong></p>
+<p>1、血条（Health Bar）的预制设计。具体要求如下</p>
+<ul>
+<li>分别使用 IMGUI 和 UGUI 实现</li>
+<li>使用 UGUI，血条是游戏对象的一个子元素，任何时候需要面对主摄像机</li>
+<li>分析两种实现的优缺点</li>
+<li>给出预制的使用方法</li>
+</ul>
+<p>2、 UI 效果制作（你仅需要实现以下效果之一）</p>
+<ul>
+<li>进入 <a href="http://www.tasharen.com/?page_id=140">NGUI</a> 官方网站，使用 UGUI 实现以下效果
+<ul>
+<li><a href="http://www.tasharen.com/ngui/exampleX.html">Inventory</a> 背包系统</li>
+<li><a href="http://www.tasharen.com/ngui/example9.html">Quest Log</a> 公告牌</li>
+<li><a href="http://www.tasharen.com/ngui/example7.html">Scroll View</a> 选择板</li>
+</ul>
+</li>
+<li>以上例子需要使用 Unity web player， 仅支持以下操作系统与浏览器，参见<a href="https://unity3d.com/cn/webplayer">官方下载</a>
+<ul>
+<li>Windows 版 <strong>IE11</strong></li>
+<li><strong>Mac OS X 10.7</strong>  Safari</li>
+<li>出现界面需要等待较长时间，打开页面让它慢慢加载</li>
+</ul>
+</li>
+</ul>
+<p>3、 DOTween 仿写</p>
+<p>如果你觉得 UI 不是你的菜，喜欢复杂的设计与代码</p>
+<ul>
+<li>研究 DOTween 网站 <a href="http://dotween.demigiant.com/getstarted.php">http://dotween.demigiant.com/getstarted.php</a> 网页， 它在 Specific settings 中 transform.DoMove 返回 Tween 对象。请实现该对象，实现对动作的持续管理。
+<ul>
+<li>本作业有较大难度，<strong><a href="https://blog.csdn.net/pmlpml">务必参考师兄的作业</a></strong></li>
+</ul>
+</li>
+</ul>
+<p>4、编写一个组件，提供常用窗口服务</p>
+<ul>
+<li>修改 Game Jam Menu Template 的脚本
+<ul>
+<li>如 ShowPanels 脚本</li>
+</ul>
+</li>
+<li>具体要求是实现一个方法
+<ul>
+<li>支持某个面板窗口独立显示</li>
+<li>支持某个面板窗口模态，其他面板窗口显示在后面</li>
+<li>支持几个窗口同时显示，仅一个窗口是活动窗口</li>
+</ul>
+</li>
+</ul>
+<p>5、如果你喜欢凭空构思场景，请自制有趣的 UI 场景</p>
+<ul>
+<li>例如：“几个小动物（3D）开会，语句从每个动物头上飘出，当达到一个大小，会出现清晰的文字！如果文字较多，会自动滚动”</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-11-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/11-data-driven-design/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">第11章、数据驱动的设计</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/10-intelligent/">
+            <span class="next-text nav-default">十、游戏智能</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

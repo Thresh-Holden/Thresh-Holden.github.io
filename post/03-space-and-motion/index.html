@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>三、空间与运动 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="I stumbled into by following my curiosity and intuition turned out to be priceless later on &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏世界空间模型 1.1 游戏世界的设计维度（文化与艺术） 游戏世界是一个虚" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/03-space-and-motion/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="三、空间与运动" />
+<meta property="og:description" content="I stumbled into by following my curiosity and intuition turned out to be priceless later on &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏世界空间模型 1.1 游戏世界的设计维度（文化与艺术） 游戏世界是一个虚" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/03-space-and-motion/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-05T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="三、空间与运动">
+<meta itemprop="description" content="I stumbled into by following my curiosity and intuition turned out to be priceless later on &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏世界空间模型 1.1 游戏世界的设计维度（文化与艺术） 游戏世界是一个虚"><meta itemprop="datePublished" content="2020-09-05T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="8664">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="三、空间与运动"/>
+<meta name="twitter:description" content="I stumbled into by following my curiosity and intuition turned out to be priceless later on &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 1、游戏世界空间模型 1.1 游戏世界的设计维度（文化与艺术） 游戏世界是一个虚"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">三、空间与运动</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-05 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1游戏世界空间模型">1、游戏世界空间模型</a>
+          <ul>
+            <li><a href="#11-游戏世界的设计维度文化与艺术">1.1 游戏世界的设计维度（文化与艺术）</a></li>
+            <li><a href="#12-游戏世界空间模型技术">1.2 游戏世界空间模型（技术）</a></li>
+          </ul>
+        </li>
+        <li><a href="#2坐标变化与运动">2、坐标变化与运动</a>
+          <ul>
+            <li><a href="#21-体验简单运动与叠加">2.1 体验简单运动与叠加</a></li>
+            <li><a href="#22-transform-部件">2.2 Transform 部件</a></li>
+            <li><a href="#23-向量与变换">2.3 向量与变换</a></li>
+            <li><a href="#24-游戏对象的空间组合">2.4 游戏对象的空间组合</a></li>
+          </ul>
+        </li>
+        <li><a href="#3课堂实验模拟太阳系">3、课堂实验（模拟太阳系）</a></li>
+        <li><a href="#4面向对象的游戏编程">4、面向对象的游戏编程</a>
+          <ul>
+            <li><a href="#41-游戏编程的挑战">4.1 游戏编程的挑战</a></li>
+            <li><a href="#42-基于职责的设计与游戏的mvc总体框架">4.2 基于职责的设计与游戏的MVC总体框架</a></li>
+            <li><a href="#43-框架核心代码与设计解读">4.3 框架核心代码与设计解读</a></li>
+            <li><a href="#44-mvc架构">4.4 MVC架构</a></li>
+          </ul>
+        </li>
+        <li><a href="#5小结">5、小结</a></li>
+        <li><a href="#6作业与练习">6、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>I stumbled into by following my curiosity and intuition turned out to be priceless later on</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<p><em>预计时间：3-4 * 45 min</em></p>
+<h2 id="1游戏世界空间模型">1、游戏世界空间模型</h2>
+<h3 id="11-游戏世界的设计维度文化与艺术">1.1 游戏世界的设计维度（文化与艺术）</h3>
+<p>游戏世界是一个虚拟的世界、假想的世界、甚至其中部分是真实的世界。玩家控制部分游戏物体，按游戏世界或现实世界的规则交互，以达成设定目标。当虚拟世界与现实世界交融时，我们就称为增强现实（Augmented Reality）游戏。例如：我们在大富翁中采用现实股票行情，使用虚拟币在游戏中交易，更有利于玩家研究现实规则，做出有意义的决策；当现实商家优惠卷（Coopons）与《精灵宝可梦》这样的游戏机制相集合，就可以利用现实地图和玩家GPS位置，结合大数据技术推荐，产生实际的商用引流效果。</p>
+<p>不管游戏世界是虚拟的或现实的，游戏世界中所有物体（游戏对象）都必须在特定的空间、时间下出现、变化、消失。因此，游戏设计必须定义空间、时间等。 Adams 在其教材中把游戏设计分为几个维度：</p>
+<ul>
+<li>空间维度：
+<ul>
+<li>自由度：2d 或 2d卷轴，3d, 2.5d(如 Aircraft)，4d（？）</li>
+<li>尺度：游戏世界的度量单位，如米、公里、光年。特别是其他物体与玩家对象的相对大小设计</li>
+<li>边界：玩家可以看到的地图与场景</li>
+<li>例如：<a href="https://gameinstitute.qq.com/community/detail/124043">游戏空间设计：恐怖与战略游戏中的门窗与视野</a></li>
+</ul>
+</li>
+<li>时间维度
+<ul>
+<li>例如：唐朝、宋朝；石器时代、铜器时代、铁器时代、火器时代、太空时代；</li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li>环境维度
+<ul>
+<li>时代与文化背景</li>
+<li>艺术风格与形式</li>
+<li>场景与物体搭配</li>
+</ul>
+</li>
+<li>情感维度
+<ul>
+<li>例如：<a href="https://gameinstitute.qq.com/community/detail/114403">从情感体验的角度进行游戏空间设计</a></li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li>道德维度
+<ul>
+<li>&hellip;</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch03/ch03-space-design.png" alt=""></p>
+<p>良好的空间设计，玩家体验的基础</p>
+<div class="admonition info"><p class="admonition-title">阅读</p>
+<p><img src="../images/game-design-fundamentals.png" alt="Ernest Adams"> 如果你对这些维度感兴趣，请阅读游戏设计教材！</p>
+</div>
+<h3 id="12-游戏世界空间模型技术">1.2 游戏世界空间模型（技术）</h3>
+<p><strong>世界坐标</strong>：一个游戏或游戏场景的 <strong>绝对坐标</strong> 系统。每个游戏对象的位置、角度、比例的值都这个坐标系下是唯一的。</p>
+<p><strong>对象坐标</strong>：游戏对象相对父游戏对象的位置、角度、比例。又称为 <strong>相对坐标</strong></p>
+<p><strong>3D 空间</strong></p>
+<p>坐标比较简单，典型 3D 正交坐标系统</p>
+<ul>
+<li>Z 轴：深度维度，前后方向。Z 越小越靠前</li>
+<li>Y 轴：高度维度，上下方向。Y 越大越高</li>
+<li>X 轴：水平维度，左右方向。</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p><strong>左手、右手坐标系统</strong></p>
+</div>
+<p>掌握此非常重要，相对坐标系中可快速确定位置</p>
+<p><img src="../images/ch03/ch03-coordinate-system.png" alt="3D坐标系统"></p>
+<div class="admonition question"><p class="admonition-title">问题</p>
+<p>Unity 是左手坐标系统？右手坐标系统？</p>
+</div>
+<p><strong>2D 空间</strong></p>
+<p>2D 空间会复杂一些</p>
+<p><img src="../images/ch03/ch03-tilemap.png" alt="瓦片地图"></p>
+<ul>
+<li>离散 2D 坐标。瓦片空间，或网格空间，或棋盘空间都是一个概念，相对专业术语是瓦片地图（tilemap）。它使用整数完成游戏对象运动、碰撞等计算（早期计算机没有FPU），特别是蜂窝状六边形地图（你玩过的！）
+<ul>
+<li>多数棋类游戏</li>
+</ul>
+</li>
+<li>连续 2D 坐标</li>
+<li>混合坐标系统。看上去游戏对象连续运动，但内部计算是网格模型。例如，3D象棋
+<ul>
+<li>例如：植物大战僵尸</li>
+</ul>
+</li>
+</ul>
+<h2 id="2坐标变化与运动">2、坐标变化与运动</h2>
+<p>游戏世界的构建，就是 <strong>游戏对象的状态</strong> 在 <strong>游戏循环</strong> 驱动下进行演变。简而言之，就是研究物体的变化与运动！</p>
+<p>游戏运动本质就是使用矩阵变换（平移、旋转、缩放）改变游戏对象的空间属性。</p>
+<h3 id="21-体验简单运动与叠加">2.1 体验简单运动与叠加</h3>
+<div class="admonition example"><p class="admonition-title">编程与操作 03-01 ，简单运动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">MoveLeft</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">this</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">left</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>先准备如上脚本 MoveLeft
+<ul>
+<li>这个代码每秒钟使得游戏对象向左移动一个单位</li>
+<li><a href="https://docs.unity3d.com/ScriptReference/Vector3.html">Vector3</a> 是一个三维向量类，<code>Vector3.left</code> 是单位常数</li>
+<li><a href="https://docs.unity3d.com/ScriptReference/Time.html">Time</a> 是离散引擎的核心类，<code>Time.deltaTime</code> 这个循环与上个循环之间的时间差</li>
+</ul>
+</li>
+<li>将代码拖放到任意游戏对象之上</li>
+<li>运行游戏</li>
+<li>观察，游戏对象左移了</li>
+<li>终止游戏</li>
+</ul>
+</div>
+<p>将游戏部件添加到游戏对象上，就可以产生组合行为，这让游戏开发者编程变得更容易。事实上，游戏中每个对象的行为都由少数几个基本动作组合而成，这样的设计提升了程序的灵活性，减少了应对游戏规则变化带来的编码量。后面，我们会讨论各种动作组合、管理的技术和方法！！！</p>
+<div class="admonition example"><p class="admonition-title">编程与操作 03-02，复合运动</p>
+<p>编程要求与提示：</p>
+<ul>
+<li>参照 MoveLeft 创建脚本 MoveUp</li>
+<li>将脚本拖放到 MoveLeft 或它的子对象上</li>
+<li>观察效果</li>
+<li>修改 MoveLeft 代码如下</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">MoveLeft</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">speed</span> <span class="p">=</span> <span class="m">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use this for initialization</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">this</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">+=</span> <span class="n">speed</span> <span class="p">*</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">left</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>MoveLeft (Script) 多出一个 Speed 属性，修改它</li>
+<li>运行并观察游戏；</li>
+</ul>
+</div>
+<h3 id="22-transform-部件">2.2 Transform 部件</h3>
+<p>Unity 使用 <a href="https://docs.unity3d.com/ScriptReference/Transform.html">TransForm 部件</a> 操作物体的位置、旋转和缩放。</p>
+<p><img src="https://docs.unity3d.com/uploads/Main/TransformExample4.png" alt="Transform 组件"></p>
+<p>场景中的每个对象都有一个变换。 它用于存储和操作对象的位置、旋转和缩放。 每个变换都可以有一个父级，让您能够分层应用位置、旋转和缩放。这是“Hierarchy”面板中显示的层级视图。 它们还支持枚举器，因此您可以使用以下方式遍历子项。</p>
+<p><strong>1、属性</strong></p>
+<ul>
+<li>位置、欧拉角、比例、旋转
+<ul>
+<li>世界坐标：position, eulerAngles, scale, rotation</li>
+<li>相对坐标：localposition, local…</li>
+</ul>
+</li>
+<li>对象空间轴（单位向量）常量
+<ul>
+<li>up, right, forward</li>
+</ul>
+</li>
+<li>空间依赖
+<ul>
+<li>parent, childCount</li>
+</ul>
+</li>
+</ul>
+<p>欧拉角（eulerAngles）：x、y和z角表示围绕z轴的旋转z度、围绕x轴的旋转x度和围绕y轴的旋转y度。</p>
+<div class="admonition example"><p class="admonition-title">操作 03-03 ，欧拉角练习</p>
+<ul>
+<li>在场景视图中放置一个长方体，如 scale = (4,1,1)</li>
+<li>用左手握住 z 轴方向，修改 z 角度，如 45 度</li>
+</ul>
+</div>
+<p>转动（Rotation）：四元数（Quaternion）。 <a href="https://docs.unity3d.com/ScriptReference/Quaternion.html">Quaternion</a> 使用向量（x,y,z,w）表示物体旋转，维基百科说它与欧拉角等价。所以：</p>
+<ul>
+<li>Quaternion.Euler(x,y,z) 可以得到四元数表示</li>
+<li>一个四元数也可以使用方法 eulerAngles 的到欧拉角</li>
+</ul>
+<p>反正你不要尝试修改四个元素的值，官方描述：<code>Don't modify this directly unless you know quaternions inside out.</code></p>
+<div class="admonition question"><p class="admonition-title">思考</p>
+<p>四元素与三个元素的欧拉角等价，为什么要浪费空间用四个元素表示旋转？</p>
+</div>
+<p><strong>2、方法</strong></p>
+<p>与直接修改游戏对象属性相比，TransForm 部件提供相关的方法，让程序员编写更利于理解的运动程序。主要方法包括：</p>
+<ul>
+<li>平移：<a href="https://docs.unity3d.com/ScriptReference/Transform.Translate.html">Translate</a></li>
+<li>旋转：<a href="https://docs.unity3d.com/ScriptReference/Transform.Rotate.html">Rotate</a></li>
+<li>围绕：<a href="https://docs.unity3d.com/ScriptReference/Transform.RotateAround.html">RotateAround</a></li>
+<li>面向：<a href="https://docs.unity3d.com/ScriptReference/Transform.LookAt.html">LookAt</a></li>
+</ul>
+<p>Unity 每个 API 都给出了丰富的案例解释这些方法，每个方法都有几个重载。</p>
+<div class="admonition note"><p class="admonition-title">要点：函数重载</p>
+<p>API 设计者要以使用者易于理解、使用方便为目标，重载函数或方法是重要设计手段。</p>
+</div>
+<div class="admonition example"><p class="admonition-title">编程练习 03-04，围绕运动</p>
+<p>编程要求与提示：</p>
+<ul>
+<li>阅读 RotateAround 方法 API 案例，<a href="https://docs.unity.cn/cn/2018.4/ScriptReference/Transform.RotateAround.html">中文 API</a></li>
+<li>用一个球体表示太阳，一个球体表示地球</li>
+<li>使用 RotateAround 让地球围绕太阳运动</li>
+</ul>
+</div>
+<h3 id="23-向量与变换">2.3 向量与变换</h3>
+<p>如果程序员线性代数还过得去，一定会 <strong>首选向量与变换</strong> 控制运动，这毕竟是万能和高效的方法，虽然不太易于理解。</p>
+<p><strong>1、Vector3</strong></p>
+<p><a href="https://docs.unity3d.com/ScriptReference/Vector3.html">Vector3</a>是三维向量，是一个 <strong>结构体</strong>。尽管 c# 把它化妆成对象模样，事实上我们仅需关心它的静态常数、成员与成员函数、静态方法即可</p>
+<ul>
+<li>静态常数：zero, up, left, forward</li>
+<li>成员与成员函数：x, y, z, normalized（单位向量）, magnitude（长度）</li>
+<li>静态方法与算子:
+<ul>
+<li>Dot, Cross，Project，ProjectOnPlane</li>
+<li>Distance，Angle，Normalize，Reflect</li>
+<li>MoveTowards，RotateTowards</li>
+<li>Lerp，Slerp</li>
+</ul>
+</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">编程练习 03-05，移动A到B运动</p>
+<p>编程要求与提示：</p>
+<ul>
+<li>在设计器中放置两个游戏对象，A是一个球，B是空对象</li>
+<li>阅读 Vector3.MoveTowards API 说明</li>
+<li>编写一段程序让 A 使用 5 秒移动到 B 所在的位置</li>
+</ul>
+</div>
+<p>上述案例，定义了类公共变量 speed 和 target，使得行为更易于控制</p>
+<div class="admonition note"><p class="admonition-title">要点：定义行为参数</p>
+<p>必须是公共实例变量，不能是属性</p>
+</div>
+<p><strong>2、Quaternion</strong></p>
+<p>Quaternion 是一个四维向量，是一个结构体。它表示了一个旋转变换，有着与矩阵运算类似的计算特性，能高效完成旋转变换。</p>
+<p>玩过抽陀螺吗？也许会更好理解四元组</p>
+<p><img src="../images/ch03/ch03-whip-top.png" alt=""></p>
+<p><strong>Quaternion 物理意义与基础编程</strong></p>
+<p>物体在对象空间中旋转，事实上仅需要知道旋转轴 <strong>单位向量</strong> <code>e = (x,y,z)</code> <strong>角度</strong> <code>a</code>，如下图所示。 四元素 <code>q = ((x,y,z)sin(a/2),cos(a/2))</code> 。这样表示有许多良好的数学特性。 建议参考维基百科（复杂问题国内博客介绍 90% 不到位）。</p>
+<p><img src="../images/ch03/ch03-quaternion.png" alt=""></p>
+<div class="admonition warning"><p class="admonition-title">注意</p>
+<p>图来源：维基百科图，它使用的是右手坐标系。Unity 使用左手坐标系！</p>
+</div>
+<p>我们先看一个特例，欧拉角（0，0，90）表示围绕 z 轴转 90度。 <code>q = ((0,0,1)sina(45),cos(45))</code> ，这样我们用四个数表示了旋转矩阵。因此，我们用一些代码检验我们的想法：</p>
+<div class="admonition example"><p class="admonition-title">编程03-06，理解 Quaternion</p>
+<ul>
+<li>先录入以下代码，注意了解使用的 Quaternion 方法含义：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">float</span> <span class="n">anyF</span> <span class="p">=</span> <span class="m">2.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Vector3</span> <span class="n">e</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">forward</span> <span class="p">*</span> <span class="n">anyF</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Quaternion</span> <span class="n">q</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">AngleAxis</span> <span class="p">(</span><span class="m">90</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">q</span><span class="p">);</span> <span class="c1">//(0,0,0.7,0.7) expected</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="n">Vector3</span> <span class="n">p1</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span> <span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// maxtrix left multify to a vetcor </span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">q</span> <span class="p">*</span> <span class="n">p1</span><span class="p">);</span> <span class="c1">// (0,1,0) expected</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="n">Quaternion</span> <span class="n">q1</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">AngleAxis</span> <span class="p">(</span><span class="m">45</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 90 rotate around z , and then 45</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">q1</span> <span class="p">*</span> <span class="n">q</span> <span class="p">*</span> <span class="n">p1</span><span class="p">);</span> <span class="c1">// (0.7,.7,0,0) expected</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">Quaternion</span> <span class="n">q2</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">Inverse</span> <span class="p">(</span><span class="n">q</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Quaternion.identity</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">q2</span> <span class="p">*</span> <span class="n">q</span><span class="p">);</span> <span class="c1">// (0.0, 0.0, 0.0, 1.0) expected</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+<p>你完全可以将 Quaternion 看成一个非常直观的旋转矩阵，利用矩阵乘向量得到旋转后的位置，矩阵乘积得到复合旋转！</p>
+<p>四元素一个有以下特性：</p>
+<ul>
+<li>q 的长度是 1</li>
+<li>q 就是旋转矩阵的一种表示，仅需要四个元数</li>
+</ul>
+<p>因此，我们只要将左手握住物体的旋转轴，确定角度就可以方便的旋转了！！！它是旋转运动编程的第一选择。（与菜鸟区别的标志之一）</p>
+<ul>
+<li>录入让物体按任意方向旋转的代码</li>
+<li>挂入一个对象，运行它！</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">RotateBeh</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="kt">int</span> <span class="n">speed</span> <span class="p">=</span> <span class="m">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="n">Vector3</span> <span class="n">e</span> <span class="p">=</span> <span class="n">Vector3</span><span class="p">.</span><span class="n">forward</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Quaternion</span> <span class="n">q</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">AngleAxis</span> <span class="p">(</span><span class="n">speed</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">transform</span><span class="p">.</span><span class="n">localRotation</span> <span class="p">*=</span> <span class="n">q</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在运行过程中修改速度和方向轴</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">编程练习 03-07，使用 Quaternion 实现 RotateAround 运动</p>
+<p>编程要求与提示：</p>
+<ul>
+<li>在设计器中放置两个游戏对象，A是一个球，B是空对象</li>
+<li>给定一个 speed 和 e</li>
+<li>编写一段程序让 A 围绕 B 旋转</li>
+</ul>
+</div>
+<p><strong>更深理解四元素</strong></p>
+<p>API 提供静态方法 Quaternion.Euler(x,y,z)，直观上按 z、x、y 轴旋转的一个序列。数学上就是 <code>q = qy * qx * qz</code>。【注意】不可交换。同样  q.eulerAngles 给出了一个四元素的欧拉角表示。</p>
+<p>Quaternion.FromToRotation API 给了两个向量计算 q 的方法。直观上，有一个物体围绕三角型 c 点从 ca 方向转到 cb 方向，显然 e 就是三角面过 c 点的法向量， a 就是角 acb。</p>
+<p>现在我们设想有一个物体先绕 x 轴转动，渐变到围绕 y 轴转动。似乎是 Quaternion.RotateTowards 静态方法</p>
+<div class="admonition example"><p class="admonition-title">编程练习 03-08， 验证 RotateTowards 练习</p>
+<p>编程要求与提示：</p>
+<ul>
+<li>理解 Quaternion</li>
+<li>阅读 Quaternion.Angle 两个四元数夹角是两个旋转轴夹角吗？</li>
+<li>编写你的测试程序</li>
+</ul>
+</div>
+<p>进一步：</p>
+<div class="admonition question"><p class="admonition-title">思考题</p>
+<p>四元素有哪些成员函数和静态方法是比较有用的？你能让某个物体按螺旋线向外运动吗？</p>
+</div>
+<h3 id="24-游戏对象的空间组合">2.4 游戏对象的空间组合</h3>
+<p>在游戏层次视图中，游戏对象按树组织似乎天经地义。事实上，游戏对象是按它的 <strong>空间关系</strong> 组织设计。对象设计图如下：</p>
+<p><img src="../images/ch03/ch03-space-tree.png" alt=""></p>
+<p><img src="images/drf/library_bookmarked.png" alt=""> Transform 类能作为 Transform 类对象的容器，是典型的 <strong>组合模式</strong>！</p>
+<p>首先，Transform 类的对象有 <code>root</code>，<code>parent</code>，<code>childrens</code> 的概念与相关操作。由于每个 transform 对象唯一绑定了一个 gameObject 对象，所以，直观上让使用者以为游戏对象层次是 GameObject 形成的。 使用空间树，可方便不同对象空间<strong>相对坐标</strong>到<strong>绝对坐标</strong>或其他对象坐标的转换，如果程序员需要经常实现两个空间的坐标的转换，直接用该树的结构构造一个变换矩阵，提升程序效率。</p>
+<p>其次，如果你细心，你可能以发现 Component、TransForm 都没有提供公共的构造函数，则意味者 Unity 设计师不希望你构建这些对象，我们怎么办呢？按组合关系（强聚合关系）的原则，自然创建与回收 Component 的任务是由 GameObject 完成的。阅读 GameObject.AddComponent API，它只有用类型作为参数，并没有添加一个对象的方法。</p>
+<p>再次，gameObject，transform, 和 components 是紧密耦合的，在编程中经常相互引用。因此，tranform，gameObject 等属性都是只读的，有 gameObject 管理和维护。即使不是只读的，任何修改都可能造成不可预测的结果。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p>你必须知道的 TransForm 属性与方法：</p>
+<ul>
+<li>属性
+<ul>
+<li>localToWorldMatrix</li>
+<li>worldToLocalMatrix</li>
+</ul>
+</li>
+<li>方法
+<ul>
+<li>TransformVector</li>
+<li>InverseTransformVector</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>思考题：构建一个矩阵实现两个对象空间坐标的转换；</p>
+<h2 id="3课堂实验模拟太阳系">3、课堂实验（模拟太阳系）</h2>
+<p>任务结果要求：</p>
+<p><img src="../images/ch03/ch03-sun-system.png" alt=""></p>
+<div class="admonition example"><p class="admonition-title">编程与操作 03-09， 简单太阳系</p>
+<p><img src="images/drf/splash_green.png" alt=""> 编程练习 03-09， 简单太阳系练习：</p>
+<p>编程要求与提示：</p>
+<ul>
+<li>搜索关键字 “<a href="https://cn.bing.com/search?q=%e5%a4%aa%e9%98%b3%e7%b3%bb%e8%b4%b4%e5%9b%be&amp;FORM=HDRSC1">太阳系贴图</a>”</li>
+<li>选择设计素材，如 <a href="http://so.redocn.com/taiyang/ccabd1f4cfb5c7e5cefaccf9cdbc.htm">红动网</a>。只要是长方形图片（低分辨）即可，将地球图片另存到本地</li>
+<li>创建 3 个球分别命名 sun, earth, moon</li>
+<li>按你自己理解设置它们的大小、位置等</li>
+<li>将地图图片拖入 Assets，再拖放到 球体对象 上，我们看到地球了。系统会自动生成一个材料目录，将图片变为贴图材料。</li>
+<li>如上方法，加入太阳、月亮、金星等</li>
+<li>添加脚本，大致如图所示</li>
+</ul>
+<p><img src="../images/ch03/ch03-sun-system-refcode.png" alt=""></p>
+</div>
+<p>思考题：太阳系中对象是否要组成空间树呢？例如：地球在太阳的空间中，月球在地球的空间中。请给出你的理由</p>
+<h2 id="4面向对象的游戏编程">4、面向对象的游戏编程</h2>
+<p>既然 Unity 引擎的设计中到处都是设计模式，现在我们也期望我们的游戏有满满设计感！</p>
+<p>本节介绍的游戏编程框架将贯穿整个教程。本节仅是一个基础结构，随着课程进展，将有越来越多部件加入该框架，以适应越来越复杂的游戏。也许开始你会觉得痛苦，因为这么简单的事情用这么复杂的代码。师兄、师姐的经验会告诉你，这付出绝对值得，因为你也能一周出品一个有相当代码量的游戏了！不是因为我编程速度快，而是前期的许多类一直在重复使用。</p>
+<p><img src="images/drf/folder_smart.png" alt="">  具体程序代码：<a href="https://github.com/pmlpml/unity3d-learning/tree/motion">motion</a></p>
+<h3 id="41-游戏编程的挑战">4.1 游戏编程的挑战</h3>
+<p>现代游戏引擎非常好使用，已不需要你做管理游戏等基础工作。但是，随着游戏规模增加（游戏对象多），游戏对象、行为和事件的管理越来越难。因此，需要按一定的规则有效的组织起来。</p>
+<p>对于游戏编程新手来说，以下挑战尤其突出：</p>
+<ul>
+<li>游行行为或事件是并发的、无序的
+<ul>
+<li>不对！ update 在 start 后发生，离散仿真引擎就这样设计的。但是，那么多 start 行为，哪个先执行呢？</li>
+<li>可以确定顺序！ 这项目设置时，可以设定脚本执行顺序。但是，你能制定几个呢？</li>
+<li>因此，默认这些行为是并发的、无序的会培养你良好的编程习惯，当需要特定顺序时使用适当的方法控制这些顺序。</li>
+</ul>
+</li>
+<li>游戏程序是无法断点跟踪的
+<ul>
+<li>可以断点啊？技术可行但原理不可行，离散仿真引擎中许多元素对时间敏感，不能暂停！</li>
+<li>因此需要习惯使用 Log 和 Assert 去诊断问题。</li>
+</ul>
+</li>
+<li>游戏行为脚本的功能职责要分明
+<ul>
+<li>回看过去代码，新手们最喜欢就是一个脚本搞定游戏。这样好么？至少，下个游戏很难利用上个游戏的代码</li>
+<li>因为每个脚本功能太多或任务交叉，一旦发现错误非常难以从直观判断哪个脚本可能错误</li>
+</ul>
+</li>
+<li>面向对象设计如设计模式，看别人说的总是<strong>不明觉厉</strong>
+<ul>
+<li>觉得很难下手！码农不懂设计师的世界，这非常正常</li>
+<li>如何入门？坚持编写高品质的代码，学习高手的代码</li>
+<li>Unity 官方 demo 代码如何？ 中等偏下，因为它要在有限的篇幅内告知你它的强大</li>
+</ul>
+</li>
+</ul>
+<h3 id="42-基于职责的设计与游戏的mvc总体框架">4.2 基于职责的设计与游戏的MVC总体框架</h3>
+<p>面向对象设计的核心：<strong>基于职责的设计</strong></p>
+<p>即：模拟人类组织管理社会的方法，根据不同人拥有资源、知识与技能的不同，赋予不同人（或对象）特定的职责。再按一定结构（如设计模式），将它们组织起来。</p>
+<p>先直接给出游戏框架设计：</p>
+<p><img src="../images/ch03/ch03-oo-game-architecture.png" alt=""></p>
+<p>为什么有这个图呢？按 Cocos 2d 的设计理念，设计一个游戏如同组织一场话剧。既然要搞话剧或游戏，就至少需要以下角色：</p>
+<ul>
+<li>导演，1名（仅要一个）
+<ul>
+<li>类型：SSDriector</li>
+<li>每届都有人问 SSDriector 是什么意思？Software School Director，嘿嘿</li>
+<li>职责：把握全局；控制场景</li>
+</ul>
+</li>
+<li>场记若干，话剧有很多场，每场需要一个。
+<ul>
+<li>抽象类型（角色）：ISceneController</li>
+<li>具体类型：FirstController</li>
+<li>职责：第一场的场记，控制布景、演员的上下场、管理动作等执行</li>
+</ul>
+</li>
+<li>吃瓜群众，1个
+<ul>
+<li>抽象类型（角色）：IUserAction</li>
+<li>具体类型：UserGUI</li>
+<li>职责：边吃瓜子边和场记聊天</li>
+</ul>
+</li>
+</ul>
+<p>似乎不错的样子！</p>
+<ul>
+<li>说好的 MVC 呢？</li>
+<li>程序是啥样？</li>
+</ul>
+<h3 id="43-框架核心代码与设计解读">4.3 框架核心代码与设计解读</h3>
+<p><strong>1、组织游戏资源</strong></p>
+<p>Unity 项目视图设计器已经给出了推荐组织方案：</p>
+<p><img src="../images/ch03/ch03-oo-game-resource.png" alt=""></p>
+<p>一般小游戏就一个场景。请严格按以下目录组织：</p>
+<ul>
+<li>材料（Materials）。</li>
+<li>预制（Resources/Prefabs）。所有游戏对象都已预制形式存在</li>
+<li>脚本（Scripts）。</li>
+</ul>
+<p><strong>2、创建场景启动对象和控制器</strong></p>
+<ul>
+<li>构造 Main 空对象，并挂载 FirstController 代码，使得游戏加载行为在你的控制下。</li>
+</ul>
+<p><img src="../images/ch03/ch03-oo-game-init-scene.png" alt=""></p>
+<p>启动时，游戏就一个对象有代码。</p>
+<p><strong>3、Director（导演）对象与单实例模式</strong></p>
+<p>创建 SSDirector 类，其职责大致如下：</p>
+<ul>
+<li>获取当前游戏的场景</li>
+<li>控制场景运行、切换、入栈与出栈</li>
+<li>暂停、恢复、退出</li>
+<li>管理游戏全局状态</li>
+<li>设定游戏的配置</li>
+<li>设定游戏全局视图</li>
+</ul>
+<p>【注】职责定义见参见 《Learn cocos2D Game Development with iOS 5》</p>
+<div class="admonition note"><p class="admonition-title">要点：面向对象设计核心就是基于职责的设计</p>
+<ul>
+<li>每个对象有尽可能单一、语义明确的职责（与现实保持一致）</li>
+<li>尽可能少暴露内部细节</li>
+</ul>
+</div>
+<p>大致代码如下：</p>
+<p><img src="../images/ch03/ch03-oo-game-director.png" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>它是单实例的。具有典型单实例类编程特征</li>
+<li>它拥有一些全局属性，如 running，fps等，这样可以让任何地方的代码访问它</li>
+<li>它继承至 C# 根对象，所以不会受 Unity 引擎管理，也不要加载</li>
+<li>它通过一个抽象的场景接口访问不同场的场记（控制器）
+<ul>
+<li>例如：它不知道每个场景需要加载哪些资源</li>
+<li>它可以与实现 ISceneController 的不同场记对话</li>
+</ul>
+</li>
+</ul>
+<p><strong>4、SceneController（场记）</strong></p>
+<p>创建 XXXSceneController 类，例如 FirstSceneController，其职责大致如下：</p>
+<ul>
+<li>管理本次场景所有的游戏对象</li>
+<li>协调游戏对象（预制件级别）之间的通讯</li>
+<li>响应外部输入事件</li>
+<li>管理本场次的规则（裁判）</li>
+<li>各种杂务</li>
+</ul>
+<p>大致代码如下：</p>
+<p><img src="../images/ch03/ch03-oo-game-controller.png" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>由于它实现了 ISceneController 接口，所以当导演切换场景时，就可以利用多态的特性，让不同场景加载不同资源</li>
+<li>在场景被加载（awake）时，它也会自动注入导演，作为当前场景</li>
+</ul>
+<p><strong>5、接口</strong></p>
+<p>在面向对象程序设计中，接口（Interface）概念至关重要。接口可以这样描述与理解：</p>
+<ul>
+<li>定义一些对象某些方面的能力。例如一个对象具有 Drivable 接口，则其他对象就可以通过 Drivable 的申明去 Drive 它。所以它的命名通常是 动词+able；</li>
+<li>定义一些对象是某种角色。例如中大人 SYSUer，中大教师、教工、学生、毕业生等可具备 SYSUer，它的命名是 XXX+er；</li>
+<li>接口命名一般用 <code>XXX+able</code> 或 <code>XXX+er</code>？随特定语言或编程场景习惯。</li>
+</ul>
+<p>从编程角度，接口就是数据类型，它定义了一组操作。例如：ISceneController 前面的前缀 I 表示接口类型。具体定义如下：</p>
+<p><img src="../images/ch03/ch03-oo-game-iscene.png" alt=""></p>
+<p>为什么要定义这样接口呢？这个案例中</p>
+<ul>
+<li>每个场景都有自己的场记，导演需要与不同场景打交道</li>
+<li>导演只知道场记有加载资源、暂停、恢复等行为，但并不知道实现细节，如：暂停前要保存哪些状态等</li>
+<li>导演也不希望知道细节，而是规定场记们必须会做什么，怎么做自由发挥。这个规定就是接口</li>
+</ul>
+<p>总之，通过 ISceneController 多态实现，场记和导演之间关系变松弛了。导演不需要知道场记是张三、李四，仅需要知道这个人穿了件带场记标记（接口）的衣服，就可执行导演的指挥任务。</p>
+<p><strong>6、门面（Fasàde）模式与交互行为设计</strong></p>
+<p>门面（Fasàde）模式的概念概念</p>
+<ul>
+<li>外部与一个子系统的通信必须通过一个统一的门面(Facade)对象进行。</li>
+</ul>
+<p>对于游戏设计，用户的交互行为是非常少的。以 tic-tac-toe 为例，交互的行为包括：</p>
+<ul>
+<li>NewGame()</li>
+<li>int GetOnesTurn()</li>
+<li>Put(X,Y)</li>
+</ul>
+<p>一个游戏，这样的交互行为通常只有十几个。如果你发现需要几百个，这游戏可能不是人能玩的了。</p>
+<p>我们仔细分析这些交互行为，它与游戏规则密切相关。如果，我们把规则中用户行为列个表</p>
+<table>
+<thead>
+<tr>
+<th>玩家动作（事件）</th>
+<th>条件</th>
+<th>结果（游戏对象动作）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动游戏</td>
+<td></td>
+<td>游戏初始界面</td>
+</tr>
+<tr>
+<td>显示游戏方</td>
+<td></td>
+<td>0/1</td>
+</tr>
+<tr>
+<td>放置棋子</td>
+<td>位置</td>
+<td>结束/未结束</td>
+</tr>
+</tbody>
+</table>
+<p>显然，这个表就是人机交互与游戏控制之间的接口。玩家并不关心游戏程序得到结果的过程，而仅关注能做什么。这样，游戏交互管理程序与游戏控制程序通过这个接口实现相互独立的开发。用专业一些的词汇，两个对象实现了解耦合。</p>
+<p>定义一个用户动作接口，这样就实现了用户行为与游戏系统规则计算的分离。优势是显而易见的，例如：用户行为编程人员可以选择菜单、键盘、或组合实现用户交互行为，而模型处理人员可以自由定义游戏规则。</p>
+<p>因而，我们称这个接口就是游戏逻辑与用户之间交互的门面（Fasàde）。代码示例如图所示：</p>
+<p><img src="../images/ch03/ch03-oo-game-iuseraction.png" alt=""></p>
+<p>太简单了，用户只能结束游戏。</p>
+<p>结束的逻辑是什么？所以，FirstSceneController 必须实现 IUserAction 接口;</p>
+<p>用户界面程序只要把 FirstSceneController 作为 IUserAction，用它就 OK 了。具体代码示例：</p>
+<p><img src="../images/ch03/ch03-oo-game-uigui.png" alt=""></p>
+<p>问题：神一般的类型转换，它对吗？</p>
+<p>尽管这个代码只能做一个动作，退出游戏。</p>
+<h3 id="44-mvc架构">4.4 MVC架构</h3>
+<p>MVC是界面人机交互程序设计的一种架构模式。它把程序分为三个部分：</p>
+<ul>
+<li>模型（Model）：数据对象及关系
+<ul>
+<li>游戏对象、空间关系</li>
+</ul>
+</li>
+<li>控制器（Controller）：接受用户事件，控制模型的变化
+<ul>
+<li>一个场景一个主控制器</li>
+<li>至少实现与玩家交互的接口（IPlayerAction）</li>
+<li>实现或管理运动</li>
+</ul>
+</li>
+<li>界面（View）：显示模型，将人机交互事件交给控制器处理
+<ul>
+<li>处收 Input 事件</li>
+<li>渲染 GUI ，接收事件</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">要点：MVC</p>
+<p>回到 4.2 节框架图，M、V、C 在游戏框架各是哪些类？这些类如何有效的组织起来呢？</p>
+</div>
+<h2 id="5小结">5、小结</h2>
+<ul>
+<li>绝对坐标、对象（相对）坐标系统；判断左手、右手坐标系</li>
+<li>三种控制运动的方法：直接修改坐标值、Transfrom 部件方法、向量与变换</li>
+<li>强力建议使用向量与变换完成运动控制，让你的游戏程序优雅（高）、高效（大）、通用（上）</li>
+<li>组合模式 &ndash;  基于空间关系的游戏对象组合方法</li>
+<li>基于职责的设计 &ndash; 使用面向对象方法，构建小游戏开发框架
+<ul>
+<li>接口</li>
+<li>MVC架构</li>
+<li>游戏交互接口（门面模式）</li>
+</ul>
+</li>
+</ul>
+<h2 id="6作业与练习">6、作业与练习</h2>
+<p><strong>c# 自学</strong></p>
+<p>搜素 “c# 集合类型”， 了解以下类型的使用。 不知道使用，自己复习 C++ 模板库。</p>
+<ul>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.ilist">IList</a>，列表抽象行为接口</li>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.generic.list-1">List&lt;T&gt;</a>，泛型列表类</li>
+<li><a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.arraylist">ArrayList</a>，动态任意类型数组类</li>
+<li>HashSet&lt;T&gt; 类</li>
+<li>Hashtable 类</li>
+</ul>
+<p><strong>作业内容</strong></p>
+<p>1、简答并用程序验证【建议做】</p>
+<ul>
+<li>游戏对象运动的本质是什么？</li>
+<li>请用三种方法以上方法，实现物体的抛物线运动。（如，修改Transform属性，使用向量Vector3的方法&hellip;）</li>
+<li>写一个程序，实现一个完整的太阳系， 其他星球围绕太阳的转速必须不一样，且不在一个法平面上。</li>
+</ul>
+<p>2、编程实践</p>
+<ul>
+<li>阅读以下游戏脚本</li>
+</ul>
+<blockquote>
+<p>Priests and Devils</p>
+<p>Priests and Devils is a puzzle game in which you will help the Priests and Devils to cross the river within the time limit. There 
+are 3 priests and 3 devils at one side of the river. They all want to get to the other side of this river, but there is only one 
+boat and this boat can only carry two persons each time. And there must be one person steering the boat from one side to the other 
+side. In the flash game, you can click on them to move them and click the go button to move the boat to the other direction. If the 
+priests are out numbered by the devils on either side of the river, they get killed and the game is over. You can try it in many &gt;
+ways. Keep all priests alive! Good luck!</p>
+</blockquote>
+<p>程序需要满足的要求：</p>
+<ul>
+<li>play the game ( <a href="http://www.flash-game.net/game/2535/priests-and-devils.html">http://www.flash-game.net/game/2535/priests-and-devils.html</a> )</li>
+<li>列出游戏中提及的事物（Objects）</li>
+<li>用表格列出玩家动作表（规则表），注意，动作越少越好</li>
+<li>请将游戏中对象做成预制</li>
+<li>在场景控制器 <code>LoadResources</code> 方法中加载并初始化 长方形、正方形、球 及其色彩代表游戏中的对象。</li>
+<li>使用 C# 集合类型 有效组织对象</li>
+<li>整个游戏仅 主摄像机 和 一个 Empty 对象， <strong>其他对象必须代码动态生成！！！</strong> 。 整个游戏不许出现 Find 游戏对象， SendMessage 这类突破程序结构的 通讯耦合 语句。 <strong>违背本条准则，不给分</strong></li>
+<li>请使用课件架构图编程，<strong>不接受非 MVC 结构程序</strong></li>
+<li>注意细节，例如：船未靠岸，牧师与魔鬼上下船运动中，均不能接受用户事件！</li>
+</ul>
+<p>3、思考题【选做】</p>
+<ul>
+<li>使用向量与变换，实现并扩展 Tranform 提供的方法，如 Rotate、RotateAround 等</li>
+</ul>
+<p><strong>作业提交要求</strong></p>
+<ul>
+<li>仅能用博客或在线文档提交作业，建议使用 Github 提交代码和作业。<strong>不能使用docx、pdf等需要下载阅读的格式</strong></li>
+<li>deadline 问课程 TA</li>
+</ul>
+<p> </p>
+<p><a href="./">返回目录</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/04-gameobject-and-graphics/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">四、游戏对象与图形基础</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/02-dscrete-simulation-basic/">
+            <span class="next-text nav-default">二、离散仿真引擎基础</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

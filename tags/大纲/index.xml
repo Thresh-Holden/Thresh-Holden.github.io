@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>大纲 on 3D游戏编程与设计 - 中山大学</title>
+    <link>http://Thresh-Holden.github.io/tags/%E5%A4%A7%E7%BA%B2/</link>
+    <description>Recent content in 大纲 on 3D游戏编程与设计 - 中山大学</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 30 Aug 2020 00:00:00 +0800</lastBuildDate><atom:link href="http://Thresh-Holden.github.io/tags/%E5%A4%A7%E7%BA%B2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>课程大纲 (2020)</title>
+      <link>http://Thresh-Holden.github.io/post/index-2020/</link>
+      <pubDate>Sun, 30 Aug 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://Thresh-Holden.github.io/post/index-2020/</guid>
+      <description>3D 游戏编程与程序设计 &amp;mdash;应用设计模式设计、开发游戏软件 前言 一、游戏的本质 二、离散仿真基础 三、空间与运动 四、游戏对象与图形基础 五、与</description>
+    </item>
+    
+  </channel>
+</rss>

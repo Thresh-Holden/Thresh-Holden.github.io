@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>五、与游戏世界交互 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="It freed me to enter one of the most creative periods of my life &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 课程内容 资源与代码下载 1、游戏交互与创新 游戏交互是玩家体验的基础。这里 交互" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/05-interaction-with-gameworld/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="五、与游戏世界交互" />
+<meta property="og:description" content="It freed me to enter one of the most creative periods of my life &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 课程内容 资源与代码下载 1、游戏交互与创新 游戏交互是玩家体验的基础。这里 交互" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/05-interaction-with-gameworld/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-10-01T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="五、与游戏世界交互">
+<meta itemprop="description" content="It freed me to enter one of the most creative periods of my life &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 课程内容 资源与代码下载 1、游戏交互与创新 游戏交互是玩家体验的基础。这里 交互"><meta itemprop="datePublished" content="2020-10-01T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="8252">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="五、与游戏世界交互"/>
+<meta name="twitter:description" content="It freed me to enter one of the most creative periods of my life &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：3-4 * 45 min 课程内容 资源与代码下载 1、游戏交互与创新 游戏交互是玩家体验的基础。这里 交互"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">五、与游戏世界交互</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-01 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#课程内容">课程内容</a></li>
+        <li><a href="#1游戏交互与创新">1、游戏交互与创新</a>
+          <ul>
+            <li><a href="#11-游戏交互模式设计">1.1 游戏交互模式设计</a></li>
+            <li><a href="#12-游戏创新方法">1.2 游戏创新方法</a></li>
+            <li><a href="#13-常见游戏输入设备">1.3 常见游戏输入设备</a></li>
+          </ul>
+        </li>
+        <li><a href="#2unity-输入处理">2、Unity 输入处理</a>
+          <ul>
+            <li><a href="#21-输入信息处理基本模型">2.1 输入信息处理基本模型</a></li>
+            <li><a href="#22-joystick--虚拟轴与按键">2.2 JoyStick – 虚拟轴与按键</a></li>
+            <li><a href="#23-键盘">2.3 键盘</a></li>
+            <li><a href="#24-鼠标">2.4 鼠标</a></li>
+            <li><a href="#25-手机输入与其他">2.5 手机输入与其他</a></li>
+          </ul>
+        </li>
+        <li><a href="#3人机交互">3、人机交互</a>
+          <ul>
+            <li><a href="#31-screen-space--屏幕坐标系统">3.1 Screen Space – 屏幕坐标系统</a></li>
+            <li><a href="#透视图">透视图</a></li>
+            <li><a href="#32-鼠标与-3d-空间物体交互">3.2 鼠标与 3d 空间物体交互</a></li>
+          </ul>
+        </li>
+        <li><a href="#4面向对象的编程---设计模式游戏对象的生产与回收">4、面向对象的编程 - 设计模式：游戏对象的生产与回收</a>
+          <ul>
+            <li><a href="#41-单实例">4.1 单实例</a></li>
+            <li><a href="#42-原型模式">4.2 原型模式</a></li>
+            <li><a href="#43-对象创建与销毁">4.3 对象创建与销毁</a></li>
+            <li><a href="#44-案例研究---简单工厂与对象池">4.4 案例研究 - 简单工厂与对象池</a></li>
+          </ul>
+        </li>
+        <li><a href="#5小结">5、小结</a></li>
+        <li><a href="#6作业与练习">6、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>It freed me to enter one of the most creative periods of my life</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<p><em>预计时间：3-4 * 45 min</em></p>
+<h2 id="课程内容">课程内容</h2>
+<p><img src="../images/game-architecture-input.png" alt=""></p>
+<p><a href="https://github.com/pmlpml/unity3d-learning/tree/ex-interaction">资源与代码下载</a></p>
+<h2 id="1游戏交互与创新">1、游戏交互与创新</h2>
+<p>游戏交互是玩家体验的基础。这里 <strong>交互模型</strong> 定义为建立输入设备的输入与游戏世界中的对象行为之间的关系，以及游戏世界状态与玩家感知（视觉、听觉、触觉、嗅觉等之间的关系）。在科幻电影中，玩家通过脑电波驾驶与控制装备；在现实的游戏中，通常使用操纵杆控制游戏中玩家扮演的角色。</p>
+<h3 id="11-游戏交互模式设计">1.1 游戏交互模式设计</h3>
+<p>Adams 认为交互设计是用户体验的核心内容，游戏输入装备的功能和性能会影响玩家在游戏中的行为选择。Adams 从游戏设计角度给出了交互设计的要点。游戏典型的交互模型包括：</p>
+<ul>
+<li>角色扮演模型。即玩家扮演游戏世界中的一个对象，并实现游戏操纵杆及其按钮的操作与游戏对象行为之间的映射。这样，玩家就可以通过一个或多个设备控制游戏对象。</li>
+<li>多视角交互模型。即为游戏世界构建多个视图，每个视图反映不同观察视角或游戏的状态，使得玩家可以在不同视图中选择合适的方式（如菜单、软件工具等）与游戏世界交互。</li>
+<li>团队交互模型。在社交类游戏中，通常有视图反映协同玩家状态，如队友列表等，玩家可通过广播、视频、聊天室、私聊等即时沟通渠道实现协作。</li>
+<li>竞技交互模式。具备竞技模式一般需要支持更多的游戏设备，以满足发烧玩家的需要。使用 180 度屏幕、7 声道杜比立体声、游戏鼠标等的玩家，显然都是游戏公司争夺的 VIP。</li>
+<li>桌面、移动交互模式。以大众客户为目标，通常是小游戏或商业游戏。</li>
+</ul>
+<p>Adams 对交互模型中常见的设计问题做了一些总结：</p>
+<ul>
+<li>视角
+<ul>
+<li>3D 与 2D 的选择</li>
+<li>第一人称与第三人称的感知差异</li>
+<li>多摄像机与投影模型</li>
+</ul>
+</li>
+<li>视觉元素
+<ul>
+<li>主视野</li>
+<li>反馈元素（如血条等表示游戏世界对象的状态）</li>
+<li>小地图</li>
+<li>化身肖像</li>
+<li>菜单与按钮</li>
+</ul>
+</li>
+<li>音频元素</li>
+</ul>
+<p><img src="images/drf/info.png" alt=""> 如果你对游戏交互设计感兴趣，请阅读游戏设计教材，Adams《游戏设计基础》！</p>
+<h3 id="12-游戏创新方法">1.2 游戏创新方法</h3>
+<p>游戏创新存在比较明显的鄙视链现象。用专业输入装备玩游戏的鄙视用手机玩游戏、Unreal开发者鄙视Unity开发者，这些容易理解，创新也分等级就难以理解了。 <a href="https://www.moddb.com/engines/quake-engine/downloads">Quake engine</a>的作者约翰·卡马克，为什么要加入 Oculus Rift 团队，并出任首席技术专家？</p>
+<p><strong>1、游戏创新第一层：交互装备创新</strong></p>
+<p>说到游戏交互装备创新，最厉害的参与者是 Apple、Microsoft、Nintendo、Sony，它们都是实力雄厚的大厂。在 AR/VR 与 物联网 时代 HTC、Oculus 以及其他厂商也积极融入其中。也许有一天，小米的各种 IoT 外设成为现代游戏元素的一部分。（<strong>IoT 游戏？2019年的预言，未来会不会流行呢？</strong>）</p>
+<p>以 Nintendo 的《<a href="https://baike.sogou.com/v56171.htm?fromTitle=%E5%8F%A3%E8%A2%8B%E5%A6%96%E6%80%AA">口袋妖怪/精灵宝可梦</a>》系列为例，第一代游戏掌机就配备的游戏；2006 年，任天堂发布了新一代游戏主机Wii，Wii配套的新款游戏手柄第一次将体感动作引入了游戏，体感装备出现后，用户们第一次发现原来除了传统的手柄按键控制之外，自己还可以直接用身体动作来控制屏幕上的游戏人物，《精灵宝可梦》出现了许多新玩法；2016年，《精灵宝可梦GO》更是现象级游戏，将现实地图与GPS位置引入游戏，预示 AR 游戏时代的到来。</p>
+<p>Microsoft，首创带力反馈游戏手柄；人体识别体感装置 Kinect ；全息眼镜 HoloLens。这些装备改变了人机交互方式，游戏更好用于医疗、复杂环境的仿真与教学。</p>
+<p>Apple 就不用说了。手机游戏几乎伴随智能手机成长。手机中许多传感器几乎就是为游戏而生。多点触摸、3d Touch，以及今天 Apple “奇丑无比” 的双肩屏（AR kit 需要这个传感器），哪个不瞄准游戏交互的制高点。</p>
+<p>因此，运用现代交互与呈现技术是游戏创新的首选（仅对学生而言）。</p>
+<p><strong>2、游戏创新第二层：机制创新</strong></p>
+<p>通常游戏竞赛都是聚焦这个层面，具体包括：</p>
+<ul>
+<li>新设备在新领域（医疗、公益、电商、社交）的应用</li>
+<li>游戏与智能技术（语音交互、智能学习、各种识别… …）</li>
+<li>新颖玩法（Flappy Bird、Temple Run … …）</li>
+<li>题材创新（如挑战极限系列，史上最难….）</li>
+</ul>
+<p><strong>3、游戏创新第三层：以客户为中心的创新</strong></p>
+<p>对于商业公司挣钱才是第一要素。因此，他们更希望是较小的风险和较高的收益，或者是砸钱易出效果类型。例如：“吃鸡”类游戏很流行，大家都忙推这类游戏。同类游戏，大家 PK 什么呢？</p>
+<ul>
+<li>细腻逼真的 3D 素材（比技术门槛和经费，如暴雪产品）</li>
+<li>热门故事（通常与历史、热门电影、政治事件绑定）</li>
+<li>满足各种脑残粉（如：开心消消乐、国内所有页游）</li>
+</ul>
+<p><strong>4、创新选择</strong></p>
+<p><strong>体验、体验、新体验！！！</strong></p>
+<ul>
+<li>游戏题材：
+<ul>
+<li>体育、教育、赛车、社交等题材最敏感</li>
+</ul>
+</li>
+<li>交互创新：
+<ul>
+<li>触摸交互，重力交互，语音交互，体感交互</li>
+</ul>
+</li>
+<li>AR/VR
+<ul>
+<li>沉浸式体验技术，最热</li>
+</ul>
+</li>
+</ul>
+<p>游戏基本形式：</p>
+<ul>
+<li>经济性驱动的游戏
+<ul>
+<li>选择手机及其智能设备创新游戏</li>
+</ul>
+</li>
+<li>挑战性驱动的游戏
+<ul>
+<li>必须包含，键盘</li>
+</ul>
+</li>
+<li>行为模式驱动的游戏
+<ul>
+<li>碎片时间游戏</li>
+</ul>
+</li>
+</ul>
+<h3 id="13-常见游戏输入设备">1.3 常见游戏输入设备</h3>
+<p><strong>1、经典“三宝”</strong></p>
+<p><img src="../images/ch05/basic-3-input.png" alt=""></p>
+<ul>
+<li>键盘（KeyBoard）</li>
+<li>鼠标（Mouse）</li>
+<li>游戏操纵杆（Joystick）</li>
+</ul>
+<p><strong>2、手机游戏输入设备</strong></p>
+<p><img src="../images/ch05/mobile-input.png" alt=""></p>
+<ul>
+<li>触摸屏（TouchPad）</li>
+<li>重力/位置传感器（Gravity/Geo Sensor）</li>
+<li>麦克风（Audio）</li>
+<li>摄像头（AR）
+<ul>
+<li>物体识别与跟踪（Tracking）</li>
+<li>3D 建模（SLAM）</li>
+</ul>
+</li>
+<li>手势/体态（Gesture/Posture）</li>
+<li>蓝牙, NFC … … 包括可连接手机的各种智能设备</li>
+</ul>
+<p><strong>3、IoT 与 其他设备</strong></p>
+<ul>
+<li>VR头盔</li>
+<li>Hololen</li>
+<li>体感、Kinect</li>
+<li>条码、激光等各种传感器 … …</li>
+</ul>
+<h2 id="2unity-输入处理">2、Unity 输入处理</h2>
+<p>Unity 支持对游戏使用最常规的输入设备类型（如控制器、游戏手柄、键盘和鼠标），还支持移动设备的触摸屏和移动感应功能。此外，还支持 VR 和 AR 系统的输入（VR 和 AR 见后面的章节 ）。</p>
+<p>Unity 还可以使用计算机的麦克风和网络摄像头来输入音频和视频数据。配合第三方云 API ，如图像识别、语音识别等，用户可创新新的游戏玩法。</p>
+<h3 id="21-输入信息处理基本模型">2.1 输入信息处理基本模型</h3>
+<p><strong>1、输入处理模式</strong></p>
+<p>你可能打算自己处理设备的输入，但是在游戏循环驱动下，处理处理并不简单。主要方式有两种：</p>
+<ul>
+<li>状态查询（polling states）
+<ul>
+<li>例如，每个周期检查键盘 A 的 up 或 down 状态</li>
+<li>优点：简单，易于计算状态持续时间</li>
+<li>缺点：每个循环都能检测到状态，简单根据 down 状态发起攻击，每秒要攻击无数次</li>
+</ul>
+</li>
+<li>推送事件（push events）
+<ul>
+<li>例如，某个周期检查到状态为 up，且上个周期为 down，则产生一个按键事件</li>
+<li>优点：易于捕获事件，使用广泛</li>
+<li>缺点：确认事件需要消除抖动，需要队列保存事件</li>
+</ul>
+</li>
+</ul>
+<p><strong>2、输入组合与键盘映射</strong></p>
+<ul>
+<li>按键与组合
+<ul>
+<li>普通玩家在游戏中控制的按键不超过 6 个，跟多的动作需要通过按键组合使用。</li>
+<li>专业玩家需要定义大量的按键，以更快捷的操作</li>
+</ul>
+</li>
+<li>键盘映射
+<ul>
+<li>满足不同玩家生理、习惯等因素形成的操作习惯</li>
+</ul>
+</li>
+</ul>
+<h3 id="22-joystick--虚拟轴与按键">2.2 JoyStick – 虚拟轴与按键</h3>
+<p>对于传统输入，Unity 使用 Input 对象，完美支持键盘、游戏游戏操纵杆 和 鼠标。</p>
+<p>Unity 引入 <strong>虚拟轴</strong> 的概念，统一管理键盘、游戏游戏操纵杆和鼠标的操作。</p>
+<p>从脚本中，可以通过名称访问所有虚拟轴。</p>
+<p>每个项目在创建时都具有以下默认输入轴：</p>
+<ul>
+<li>Horizontal 和 Vertical 映射到 w、a、s、d 键和箭头键。</li>
+<li>Fire1、Fire2 和 Fire3 分别映射到 Control 键、Option (Alt) 键和 Command 键。</li>
+<li>Mouse X 和 Mouse Y 映射到鼠标移动的增量。</li>
+<li>Window Shake X 和 Window Shake Y 映射到窗口的移动。</li>
+</ul>
+<p>请选择 Edit &gt; Project Settings 菜单，然后选择 Input 类别。还可以在此处更改每个轴的设置。</p>
+<p><img src="https://docs.unity.cn/cn/current/uploads/Main/InputAxis.png" alt=""></p>
+<p>具体设置参见：<a href="https://docs.unity.cn/cn/current/Manual/ConventionalGameInput.html">传统游戏输入</a></p>
+<ul>
+<li>在脚本中使用虚拟轴和按键
+<ul>
+<li><code>Input.GetAxis(&quot;Vertical&quot;) * speed;</code></li>
+<li><code>If (Input.GetButton(“Fire1”)) { }</code></li>
+</ul>
+</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">编程 05-01，使用虚拟轴</p>
+<ul>
+<li>使用unity虚拟轴默认配置</li>
+<li>在（0，0，0）位置一个 cube，在其上挂代码</li>
+<li>运行</li>
+<li>修改<code>Horizontal</code>的配置参数</li>
+<li>观察效果</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Joystick</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="kt">float</span> <span class="n">speedX</span> <span class="p">=</span> <span class="m">10.0F</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="kt">float</span> <span class="n">speedY</span> <span class="p">=</span> <span class="m">10.0F</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">float</span> <span class="n">translationY</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Vertical&#34;</span><span class="p">)</span> <span class="p">*</span> <span class="n">speedY</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">float</span> <span class="n">translationX</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">GetAxis</span><span class="p">(</span><span class="s">&#34;Horizontal&#34;</span><span class="p">)</span> <span class="p">*</span> <span class="n">speedX</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">translationY</span> <span class="p">*=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">translationX</span> <span class="p">*=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//transform.Translate(0, translationY, 0);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//transform.Translate(translationX, 0, 0);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">translationX</span><span class="p">,</span> <span class="n">translationY</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span> <span class="p">(</span><span class="s">&#34;Fire1&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;Fired Pressed&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+<h3 id="23-键盘">2.3 键盘</h3>
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/ScriptReference/Input.html">Input</a> 静态变量（只读）
+<ul>
+<li>anyKey                判断是否有键按着</li>
+<li>anyKeyDown      判断是否有键按下</li>
+<li>inputString         输入缓冲区</li>
+</ul>
+</li>
+<li>Input 静态方法
+<ul>
+<li>bool GetKey(string name) 检测指定的按键按着</li>
+<li>bool GetKeyDown(string name) 指定的键按下</li>
+</ul>
+</li>
+<li>枚举
+<ul>
+<li><a href="https://docs.unity.cn/cn/current/ScriptReference/KeyCode.html">KeyCode</a></li>
+</ul>
+</li>
+</ul>
+<p>键的名称遵循以下约定：</p>
+<ul>
+<li>普通键：“a”、“b”、“c”…</li>
+<li>数字键：“1”、“2”、“3”…</li>
+<li>箭头键：“up”、“down”、“left”和“right”</li>
+<li>键盘键：“[1]”、“[2]”、“[3]”、“[+]”和“[equals]”</li>
+<li>修饰键：“right shift”、“left shift”、“right ctrl”、“left ctrl”、“right alt”、“left alt”、“right cmd”、“left cmd”</li>
+<li>鼠标按钮：“mouse 0”、“mouse 1”、“mouse 2”…</li>
+<li>游戏杆按钮（任何游戏杆）：“joystick button 0”、“joystick button 1”、“joystick button 2”…</li>
+<li>游戏杆按钮（特定游戏杆）：“joystick 1 button 0”、“joystick 1 button 1”、“joystick 2 button 0”…</li>
+<li>特殊键：“backspace”、“tab”、“return”、“escape”、“space”、“delete”、“enter”、“insert”、“home”、“end”、“page up”和“page down”</li>
+<li>功能键：“f1”、“f2”、“f3”…</li>
+<li>用于标识键的名称在脚本接口中和在 Ins</li>
+</ul>
+<p><strong>离散系统状态与事件</strong></p>
+<ul>
+<li>假设离散系统每秒采集 60 次状态
+<ul>
+<li>玩家按了 “z” 键</li>
+<li>在 Update 中 Input.GetKey(“z”) 就会检出几十次</li>
+<li>在 Update 中 Input.GetKeyDown(“z”) 只会出现一次，但如果你这帧没有检查，则所有状态自动复位</li>
+</ul>
+</li>
+<li>对于事件，例如：KeyDown
+<ul>
+<li>可能同时发生多个</li>
+<li>所以必须使用缓冲区缓存多个事件，如 inputString</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">编程要点</p>
+<p>Input.GetKey  检测用户按键“力度”，请使用虚拟轴
+Input.GetKeyDown 检测用户按键次数</p>
+</div>
+<p><strong>字串的输入</strong></p>
+<p>返回该帧输入的键盘输入。（只读）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExampleScript</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">GUIText</span>  <span class="n">gt</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gt</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">GUIText</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Update</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">foreach</span> <span class="p">(</span><span class="kt">char</span> <span class="n">c</span> <span class="k">in</span> <span class="n">Input</span><span class="p">.</span><span class="n">inputString</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="p">==</span> <span class="sc">&#39;\b&#39;</span><span class="p">)</span> <span class="c1">// has backspace/delete been pressed?</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">gt</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">Length</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">gt</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="n">gt</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">Substring</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">gt</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">c</span> <span class="p">==</span> <span class="sc">&#39;\n&#39;</span><span class="p">)</span> <span class="p">||</span> <span class="p">(</span><span class="n">c</span> <span class="p">==</span> <span class="sc">&#39;\r&#39;</span><span class="p">))</span> <span class="c1">// enter/return</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">print</span><span class="p">(</span><span class="s">&#34;User entered their name: &#34;</span> <span class="p">+</span> <span class="n">gt</span><span class="p">.</span><span class="n">text</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">gt</span><span class="p">.</span><span class="n">text</span> <span class="p">+=</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="24-鼠标">2.4 鼠标</h3>
+<ul>
+<li>Input 静态变量（只读）
+<ul>
+<li>mousePosition     鼠标位置（Vector3）</li>
+<li>mousePresent      是否有鼠标</li>
+</ul>
+</li>
+<li>Input 静态方法
+<ul>
+<li>bool GetKey(string name) 检测指定的按键按着</li>
+<li>bool GetKeyDown(string name) 指定的键按下</li>
+</ul>
+</li>
+<li>枚举
+KeyCode.Mouse0 .. KeyCode.Mouse6</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">编程要点</p>
+<p>其实程序 onMouseMove，onMouseMoveOver 也难写<br>
+每帧检测 MouseMove 可能导致计算过载，FPS！！</p>
+</div>
+<div class="admonition example"><p class="admonition-title">编程 05-02，DoubleClicked 检测</p>
+<p>以下伪代码对吗？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Update() {
+</span></span><span class="line"><span class="cl">    IF “fire1” keydown THEN
+</span></span><span class="line"><span class="cl">       IF dc_count &lt;= CONSTANT THEN
+</span></span><span class="line"><span class="cl">           DebugOut “Clicked!!!”
+</span></span><span class="line"><span class="cl">       ELSE
+</span></span><span class="line"><span class="cl">            Reset dc_count   
+</span></span><span class="line"><span class="cl">       ENDIF 
+</span></span><span class="line"><span class="cl">    ENDIF
+</span></span><span class="line"><span class="cl">    dc_count += delta-time
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+<h3 id="25-手机输入与其他">2.5 手机输入与其他</h3>
+<p>iOS 和 Android 设备能够跟踪多根手指同时触摸屏幕的操作。 您可以通过访问 Input.touches 属性数组来访问最后一帧期间每根手指触摸屏幕的状态数据。</p>
+<p>设备移动时，其加速度计硬件将报告设备沿三维空间中的三个主轴的线性加速度变化。 您可以使用该数据检测设备的当前方向（相对于地面）以及该方向上的任何即时更改。</p>
+<p><strong>其他值得研究的输入</strong></p>
+<ul>
+<li>手势输入（Gesture/Posture）
+<ul>
+<li>到商店搜索一下… …</li>
+</ul>
+</li>
+<li>语音输入
+<ul>
+<li>也可以在网上搜索（unity 语音）</li>
+</ul>
+</li>
+<li>图像输入与AR</li>
+<li>GPS 位置输入
+<ul>
+<li>MR 越野游戏：定向追踪（定向寻宝）</li>
+</ul>
+</li>
+</ul>
+<h2 id="3人机交互">3、人机交互</h2>
+<h3 id="31-screen-space--屏幕坐标系统">3.1 Screen Space – 屏幕坐标系统</h3>
+<ul>
+<li>屏幕坐标（ Screen Space ）
+<ul>
+<li>像素为单位，屏幕的左下角为（0，0）点，右上角为（Screen.width，Screen.height）</li>
+</ul>
+</li>
+<li>视口坐标（ViewPort）
+<ul>
+<li>视口坐标是标准的和相对于相机的。相机的左下角为（0，0）点，右上角为（1，1）点</li>
+</ul>
+</li>
+<li>Aspect（观察面）
+<ul>
+<li>适应不同播放制式的观察面</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch05/view-aspect.png" alt=""></p>
+<h3 id="透视图">透视图</h3>
+<p><img src="../images/ch05/perspective-view.png" alt=""></p>
+<p>从camera角度：</p>
+<ol>
+<li>物体透视按摄像机 z 轴深度投影到一个观察面。这个面是 z = z0 的一个正方型 (-1,-1)~(1,1) ，称为标准面。正交投影就按 size 标准化；</li>
+<li>用 aspect 将正方形裁剪成一个矩形，这个矩形就是视口；</li>
+<li>将矩形映射的像素空间，就是 Screen Space</li>
+</ol>
+<h3 id="32-鼠标与-3d-空间物体交互">3.2 鼠标与 3d 空间物体交互</h3>
+<ul>
+<li>射线碰撞与屏幕坐标
+<ul>
+<li>屏幕每个点 p 都对应标准面上一个点 p’</li>
+<li>摄像机坐标系中 op’ 向量上点都投影到 p （透视图）</li>
+<li>因此，op’ 向量（射线）碰撞到的第一个三角面所属对象就是该坐标显示的物体</li>
+</ul>
+</li>
+<li>Unity 的支持
+<ul>
+<li>Ray 射线结构，表示从某个点（original）发出的射线</li>
+<li>RaycastHit 射线与物体碰撞的数据结构</li>
+<li>Physics 物理世界管理对象，包括重力常数设置；射线、线段、盒子、球体碰撞的常用静态函数</li>
+<li>Camera 部件，根据透视形式，返回正确的射线结构</li>
+</ul>
+</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">编程 05-03，光标拾取物体</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">PickupObject</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="n">GameObject</span> <span class="n">cam</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span><span class="p">(</span><span class="s">&#34;Fire1&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;Fired Pressed&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">mousePosition</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">Vector3</span> <span class="n">mp</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">mousePosition</span><span class="p">;</span> <span class="c1">//get Screen Position</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="c1">//create ray, origin is camera, and direction to mousepoint</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Camera</span> <span class="n">ca</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">cam</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">)</span> <span class="n">ca</span> <span class="p">=</span> <span class="n">cam</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Camera</span><span class="p">&gt;</span> <span class="p">();</span> 
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="n">ca</span> <span class="p">=</span> <span class="n">Camera</span><span class="p">.</span><span class="n">main</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">Ray</span> <span class="n">ray</span> <span class="p">=</span> <span class="n">ca</span><span class="p">.</span><span class="n">ScreenPointToRay</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">mousePosition</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="c1">//Return the ray&#39;s hit</span>
+</span></span><span class="line"><span class="cl">			<span class="n">RaycastHit</span> <span class="n">hit</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">Physics</span><span class="p">.</span><span class="n">Raycast</span><span class="p">(</span><span class="n">ray</span><span class="p">,</span> <span class="k">out</span> <span class="n">hit</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">print</span> <span class="p">(</span><span class="n">hit</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">(</span><span class="n">hit</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="s">&#34;Finish&#34;</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//plane tag</span>
+</span></span><span class="line"><span class="cl">					<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;hit &#34;</span> <span class="p">+</span> <span class="n">hit</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span> <span class="p">+</span><span class="s">&#34;!&#34;</span> <span class="p">);</span> 
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="n">Destroy</span> <span class="p">(</span><span class="n">hit</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>程序要点：</p>
+<ul>
+<li>mousePosition 是 Vector3 ，请不要修改 z 坐标</li>
+<li>获取摄像机的 Camera 部件，构建 Ray</li>
+<li>Camera 部件支持正确生成世界坐标的射线</li>
+<li>Raycast 函数使用了变参（值参与变参），为什么 hit 必须用变参？</li>
+<li>为了优化性能，Raycast 支持在特定层扫描对象</li>
+</ul>
+</div>
+<div class="admonition note"><p class="admonition-title">要点，射线碰撞</p>
+<p>射线碰撞 <a href="https://docs.unity.cn/cn/current/ScriptReference/Physics.Raycast.html">Physics.Raycast</a></p>
+</div>
+<div class="admonition example"><p class="admonition-title">编程 05-04，光标拾取多个物体程序</p>
+<ul>
+<li>将以下部件加载到场景中</li>
+<li>点击对象，消除除了地形以外的物体</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">PickupMultiObjects</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="n">GameObject</span> <span class="n">cam</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// Update is called once per frame</span>
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Update</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetButtonDown</span><span class="p">(</span><span class="s">&#34;Fire1&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;Fired Pressed&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">mousePosition</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">Vector3</span> <span class="n">mp</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="n">mousePosition</span><span class="p">;</span> <span class="c1">//get Screen Position</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="c1">//create ray, origin is camera, and direction to mousepoint</span>
+</span></span><span class="line"><span class="cl">			<span class="n">Camera</span> <span class="n">ca</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">cam</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">)</span> <span class="n">ca</span> <span class="p">=</span> <span class="n">cam</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Camera</span><span class="p">&gt;</span> <span class="p">();</span> 
+</span></span><span class="line"><span class="cl">			<span class="k">else</span> <span class="n">ca</span> <span class="p">=</span> <span class="n">Camera</span><span class="p">.</span><span class="n">main</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">Ray</span> <span class="n">ray</span> <span class="p">=</span> <span class="n">ca</span><span class="p">.</span><span class="n">ScreenPointToRay</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">mousePosition</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="c1">//Return the ray&#39;s hits</span>
+</span></span><span class="line"><span class="cl">			<span class="n">RaycastHit</span><span class="p">[]</span> <span class="n">hits</span> <span class="p">=</span> <span class="n">Physics</span><span class="p">.</span><span class="n">RaycastAll</span> <span class="p">(</span><span class="n">ray</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="k">foreach</span> <span class="p">(</span><span class="n">RaycastHit</span> <span class="n">hit</span> <span class="k">in</span> <span class="n">hits</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">print</span> <span class="p">(</span><span class="n">hit</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">(</span><span class="n">hit</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">tag</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="s">&#34;Finish&#34;</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//plane tag</span>
+</span></span><span class="line"><span class="cl">					<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;hit &#34;</span> <span class="p">+</span> <span class="n">hit</span><span class="p">.</span><span class="n">collider</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="n">name</span> <span class="p">+</span><span class="s">&#34;!&#34;</span> <span class="p">);</span> 
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="n">Destroy</span> <span class="p">(</span><span class="n">hit</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>		
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意程序的性能问题哦！</p>
+</div>
+<h2 id="4面向对象的编程---设计模式游戏对象的生产与回收">4、面向对象的编程 - 设计模式：游戏对象的生产与回收</h2>
+<p>创建型模式的主要关注点是“怎样创建对象？”，它的主要特点是“将对象的创建与使用分离”。这样可以降低系统的耦合度，使用者不需要关注对象的创建细节，对象的创建由相关的工厂来完成。</p>
+<p>创建型模式分为以下几种。</p>
+<ul>
+<li><strong>单例（Singleton）模式</strong>：某个类只能生成一个实例，该类提供了一个全局访问点供外部获取该实例，其拓展是有限多例模式。</li>
+<li><strong>原型（Prototype）模式</strong>：将一个对象作为原型，通过对其进行复制而克隆出多个和原型类似的新实例。</li>
+<li><strong>工厂方法（FactoryMethod）模式</strong>：定义一个用于创建产品的接口，由子类决定生产什么产品。</li>
+<li><strong>抽象工厂（AbstractFactory）模式</strong>：提供一个创建产品族的接口，其每个子类可以生产一系列相关的产品。</li>
+<li><strong>建造者（Builder）模式</strong>：将一个复杂对象分解成多个相对简单的部分，然后根据不同需要分别创建它们，最后构建成该复杂对象。</li>
+</ul>
+<p><strong>对象池</strong></p>
+<p>创建与销毁需要耗费大量资源，因此对象销毁时，我们仅做一个标记，等需要时再重新初始化并投入使用，该技术称为对象池。</p>
+<h3 id="41-单实例">4.1 单实例</h3>
+<p><strong>1、单实例</strong></p>
+<p>见前面的内容</p>
+<p><strong>2、场景单实例</strong></p>
+<p>运用模板，可以为每个 MonoBehaviour子类 创建一个对象的实例。<code>Singleten&lt;T&gt;</code> 代码如图所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Singleton</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">protected</span> <span class="k">static</span> <span class="n">T</span> <span class="n">instance</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="k">static</span> <span class="n">T</span> <span class="n">Instance</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">		<span class="k">get</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">				<span class="n">instance</span> <span class="p">=</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="n">FindObjectOfType</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">));</span>  
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">(</span><span class="n">instance</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">					<span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span> <span class="p">(</span><span class="s">&#34;An instance of &#34;</span> <span class="p">+</span> <span class="k">typeof</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">+</span>
+</span></span><span class="line"><span class="cl">					<span class="s">&#34; is needed in the scene, but there is none.&#34;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>  
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>  
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="n">instance</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>  
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>场景单实例的使用很简单，你仅需要将 MonoBehaviour 子类对象挂载任何一个游戏对象上即可。</p>
+<p>然后在任意位置使用代码 <code>Singleton&lt;YourMonoType&gt;.Instance</code> 获得该对象。</p>
+<h3 id="42-原型模式">4.2 原型模式</h3>
+<p>Unity 对原型模式创建对象的支持是强大的，正常情况下不需要使用对象的 Clone 方法。</p>
+<p><strong>1、预制件 + 实例化</strong></p>
+<p>游戏系统主力的创建游戏对象方法，也是最实用的技术。</p>
+<p><a href="https://docs.unity.cn/ScriptReference/Object.Instantiate.html">Object.Instantiate</a> 是克隆万物之神器</p>
+<ul>
+<li>实例化 <a href="https://docs.unity.cn/ScriptReference/GameObject.html">GameObject</a> 将克隆所有子对象和组件</li>
+<li>实例化 <a href="https://docs.unity.cn/ScriptReference/Component.html">Component</a> 也会附加到游戏对象</li>
+<li>实例化 游戏对象和部件，可以附加指定其位置、角度、坐标系等</li>
+</ul>
+<p>配合预制件，非常方便。
+例如：筑墙</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Instantiation</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span> <span class="n">Transform</span> <span class="n">brick</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">y</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">;</span> <span class="n">y</span><span class="p">++)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">x</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">;</span> <span class="n">x</span><span class="p">++)</span> 
+</span></span><span class="line"><span class="cl">			<span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="n">Instantiate</span><span class="p">(</span><span class="n">brick</span><span class="p">,</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码不仅很整洁，而且可复用性很强。没有任何信息表示我们要实例化立方体或者它必须包含刚体。所有这些都在预制件中定义。</p>
+<p>具体操作与更多案例，参见官方参考：<a href="https://docs.unity.cn/cn/current/Manual/InstantiatingPrefabs.html">运行时实例化预制件</a></p>
+<p><strong>2、资源加载</strong></p>
+<p>通过 Resources.Load 函数，可访问 Assets 文件夹中处于任意位置的名为“Resources”的文件夹中的所有资源。 可以存在多个“Resources”文件夹，加载对象时，将对每个文件夹进行检查。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">ExampleClass</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GameObject</span> <span class="n">go</span> <span class="p">=</span> <span class="n">GameObject</span><span class="p">.</span><span class="n">CreatePrimitive</span><span class="p">(</span><span class="n">PrimitiveType</span><span class="p">.</span><span class="n">Plane</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Renderer</span> <span class="n">rend</span> <span class="p">=</span> <span class="n">go</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Renderer</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rend</span><span class="p">.</span><span class="n">material</span><span class="p">.</span><span class="n">mainTexture</span> <span class="p">=</span> <span class="n">Resources</span><span class="p">.</span><span class="n">Load</span><span class="p">(</span><span class="s">&#34;glass&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">Texture</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="admonition question"><p class="admonition-title">思考</p>
+<p>资源加载 与 预制实例化的区别是？</p>
+</div>
+<p>更多细节，特别是资源的空间利用与回收，请参考<a href="https://docs.unity.cn/cn/current/ScriptReference/Resources.html">Resource</a></p>
+<p><strong>3、使用ScriptableObject文件定制属性配置</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">[System.Serializable]</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">Attributes</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Tooltip(&#34;角色血量&#34;)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">hp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Tooltip(&#34;物理攻击&#34;)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">pAtk</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Tooltip(&#34;物理防御&#34;)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">pDef</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Tooltip(&#34;魔法攻击&#34;)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">mAtk</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Tooltip(&#34;魔法防御&#34;)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">mDef</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Tooltip(&#34;行动速度&#34;)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">int</span> <span class="n">spd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">[CreateAssetMenu(fileName = &#34;CharacterItem&#34;, menuName = &#34;(ScriptableObject)CharacterItem&#34;)]</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">CharacterItem</span> <span class="p">:</span> <span class="n">ScriptableObject</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="kt">string</span> <span class="n">Desc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Tooltip(&#34;角色属性&#34;)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">Attributes</span> <span class="n">Attributes</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>鼠标右击创建asset配置文件，就看到 Create 菜单多了创建数据项</p>
+<p><img src="../images/ch05/scriptableobj_menu.png" alt=""></p>
+<p>然后在 Inspector 中编辑配置数据。</p>
+<p><img src="../images/ch05/scriptableobj_editor.png" alt=""></p>
+<p>在脚本中使用配置数据，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">class</span> <span class="nc">PropertyPatternExample2</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="n">CharacterItem</span> <span class="n">CharDataModel</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后，从 Asset 中将配置好的数据拖入。</p>
+<h3 id="43-对象创建与销毁">4.3 对象创建与销毁</h3>
+<p><strong>游戏对象创建</strong></p>
+<p>例如，在一个飞碟游戏中，每一轮都有很多种飞碟，它们都是按特定配置随机产生，如果使用以下方法创建这些飞碟</p>
+<ul>
+<li>创建空对象并添加组件
+<ul>
+<li>new GameObject();</li>
+<li>new GameObject(string name);</li>
+<li>new GameObject(string name, params Type[] components);</li>
+</ul>
+</li>
+<li>创建基础类型游戏对象
+<ul>
+<li>GameObject CreatePrimitive(PrimitiveType type);</li>
+</ul>
+</li>
+<li>从已知对象或预制克隆
+<ul>
+<li>Instantiate<Transform> (brick, new Vector3(x, y, 0), Quaternion.identity);</li>
+</ul>
+</li>
+</ul>
+<p>必然在多处代码中出现复杂的创建飞碟。因此需要一个类来整合这些可以共享的代码，即工厂类！</p>
+<p><strong>游戏对象销毁</strong></p>
+<ul>
+<li>对象销毁
+<ul>
+<li>Object.Destroy(Object obj, float t = 0.0F);</li>
+<li>如果是组件对象，则从游戏对象中立即摘除；</li>
+<li>如果是游戏对象，则不会在update期间立即销毁，通常在 render 前销毁它的部件以及所有子对象；</li>
+</ul>
+</li>
+<li>立即销毁
+<ul>
+<li>Object. DestroyImmediate</li>
+<li>Unity 建议不要立即销毁，这可能导致离散引擎并发的行为之间依赖关系产生不可预知错误；</li>
+</ul>
+</li>
+</ul>
+<h3 id="44-案例研究---简单工厂与对象池">4.4 案例研究 - 简单工厂与对象池</h3>
+<p><strong>案例研究：“鼠标打飞碟”游戏设计</strong></p>
+<p>游戏需求：</p>
+<ul>
+<li>分多个 round ， 每个 round 都是 n 个 trail；</li>
+<li>每个 trail 的飞碟的色彩，大小；发射位置，速度，角度，每次发射飞碟数量不一；。</li>
+<li>鼠标击中得分，得分按色彩、大小、速度不同计算，计分规则自由定</li>
+</ul>
+<p><strong>为什么需要工厂对象</strong></p>
+<p>简单工厂又称为工厂方法，即类一个方法能够得到一个对象实例，使用者不需要知道该实例如何构建、初始化等细节。</p>
+<ul>
+<li>游戏对象的创建与销毁高成本，必须减少销毁次数。如：游戏中子弹</li>
+<li>屏蔽创建与销毁的业务逻辑，使程序易于扩展</li>
+</ul>
+<p>在 Unity 中，工厂方法 + 单实例 + 对象池 通常都是同时一起使用。直接给设计：</p>
+<p><img src="../images/ch05/disk-factory-design.png" alt=""></p>
+<p>设计师读图：</p>
+<ol>
+<li>游戏由导演、场记、运动管理师、演员构成。</li>
+<li>新游戏中，场记请了记分员、飞碟管理员</li>
+<li>飞碟管理员管理飞碟的发放与回收，自己有个小仓库管理这些飞碟</li>
+<li>记分员按飞碟的数据计分，记分员拥有计分规则</li>
+<li>场记只需要管理出飞碟规则与管理碰撞就可以了</li>
+</ol>
+<p>设计模式解读：</p>
+<ul>
+<li>DiskFactory 类是一个单实例类，用前面场景单实例创建</li>
+<li>DiskFactory 类有工厂方法 GetDisk 产生飞碟，有回收方法 Free（Disk）</li>
+<li>DiskFactory 使用模板模式根据预制和规则制作飞碟</li>
+<li>对象模板包括飞碟对象与飞碟数据</li>
+</ul>
+<p><strong>这样设计的优势</strong></p>
+<p>应对规则、地图等变化，让设计者最低代价管理规则变化。例如：</p>
+<ul>
+<li>道具工厂
+<ul>
+<li>通过场景单实例，构建了方便可取获取DISK的类；</li>
+<li>包装了复杂的Disk生产与回收逻辑，易于使用；</li>
+<li>它包含Disk产生规则（控制每个round的难度），可以积极应对未来游戏规则的变化，减少维护成本</li>
+</ul>
+</li>
+<li>记分员
+<ul>
+<li>包装了计分规则（控制业务均衡）</li>
+<li>提供了简单的对外业务接口</li>
+</ul>
+</li>
+</ul>
+<p><strong>对象池的实现</strong></p>
+<p>这里仅给出伪代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">getDisk(ruler) 
+</span></span><span class="line"><span class="cl">BEGIN
+</span></span><span class="line"><span class="cl">	IF (free list has disk) THEN
+</span></span><span class="line"><span class="cl">	a_disk = remove one from list
+</span></span><span class="line"><span class="cl">	ELSE
+</span></span><span class="line"><span class="cl">	a_disk = clone from Prefabs
+</span></span><span class="line"><span class="cl">	ENDIF
+</span></span><span class="line"><span class="cl">	Set DiskData of a_disk with the ruler
+</span></span><span class="line"><span class="cl">	Add a_disk to used list
+</span></span><span class="line"><span class="cl">	Return a_disk
+</span></span><span class="line"><span class="cl">END
+</span></span><span class="line"><span class="cl">FreeDisk(disk)
+</span></span><span class="line"><span class="cl">BEGIN
+</span></span><span class="line"><span class="cl">	Find disk in used list
+</span></span><span class="line"><span class="cl">	IF (not found) THEN THROW exception
+</span></span><span class="line"><span class="cl">	Move disk from used to free list
+</span></span><span class="line"><span class="cl">END
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="5小结">5、小结</h2>
+<ul>
+<li>游戏输入
+<ul>
+<li>游戏输入与应用创新的关系</li>
+<li>查询模型与事件模型</li>
+<li>虚拟轴与虚拟按键（虚拟的优点）</li>
+<li>键盘查询</li>
+<li>用鼠标拾取3D对象</li>
+</ul>
+</li>
+<li>设计模式：游戏对象的生产与回收
+<ul>
+<li>场景单实例模式</li>
+<li>模板模式</li>
+<li>工厂模式</li>
+<li>对象池</li>
+</ul>
+</li>
+</ul>
+<h2 id="6作业与练习">6、作业与练习</h2>
+<p>1、编写一个简单的鼠标打飞碟（Hit UFO）游戏</p>
+<ul>
+<li>游戏内容要求：
+<ol>
+<li>游戏有 n 个 round，每个 round 都包括10 次 trial；</li>
+<li>每个 trial 的飞碟的色彩、大小、发射位置、速度、角度、同时出现的个数都可能不同。它们由该 round 的 ruler 控制；</li>
+<li>每个 trial 的飞碟有随机性，总体难度随 round 上升；</li>
+<li>鼠标点中得分，得分规则按色彩、大小、速度不同计算，规则可自由设定。</li>
+</ol>
+</li>
+<li>游戏的要求：
+<ul>
+<li>使用带缓存的工厂模式管理不同飞碟的生产与回收，该工厂必须是场景单实例的！具体实现见参考资源 Singleton 模板类</li>
+<li>近可能使用前面 MVC 结构实现人机交互与游戏模型分离</li>
+</ul>
+</li>
+</ul>
+<p>如果你的使用工厂有疑问，参考：<a href="http://www.manew.com/thread-48481-1-1.html">弹药和敌人：减少，重用和再利用</a>；参考：<a href="https://gameinstitute.qq.com/community/detail/121124">Unity对象池（Object Pooling）理解与简单应用</a> 代码质量较低，比较凌乱</p>
+<p>2、编写一个简单的自定义 Component （<strong>选做</strong>）</p>
+<ul>
+<li>用自定义组件定义几种飞碟，做成预制
+<ul>
+<li>参考官方脚本手册 <a href="https://docs.unity3d.com/ScriptReference/Editor.html">https://docs.unity3d.com/ScriptReference/Editor.html</a></li>
+<li>实现自定义组件，编辑并赋予飞碟一些属性</li>
+</ul>
+</li>
+</ul>
+<p>如果你想了解跟多自定义插件或编辑器的话题，请参考：<a href="http://gad.qq.com/article/detail/22497">Unity3d自定义一个编辑器组件/插件的简易教程</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/06-physics-and-collision/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">六、物理系统与碰撞</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/04-gameobject-and-graphics/">
+            <span class="next-text nav-default">四、游戏对象与图形基础</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>七、模型与动画 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="It was beautiful, historical, artistically subtle in a way that science can&amp;rsquo;t capture, and I found it fascinating &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：6-8 * 45 min 人设之美令人难忘，它对游戏的成功至关重要。 动画系统使得游戏运动管理" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/07-model-and-animation/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="七、模型与动画" />
+<meta property="og:description" content="It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：6-8 * 45 min 人设之美令人难忘，它对游戏的成功至关重要。 动画系统使得游戏运动管理" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/07-model-and-animation/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-10-11T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="七、模型与动画">
+<meta itemprop="description" content="It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：6-8 * 45 min 人设之美令人难忘，它对游戏的成功至关重要。 动画系统使得游戏运动管理"><meta itemprop="datePublished" content="2020-10-11T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="8057">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="七、模型与动画"/>
+<meta name="twitter:description" content="It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：6-8 * 45 min 人设之美令人难忘，它对游戏的成功至关重要。 动画系统使得游戏运动管理"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">七、模型与动画</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-11 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#课程相关资源">课程相关资源</a></li>
+        <li><a href="#1模型与动画">1、模型与动画</a>
+          <ul>
+            <li><a href="#21-基本概念">2.1 基本概念</a></li>
+            <li><a href="#12-预制与模型使用">1.2 预制与模型使用</a></li>
+            <li><a href="#13-处理遗留模型">1.3 处理遗留模型</a></li>
+          </ul>
+        </li>
+        <li><a href="#2mecanim动画系统">2、Mecanim动画系统</a>
+          <ul>
+            <li><a href="#21-animator-组件">2.1 Animator 组件</a></li>
+            <li><a href="#22-使用动画控制器">2.2 使用动画控制器</a></li>
+            <li><a href="#23-设计状态机控制器">2.3 设计状态机控制器</a></li>
+            <li><a href="#24-动画控制器基础编程">2.4 动画控制器基础编程</a></li>
+            <li><a href="#25-动画控制器事件">2.5 动画控制器事件</a></li>
+          </ul>
+        </li>
+        <li><a href="#3动画剪辑animation-clip">3、动画剪辑（Animation Clip）</a>
+          <ul>
+            <li><a href="#31-外部源动画">3.1 外部源动画</a></li>
+            <li><a href="#32-编辑动画">3.2 编辑动画</a></li>
+            <li><a href="#33-动画原理与资源属性">3.3 动画原理与资源属性</a></li>
+            <li><a href="#34-导出动画编辑">3.4 导出动画编辑</a></li>
+            <li><a href="#35-动画剪辑事件">3.5 动画剪辑事件</a></li>
+          </ul>
+        </li>
+        <li><a href="#4类人动画与动画中级知识">4、类人动画与动画中级知识</a>
+          <ul>
+            <li><a href="#41-配置-avatar">4.1 配置 Avatar</a></li>
+            <li><a href="#42-动画直接播放">4.2 动画直接播放</a></li>
+            <li><a href="#43-动画覆盖控制器">4.3 动画覆盖控制器</a></li>
+            <li><a href="#44-混合树">4.4 混合树</a></li>
+            <li><a href="#45-更多复杂内容">4.5 更多复杂内容</a></li>
+          </ul>
+        </li>
+        <li><a href="#5面向对象的编程---设计模式对象的行为">5、面向对象的编程 - 设计模式：对象的行为</a>
+          <ul>
+            <li><a href="#51-定义-listener-接口回调">5.1 定义 listener 接口回调</a></li>
+            <li><a href="#52-使用消息订阅发布模式">5.2 使用消息订阅/发布模式</a></li>
+            <li><a href="#53-c-事件-代理机制">5.3 C# 事件-代理机制</a></li>
+          </ul>
+        </li>
+        <li><a href="#6小结">6、小结</a></li>
+        <li><a href="#7作业与练习">7、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>It was beautiful, historical, artistically subtle in a way that science can&rsquo;t capture, and I found it fascinating</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<p><em>预计时间：6-8 * 45 min</em></p>
+<p><strong>人设之美令人难忘，它对游戏的成功至关重要。</strong></p>
+<p><img src="../images/ch07/ch07-animated.gif" alt=""></p>
+<p>动画系统使得游戏运动管理与游戏对象状态管理更方便！</p>
+<h2 id="课程相关资源">课程相关资源</h2>
+<p><img src="../images/game-architecture-model.png" alt=""></p>
+<ol>
+<li><a href="https://gitee.com/pmlpml/game-unity/raw/master/post/assets/garen.zip">遗留模型 Garen</a></li>
+<li><a href="https://gitee.com/pmlpml/game-unity/raw/master/post/assets/dex-birds.zip">遗留模型 birds</a></li>
+<li>资源商店，<em>Adventure - Sample Game</em></li>
+<li>标准资源包 <em>ThirdPersonCharacter</em></li>
+<li><a href="https://renderpeople.com/free-3d-people/">免费人物模型与动画</a></li>
+</ol>
+<h2 id="1模型与动画">1、模型与动画</h2>
+<h3 id="21-基本概念">2.1 基本概念</h3>
+<ul>
+<li>模型（Model）
+<ul>
+<li>物体对象的组合，Unity 映射为游戏对象树</li>
+<li>每个物体包含一个网格（Mesh）与蒙皮设置</li>
+<li>包含使用的纹理、材质以及一个或多个动画剪辑</li>
+<li>模型由 3D 设计人员使用 3D Max 等创建</li>
+</ul>
+</li>
+<li>动画剪辑（Animation Clip）
+<ul>
+<li>物体或骨骼的位置等属性在关键帧的时间序列</li>
+<li>通过插值算法计算每帧的物体的位置或属性</li>
+</ul>
+</li>
+</ul>
+<p>模型的显示</p>
+<ul>
+<li>Mesh 表面网格</li>
+<li>MeshRender 网格渲染器</li>
+</ul>
+<p>三维模型是用三维建模软件建造的立体模型，也是构成 Unity 3D 场景的基础元素。
+Unity 3D 几乎支持所有主流格式的三维模型，如 FBX 文件和 OBJ 文件等。
+开发者可以将三维建模软件导出的模型文件添加到项目资源文件夹中，Unity 3D 会将其显示在 Assets 面板中。</p>
+<p>主流的三维建模软件</p>
+<ul>
+<li>Autodesk 3D Studio Max</li>
+<li>Autodesk Maya</li>
+<li>Cinema 4D</li>
+</ul>
+<p>动画剪辑可能包括：</p>
+<ul>
+<li>在动作捕捉工作室中捕捉的人形动画</li>
+<li>美术师在外部 3D 应用程序（如 Autodesk® 3ds Max® 或 Autodesk® Maya®）中从头开始创建的动画</li>
+<li>来自第三方库（例如 Unity 的 Asset Store）的动画集</li>
+<li>从导入的单个时间轴剪切的多个剪辑。</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">操作 07-01，体验模型与动画</p>
+<ul>
+<li>创建一个项目</li>
+<li>导入标准库</li>
+<li>下载 birds.zip 解压，将 birds 目录拖入项目</li>
+<li>查看 Standard Assets -&gt; Vichicles -&gt; Car 属性</li>
+</ul>
+<p><img src="../images/ch07/ch07-car-model.png" alt=""></p>
+<ul>
+<li>点击模型与每个部件</li>
+<li>查看 birds 的 crow，我们看到一个动画播放符号</li>
+</ul>
+<p><img src="../images/ch07/ch07-birds-model.png" alt=""></p>
+<ul>
+<li>模型资源
+<ul>
+<li>模型库包括许多内容，模型对象、材料、代码等</li>
+<li>物体模型包括：
+<ul>
+<li>子物体</li>
+<li>网格</li>
+<li>动画</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="12-预制与模型使用">1.2 预制与模型使用</h3>
+<p>模型一般做成预制供用户使用，例如：</p>
+<div class="admonition example"><p class="admonition-title">操作 07-02，模型使用</p>
+<ul>
+<li>放置 car 预制到游戏场景地面 或 Plane 面上</li>
+<li>运行</li>
+<li>按“下箭头”倒车</li>
+<li>研究 Car 的物体组织</li>
+</ul>
+<p><img src="../images/ch07/ch07-car-prefab.png" alt=""></p>
+<ul>
+<li>Car 预制结构
+<ul>
+<li>哪些物体有刚体</li>
+<li>碰撞器设计</li>
+<li>哪些是显示部件</li>
+<li>启动的烟雾</li>
+<li>Lights？</li>
+<li>控制代码</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition question"><p class="admonition-title">设计，为 crow（乌鸦）建预制</p>
+<ul>
+<li>crow对象结构</li>
+<li>碰撞器？</li>
+<li>飞行？</li>
+</ul>
+</div>
+<h3 id="13-处理遗留模型">1.3 处理遗留模型</h3>
+<p>Mecanim 动画系统（5.0 起）是 Unity 公司推出的全新动画系统，具有重定向、可融合等诸多新特性，可以帮助程序设计人员通过和美工人员的配合快速设计出角色动画。但是，如果必须使用遗留动画资源，需要手动选择模型骨骼（Rig）的动画类型为 Generic</p>
+<div class="admonition example"><p class="admonition-title">操作 07-03，处理遗留动画</p>
+<ul>
+<li>下载 Garen 模型</li>
+<li>模型骨骼（Rig）的动画类型选择
+<ul>
+<li>None (没有动画)。如 skycar</li>
+<li>Legacy（遗留动画）。一般不用，如必须使用请自学</li>
+<li>Generic（普通动画）。如果资源是 <strong>遗留动画</strong>，请将它们改为 <strong>普通动画</strong>。带器械的人物设计只能使用普通动画！</li>
+<li>Humanoid（人形动画）。可以通过将物体各部件映射的人的身体部件，从而支持类似人的物体（如外星人、机器人、猩猩等）使用同一套动画模型。</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="2mecanim动画系统">2、Mecanim动画系统</h2>
+<p>Unity 有一个丰富而复杂的动画系统（有时称为“Mecanim”）。该系统具有以下功能：</p>
+<ul>
+<li>为 Unity 的所有元素（包括对象、角色和属性）提供简单工作流程和动画设置。</li>
+<li>支持导入的动画剪辑以及 Unity 内创建的动画</li>
+<li>人形动画重定向 - 能够将动画从一个角色模型应用到另一角色模型。</li>
+<li>对齐动画剪辑的简化工作流程。</li>
+<li>方便预览动画剪辑以及它们之间的过渡和交互。因此，动画师与工程师之间的工作更加独立，使动画师能够在挂入游戏代码之前为动画构建原型并进行预览。</li>
+<li>提供可视化编程工具来管理动画之间的复杂交互。</li>
+<li>以不同逻辑对不同身体部位进行动画化。</li>
+<li>分层和遮罩功能</li>
+</ul>
+<h3 id="21-animator-组件">2.1 Animator 组件</h3>
+<p><a href="https://docs.unity.cn/cn/current/Manual/class-Animator.html">Animator</a> 组件用于将动画分配给场景中的游戏对象。Animator 组件需要引用 Animator Controller，后者定义要使用哪些动画剪辑，并控制何时以及如何在动画剪辑之间进行混合和过渡。</p>
+<p>如果游戏对象是具有Avatar定义的人形角色，还应在此组件中分配Avatar，如下所示：</p>
+<p><img src="https://docs.unity.cn/cn/current/uploads/Main/MecanimAnimatorComponent.png" alt=""></p>
+<ul>
+<li>有动画的模型，编辑器会自动添加该组件</li>
+<li>用户也可以在模型根对象手动添加该组件</li>
+</ul>
+<div class="admonition warning"><p class="admonition-title">注意事项：如果系统添加的是 Animation 组件</p>
+<p>模型骨骼是“遗留动画”，请修改为“普通动画”</p>
+</div>
+<h3 id="22-使用动画控制器">2.2 使用动画控制器</h3>
+<p>Mecanim使用状态机管理运动</p>
+<ul>
+<li>状态机模型：
+<ul>
+<li>𝐹𝑆𝑀=(Σ,𝑆, 𝑠0,𝛿,𝐹)  𝑤ℎ𝑒𝑟𝑒 𝛿：𝑆×Σ→𝑆</li>
+</ul>
+</li>
+<li>状态集（ 𝑆 ）：
+<ul>
+<li>运动状态、复合运动状态、特殊状态</li>
+</ul>
+</li>
+<li>特殊状态：
+<ul>
+<li>Entry（ 𝑠0 ）：开始状态</li>
+<li>AnyState:  任意状态</li>
+<li>Exit（ 𝐹 ）：终止状态</li>
+</ul>
+</li>
+<li>变迁（𝛿）：
+<ul>
+<li>在输入(Σ)/事件驱动下，转入下一个状态</li>
+</ul>
+</li>
+<li>状态机特点
+<ul>
+<li>任意时刻 <strong>有仅有</strong> 一个活跃的状态或变迁</li>
+</ul>
+</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">操作 07-04，创建动画状态机(CrowAnimatorController)</p>
+<ul>
+<li>菜单 Assets -&gt; Create -&gt; Animator Controller</li>
+<li>将 crow 动画 fly 动作拖入编辑器</li>
+</ul>
+<p><img src="../images/ch07/ch07-animator-controller-ex0.png" alt=""></p>
+<ul>
+<li>在状态上用右键添加变迁，结果如上图所示</li>
+<li>将 crow 拖入游戏，添加 Animator 组件</li>
+<li>将制作的 CrowAnimatorController 拖入 Animator 组件</li>
+<li>运行</li>
+</ul>
+</div>
+<h3 id="23-设计状态机控制器">2.3 设计状态机控制器</h3>
+<p>设计状态机控制器包括 <strong>状态</strong>、<strong>变迁</strong>、<strong>参数</strong>、<strong>条件</strong> 四个部分设计</p>
+<div class="admonition example"><p class="admonition-title">操作 07-05，设计状态机控制器</p>
+<ul>
+<li>创建如图状态图</li>
+</ul>
+<p><img src="../images/ch07/ch07-animator-controller-ex1.png" alt=""></p>
+<ul>
+<li>控制器如何执行动画呢？</li>
+</ul>
+<p>观察状态的属性：</p>
+<ul>
+<li>Motion 动画剪辑</li>
+<li>Speed 速度（倍率）</li>
+<li>Foot IK？</li>
+<li>…</li>
+<li>Transtions
+<ul>
+<li>默认：按顺序检测生效转移</li>
+<li>Solo：优先检测转移</li>
+<li>Mute：禁止转移</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch07/ch07-animator-states.png" alt=""></p>
+<p>设置变迁：</p>
+<ul>
+<li>注意变迁的顺序</li>
+<li>设定 solo 或 mute</li>
+<li>设定每个变迁
+<ul>
+<li>给变迁命名，便于控制</li>
+<li>是否使用动画结束条件</li>
+<li>变迁 <strong>动画混合</strong>（平滑过程）</li>
+<li>变迁条件，例如：
+<ul>
+<li>Fly-&gt;exit 条件是 live</li>
+<li>Not live 从任意状态转死亡</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>控制变迁条件：</p>
+<ul>
+<li>使用转移控制变量
+<ul>
+<li>Float，Int，Bool  类型</li>
+<li>Trigger 类型</li>
+</ul>
+</li>
+<li>规划转移变量与变迁事件发生条件
+<ul>
+<li>转移变量设计
+<ul>
+<li>建议多使用 trigger 类型变量</li>
+<li>确保转移条件唯一，避免使用顺序决定转移（位操作通常OK）</li>
+<li>使用 mute 关闭不用的转移</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>条件设计，例如：
+<ul>
+<li>live = false 转入死亡</li>
+<li>fly_attack_trigger 确定转入攻击</li>
+</ul>
+</li>
+</ul>
+<p>本案例参数，示例：</p>
+<p><img src="../images/ch07/ch07-animator-parameters.png" alt=""></p>
+<p>本案例变迁设置，实例</p>
+<p><img src="../images/ch07/ch07-animator-conditions.png" alt=""></p>
+</div>
+<h3 id="24-动画控制器基础编程">2.4 动画控制器基础编程</h3>
+<p><a href="https://docs.unity.cn/cn/current/ScriptReference/Animator.html">Animator API</a> 脚本的属性与方法:</p>
+<ul>
+<li>设计时，功能强大</li>
+<li>运行时，你甚至无法查询设计了哪些状态
+<ul>
+<li>尽管有很多属性和方法</li>
+<li>很多内容并不建议使用</li>
+</ul>
+</li>
+<li>通过参数控制状态机才是正解方案！！！</li>
+</ul>
+<p><img src="../images/ch07/ch07-animator-controller-uml.png" alt=""></p>
+<div class="admonition example"><p class="admonition-title">编程 07-06，控制小鸟飞行游戏</p>
+<ul>
+<li>自己考虑给 crow 添加刚体等</li>
+<li>设置合适阻尼（空气阻力）有利于平衡控制</li>
+<li>注意：物理与运动学不能混用</li>
+</ul>
+<p><img src="../images/ch07/ch07-animator-crow-control.png" alt=""></p>
+</div>
+<h3 id="25-动画控制器事件">2.5 动画控制器事件</h3>
+<p>状态机 <a href="https://docs.unity.cn/cn/current/Manual/StateMachineBehaviours.html">行为与事件</a>，<a href="https://docs.unity.cn/cn/current/ScriptReference/StateMachineBehaviour.html">API 脚本</a></p>
+<ul>
+<li>StateMachineBehaviour 对象
+<ul>
+<li>对象继承 ScriptableObject</li>
+<li>绑定特定状态，执行特定行为</li>
+<li>工作原理类似 SSAction</li>
+</ul>
+</li>
+<li>StateMachineBehaviour 对象事件处理器</li>
+<li>常用案例，例如：发大招
+<ul>
+<li>Enter 状态，放一个烟雾效果</li>
+<li>Exit 状态，结束效果</li>
+</ul>
+</li>
+<li>常用案例（攻击事物）！！！
+<ul>
+<li>动作 Update 到指定时间（位置）</li>
+<li>开始执行爆破、计分等任务</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">要点：事件处理</p>
+<p>API 文档案例仅是参考。实战中，事件处理不宜处理该游戏对象外部的信息，如计算分数，销毁其他对象等。<br>
+常规做法由控制器注入事件侦听器，让计分对象处理。</p>
+</div>
+<p>MonoBehavior 事件：</p>
+<ul>
+<li>OnAnimatorIK</li>
+<li>OnAnimatorMove</li>
+</ul>
+<p>见官方教程 <a href="https://docs.unity.cn/cn/current/Manual/ScriptingRootMotion.html">为“原地就位”的人形动画编写根运动脚本</a></p>
+<h2 id="3动画剪辑animation-clip">3、动画剪辑（Animation Clip）</h2>
+<p>动画剪辑是 Unity 动画系统的核心元素之一。Unity 支持从外部源导入动画，并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑。</p>
+<h3 id="31-外部源动画">3.1 外部源动画</h3>
+<p>外部来源的动画按照与常规 3D 文件相同的方式导入 Unity。这些文件（无论是通用 FBX 文件还是来自 Autodesk® Maya®、Cinema 4D、Autodesk® 3ds Max® 等 3D 软件的原生格式）可包含动画数据，这些数据的形式为文件中对象移动的线性录制结果。</p>
+<p><a href="https://docs.unity.cn/cn/current/Manual/AnimationsImport.html">从外部源导入</a>的动画剪辑可能包括：</p>
+<ul>
+<li>在动作捕捉工作室中捕捉的人形动画</li>
+<li>美术师在外部 3D 应用程序（如 Autodesk® 3ds Max® 或 Autodesk® Maya®）中从头开始创建的动画</li>
+<li>来自第三方库（例如 Unity 的 Asset Store）的动画集</li>
+<li>从导入的单个时间轴剪切的多个剪辑。</li>
+</ul>
+<div class="admonition example"><p class="admonition-title">操作 07-07，导入动画</p>
+<ul>
+<li>导入动画，只需拖放模型文件到项目的Assets文件夹。</li>
+<li>例如：拖 Garen 目录成为你的项目资源
+<ul>
+<li>用 Inspector 观察所有模型和动画</li>
+<li>如果是传统动画，则必须改为 <strong>Generic</strong></li>
+<li>Model 是导入参数，一般不需修改</li>
+<li>Garen是多模型导入，动画命名“模型名@动画名.fbx”</li>
+</ul>
+</li>
+</ul>
+<p><img src="../images/ch07/ch07-animation-rig-setting.png" alt=""></p>
+<p>您可以在 Animation 窗口中查看导入的动画剪辑的关键帧和曲线。有时，如果这些导入的剪辑存在带有大量关键帧的很多骨骼，信息量可能非常复杂。例如，下图是 Animation 窗口中的人形奔跑动画的情况：</p>
+<p><img src="https://docs.unity.cn/cn/current/uploads/Main/AnimationViewingImportedCurves.jpg" alt=""></p>
+<p>左边窗口是骨骼结构，右边点点是动画 <strong>关键帧</strong> 数据，选择 <code>Curves</code>，则看到插值后的运动曲线。</p>
+</div>
+<p>分割动画</p>
+<ul>
+<li>部分动画需要分割</li>
+<li>请选择模型，在属性面板 Ainimation 中分割动画</li>
+</ul>
+<h3 id="32-编辑动画">3.2 编辑动画</h3>
+<p>Unity 中使用 Animation 窗口 <strong>让您可以直接在 Unity 内创建和修改</strong> 动画剪辑。它旨在充当外部 3D 动画程序的强大而直接的替代方案。除了对运动进行动画化，编辑器还允许您对材质和组件的变量进行动画化，并使用<strong>动画事件</strong>函数（在时间轴上的指定点调用这些函数）来充实动画剪辑。</p>
+<p>官方参考资源：<a href="https://docs.unity.cn/cn/current/Manual/AnimationEditorGuide.html">Animation 窗口指南</a></p>
+<div class="admonition example"><p class="admonition-title">操作 07-08，创建简单动画</p>
+<ol>
+<li>打开 Animation 窗口</li>
+<li>创建一个 cube 游戏对象，输入 postion(0,0,0)，并选择它</li>
+<li>在 Animation 窗口，选 Create 按钮创建动画，命名为 <code>JumpUp</code></li>
+<li>添加一个属性 transtion.postion</li>
+<li>点击红色录制按钮，进入录制状态</li>
+<li>拖动编辑线到中间，输入 postion(0,3,0)</li>
+<li>编辑器会自动添加一个关键帧</li>
+<li>结束录制</li>
+<li>来回拖动编辑线，可观察到不同时间 Cube 的位置</li>
+<li>点击运行！Cube 在跳动</li>
+<li>同时，我们观察到 cube 添加了 Animator 组件，系统也创建了一个动画控制器</li>
+</ol>
+<ul>
+<li>请将动画改为矩形运动。</li>
+</ul>
+<p><img src="../images/ch07/ch07-animation-circle.png" alt=""></p>
+<ul>
+<li>使用 curves 工具，按上图改为圆周运动。</li>
+</ul>
+</div>
+<p>实验要求掌握的基本概念：</p>
+<ul>
+<li>创建动画</li>
+<li><strong>关键帧</strong></li>
+<li>动画曲线，曲线 <strong>关键点</strong></li>
+</ul>
+<h3 id="33-动画原理与资源属性">3.3 动画原理与资源属性</h3>
+<p>Animation Clip 资源属性</p>
+<ul>
+<li>选择 JumpUp 动画资源
+<ul>
+<li>Loop Time
+<ul>
+<li>沿时间轴循环</li>
+</ul>
+</li>
+<li>Loop pose
+<ul>
+<li>动作复位</li>
+</ul>
+</li>
+<li>Generate Root …
+<ul>
+<li>产生用于 Root 的曲线</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>动画原理</p>
+<ul>
+<li>控制游戏对象或子对象的属性</li>
+<li>关键帧，关键点的值</li>
+<li>插值计算每帧动画曲线值</li>
+</ul>
+<h3 id="34-导出动画编辑">3.4 导出动画编辑</h3>
+<p>模型动画是只读的，使用 “Ctrl-D” 就可以导出动画，导出的动画就是可编辑的</p>
+<div class="admonition example"><p class="admonition-title">操作 07-09，导出模型动画并编辑</p>
+<ul>
+<li>选择 Garen@Attack3的动画</li>
+<li>按 “Ctrl-D” 并将导出的动画资源放入animation目录</li>
+<li>创建一个 Garen 游戏对象</li>
+<li>将刚才产生状态机拖入 Garen，运行！</li>
+<li>在将 Attack3 加入状态机，并作为下一个动作</li>
+<li>运行！</li>
+<li>你将看到 Garen 跳起然后转一圈！</li>
+</ul>
+<p>你现在可以用编辑器编辑这些 Clip 了</p>
+</div>
+<div class="admonition example"><p class="admonition-title">操作 07-10，动画设计练习</p>
+<p>设计一个按钮，动画效果要求</p>
+<ul>
+<li>开：按钮按到底部，回弹到约一半高度</li>
+<li>关：按钮按到底部，回弹到全部高度</li>
+</ul>
+</div>
+<h3 id="35-动画剪辑事件">3.5 动画剪辑事件</h3>
+<p>动画剪辑事件是当动画执行到特定位置，执行你定义的代码！</p>
+<div class="admonition example"><p class="admonition-title">操作 07-11，动画事件练习</p>
+<p>添加事件处理代码，并挂载到 garen。例如：</p>
+<p><img src="../images/ch07/ch07-animation-events-coding.png" alt=""></p>
+<p>添加动画事件</p>
+<p><img src="../images/ch07/ch07-animation-events-add.png" alt=""></p>
+<p>这时就可以做预制了！</p>
+</div>
+<div class="admonition note"><p class="admonition-title">要点：处理事件与消息发布</p>
+<p>当你设计一个资源，它的代码不能直接调用资源外的代码，因为你根本不知道用户如何处理这个事件。怎么办？</p>
+<ul>
+<li>函数回调，C#中称为 <strong>事件-代理</strong> 机制</li>
+<li>接口回调，让外部代码实现你的事件接口，在注入侦听器</li>
+<li>自己实现发布订阅模型</li>
+</ul>
+</div>
+<h2 id="4类人动画与动画中级知识">4、类人动画与动画中级知识</h2>
+<h3 id="41-配置-avatar">4.1 配置 Avatar</h3>
+<p>Avatar的意思化身（印度教和佛教中化作人形或兽形的神）。不用说兽幻化成人形，即使是植物，草也会有点头这样的拟人动作。因此Unity 的动画系统具有处理人形角色的特殊功能。因为人形角色在游戏中很常见，所以 Unity 为人形动画提供专门的工作流程以及扩展工具集。</p>
+<ul>
+<li>类人骨架是非常常用的特例，并且在游戏中广泛使用</li>
+<li>人骨骼结构的类似性，使得把动画从一个类人骨架映射到另一个成为可能。
+<ul>
+<li>只要模型的子对象名字一样</li>
+<li>如果名字不一样，就需要映射</li>
+</ul>
+</li>
+<li>这个映射，就是 Avatar！</li>
+</ul>
+<div class="admonition note"><p class="admonition-title">要点：模型 Avatar </p>
+<p>模型部件到 <strong>理想人</strong> 部件之间的映射，使得理想人的动画剪辑可以运用到模型上，大大简化了动画设计的数量。</p>
+</div>
+<p>由于模型设计时，骨骼模型的部件可能和理想人不同，需要采用 Avater 映射到标准人。</p>
+<div class="admonition example"><p class="admonition-title">操作 07-12，配置 Avater</p>
+<ul>
+<li>资源商店找到 <em>Adventure - Sample Game</em> 加入我的资源</li>
+<li>在 unity 中下载，并导入 Models, Materials, Shaders，Textures 四个目录</li>
+<li>打开 Models 目录，逐一检查 Rig 的属性，观察 humanoid 类型与 Generic 不同</li>
+<li>将 Player 和 FruitVender 加入场景，如图所示：</li>
+</ul>
+<p><img src="../images/ch07/ch07-animation-humanoid.png" alt=""></p>
+<ul>
+<li>在 Standard Assets / Characters / ThirdPersonCharacter / Animation / 中找到 HumanoidIdleJumpUp 的动画 JumpUpidIdleJumpUp</li>
+<li>创建动画控制器（仅动作 JumpUpidIdleJumpUp ）</li>
+<li>将动画添加到 Player 和 FruitVender</li>
+<li>运行！</li>
+</ul>
+<p>你发现了哪些问题？</p>
+<ul>
+<li>将模型 FruitVender 拷贝到另一个目录</li>
+<li>在 Inspect 窗口，修改模型 Rig 类型为 humanoid 并 apply</li>
+<li>点击 configuration</li>
+</ul>
+<p><img src="../images/ch07/ch07-animation-humanoid-config.png" alt=""></p>
+<ul>
+<li>同时出现模型结构树和人物 <code>T-pose</code> ，方便匹配工作</li>
+<li>正常情况下，系统会自动匹配人的骨骼</li>
+<li>最后选 done 结束配对</li>
+<li>检查：Configuaration 有一个勾表示匹配成功！</li>
+<li>将新 FruitVender 加入游戏场景</li>
+<li>添加动画控制器</li>
+<li>注意： Animator 的 Apply Root Motion 选中</li>
+<li>运行！</li>
+</ul>
+</div>
+<p>这里我们并没有选用游戏自带动画，而是采用标准资源包的标准人动画。通过映射，实现了动作！</p>
+<div class="admonition note"><p class="admonition-title">要点：体验根运动的效果</p>
+<p>Animator 的 Apply Root Motion 属性，效果很重要！</p>
+</div>
+<h3 id="42-动画直接播放">4.2 动画直接播放</h3>
+<p><a href="">Animator</a> 的两个直播方法：</p>
+<ul>
+<li>Play( … ) 直接转到一个状态</li>
+<li>CrossFade( … ) 带过度转到一个状态</li>
+</ul>
+<div class="admonition warning"><p class="admonition-title">注意事项：强制状态转移</p>
+<p>尽管很好用，但小心使用哦！</p>
+</div>
+<h3 id="43-动画覆盖控制器">4.3 动画覆盖控制器</h3>
+<p><a href="https://docs.unity.cn/cn/2018.4/Manual/AnimatorOverrideController.html">Animator Override Controller</a> 是一种数据资源，可让您扩展现有 Animator Controller，从而替换使用的特定动画但保留其原始结构、参数和逻辑。</p>
+<ul>
+<li>问题场景
+<ul>
+<li>游戏有N个角色，这N个角色的状态机一样，仅动画内容不一样。</li>
+</ul>
+</li>
+<li>解决方案
+<ul>
+<li>为一个角色设计状态机，其他的角色就设计AnimatorOverrideController 的资源，在用工厂生产这个角色时，使用这个资源赋予 该角色 Animator.runtimeAnimatorController 属性</li>
+</ul>
+</li>
+</ul>
+<p>典型的代码：</p>
+<p><img src="../images/ch07/ch07-animator-override.png" alt=""></p>
+<p>脚本 <a href="https://docs.unity.cn/cn/current/ScriptReference/AnimatorOverrideController.html">Animator Override Controller</a> 给出动态切换动作的案例。</p>
+<h3 id="44-混合树">4.4 混合树</h3>
+<p>游戏动画中的一项常见任务是在两个或更多相似运动之间进行混合。也许最熟知的示例就是根据角色的速度来混合行走和奔跑动画。另一个示例是角色在奔跑期间转向时向左或向右倾斜。</p>
+<p><strong>1D混合</strong></p>
+<p>游戏应用场景：一只鸭子走在沼泽地上，遇到水塘就游，遇到陆地就走。输入参数是地面与水面的距离 h，当 h &gt; 0 走，当 h &lt; 2 游，在之间则处于游走状态。</p>
+<div class="admonition example"><p class="admonition-title">操作 07-13，1D 混合</p>
+<p>动画混合：</p>
+<ul>
+<li>创建一个鸭子对象 duck</li>
+<li>在状态机编辑窗口，点右键出现 Create State -&gt; Form new Blend Tree</li>
+<li>修改状态名 swim_walk。 双击 swim_walk 状态，进入 <a href="https://docs.unity.cn/cn/current/Manual/BlendTree-1DBlending.html">Blend Tree 编辑界面</a>。</li>
+<li>添加两个动作，拖入 swim 和 walk 。 系统会生成一个混合控制变量，移动红线，并看播放效果</li>
+</ul>
+<p><img src="../images/ch07/ch07-animator-1dblend.png" alt=""></p>
+</div>
+<p><strong>2D 混合</strong></p>
+<p>参考官方解说 <a href="https://docs.unity.cn/cn/current/Manual/BlendTree-2DBlending.html">2D 混合</a></p>
+<p>具体案例，标准资源库的第三人称角色的 animator 目录，查看 Crouching 动作</p>
+<h3 id="45-更多复杂内容">4.5 更多复杂内容</h3>
+<p>动画是游戏中最复杂的编程，以下工作都是必要的！</p>
+<ul>
+<li>子状态机</li>
+<li>动画分层</li>
+<li><a href="https://docs.unity.cn/cn/current/Manual/TargetMatching.html">目标匹配</a> : 通常在游戏中可能出现以下情况：角色必须以某种方式移动，使得手或脚在某个时间落在某个地方。</li>
+<li>动态生成 AnimationClip</li>
+<li>动态添加 AnimationCurve</li>
+<li>动态添加 AnimationEvent</li>
+</ul>
+<h2 id="5面向对象的编程---设计模式对象的行为">5、面向对象的编程 - 设计模式：对象的行为</h2>
+<p>行为型模式用于描述程序在运行时复杂的流程控制，即描述多个类或对象之间怎样相互协作共同完成单个对象都无法单独完成的任务，它涉及算法与对象间职责的分配。</p>
+<p>行为型模式分为类行为模式和对象行为模式，前者采用继承机制来在类间分派行为，后者采用组合或聚合在对象间分配行为。由于组合关系或聚合关系比继承关系耦合度低，满足“合成复用原则”，所以对象行为模式比类行为模式具有更大的灵活性。</p>
+<p>行为型模式是 GoF 设计模式中最为庞大的一类，它包含以下 11 种模式。</p>
+<ol>
+<li>模板方法（Template Method）模式：定义一个操作中的算法骨架，将算法的一些步骤延迟到子类中，使得子类在可以不改变该算法结构的情况下重定义该算法的某些特定步骤。</li>
+<li>策略（Strategy）模式：定义了一系列算法，并将每个算法封装起来，使它们可以相互替换，且算法的改变不会影响使用算法的客户。</li>
+<li>命令（Command）模式：将一个请求封装为一个对象，使发出请求的责任和执行请求的责任分割开。</li>
+<li>职责链（Chain of Responsibility）模式：把请求从链中的一个对象传到下一个对象，直到请求被响应为止。通过这种方式去除对象之间的耦合。</li>
+<li>状态（State）模式：允许一个对象在其内部状态发生改变时改变其行为能力。</li>
+<li>观察者（Observer）模式：多个对象间存在一对多关系，当一个对象发生改变时，把这种改变通知给其他多个对象，从而影响其他对象的行为。</li>
+<li>中介者（Mediator）模式：定义一个中介对象来简化原有对象之间的交互关系，降低系统中对象间的耦合度，使原有对象之间不必相互了解。</li>
+<li>迭代器（Iterator）模式：提供一种方法来顺序访问聚合对象中的一系列数据，而不暴露聚合对象的内部表示。</li>
+<li>访问者（Visitor）模式：在不改变集合元素的前提下，为一个集合中的每个元素提供多种访问方式，即每个元素有多个访问者对象访问。</li>
+<li>备忘录（Memento）模式：在不破坏封装性的前提下，获取并保存一个对象的内部状态，以便以后恢复它。</li>
+<li>解释器（Interpreter）模式：提供如何定义语言的文法，以及对语言句子的解释方法，即解释器。</li>
+</ol>
+<h3 id="51-定义-listener-接口回调">5.1 定义 listener 接口回调</h3>
+<p>消息发送者发送消息给接受者，发送对象的基本代码是 <code>Receiver.message(...)</code></p>
+<div class="admonition note"><p class="admonition-title">要点：Receiver是什么？</p>
+<p>如果你做一个模块或预制，这时你多数并不知道 Receiver 会是什么类型。怎么办？</p>
+</div>
+<p>通常的做法就是在 模块的脚本中定义一个 <code>IXxxListener</code> 接口， 然后 <code>Sender</code> 类中定义一个实例变量 <code>xxxListener</code>， 这时发送对象的基本代码是 <code>xxxListener.message(...)</code> ，同时 <code>Sender</code> 要实现方法或属性 <code>SetXxxListener</code> 方便使用者注入 listener</p>
+<p>模块或预制的使用者如果关注这个消息，就会做以下两个动作：</p>
+<ul>
+<li><code>Class Receiver implements IXxxListener</code></li>
+<li><code>sender.SetXxxListener(MyReceiver)</code></li>
+</ul>
+<p>专业一些，这种设计称为 <strong>依赖倒置</strong> （Dependence Inversion Principle，DIP）它降低了客户与实现模块之间的耦合。</p>
+<ul>
+<li>原始代码 Sender 依赖 Receiver</li>
+<li>添加 IXxxListener 接口后， Receiver 依赖 IXxxListener 和 Sender；Sender 依赖 IXxxListener</li>
+</ul>
+<div class="admonition tip"><p class="admonition-title">提示</p>
+<p>这里依然遗留了 Receiver 依赖 具体的 Sender 问题</p>
+</div>
+<h3 id="52-使用消息订阅发布模式">5.2 使用消息订阅/发布模式</h3>
+<p>我们希望这个问题一般化。为了便于记忆，我们演绎为明星与粉丝的故事：</p>
+<p><strong>明星与粉丝</strong></p>
+<p>明星希望把自己的动态及时通知粉丝，但她（他）并不喜欢一一通知粉丝。</p>
+<p>所以，第一个想法就是用 <code>微信公众号</code> 或 <code>微博</code> 通知粉丝。用设计术语 <strong>依赖导致</strong>，如图所示：</p>
+<p><img src="../images/ch07/ch07-pattern-dip.png" alt=""></p>
+<p>这样，粉丝仅需知道明星的公众号，然后关注它。</p>
+<div class="admonition tip"><p class="admonition-title">提示</p>
+<p>（1）Receiver 依赖 具体的公众号，而不是 sender<br>
+（2）一个公众号可以自动通知很多 receivers</p>
+</div>
+<p>显然，明星对这个分离明星和粉丝关系的模型很满意，决定让自己的助理代替自己管理公众号。</p>
+<p><strong>订阅/发布模式</strong></p>
+<p>进一步，我们把上述设计进一步模型化，以便于编程实现</p>
+<p><img src="../images/ch07/ch07-pattern-observer.png" alt=""></p>
+<ul>
+<li><strong>发布者（事件源）/Publisher</strong>：事件或消息的拥有者</li>
+<li><strong>主题（渠道）/Subject</strong>：消息发布媒体</li>
+<li><strong>接收器（地址）/Handle</strong>：处理消息的方法</li>
+<li><strong>订阅者（接收者）/Subscriber</strong>：对主题感兴趣的人</li>
+</ul>
+<p>这也称为观察者模式（Observer Pattern）</p>
+<ul>
+<li>发布者与订阅者没有直接的耦合</li>
+<li>发布者与订阅者没有直接关联，可以 <strong>多对多</strong> 通讯</li>
+<li>在MVC设计中，是实现模型与视图分离的重要手段
+<ul>
+<li>例如：数据DataSource对象，就是Subject。任何使用该数据源的显示控件，如Grid都会及时更新。</li>
+</ul>
+</li>
+</ul>
+<p><strong>设计模式与游戏的持续改进</strong></p>
+<ul>
+<li>当一个游戏对象实现“击打”行为，可能的处理是：
+<ul>
+<li>按规则计分</li>
+<li>按规则计算对周边物体的伤害</li>
+<li>显示各种效果</li>
+<li>… …</li>
+</ul>
+</li>
+<li>如果你在事件写了以上代码
+<ul>
+<li>你想修改游戏规则，你将无法保证修改正确，因为很多行为都有类似的代码</li>
+<li>添加一些新行为，你不仅无法复用代码，而且产生逻辑冲突</li>
+</ul>
+</li>
+<li>如果使用设计模式
+<ul>
+<li>计分员对象感兴趣该事件，会计分（编程时哪有合理规则！）</li>
+<li>控制器感兴趣这个事件，会按规则做响应</li>
+<li>添加新需求，如生成奖励对象，则添加一个奖励管理者</li>
+</ul>
+</li>
+</ul>
+<h3 id="53-c-事件-代理机制">5.3 C# 事件-代理机制</h3>
+<p>在多数场景中 listener 接口仅包含一个接受消息的方法，因此 C# 对这种情况下的订阅/发布模式做了语言级别的实现。称为事件-代理机制。说成事件的 <strong>代理模型</strong> 也正确！</p>
+<p><img src="../images/ch07/ch07-pattern-delegate.png" alt=""></p>
+<p>要点在于：</p>
+<ul>
+<li>delegate 关键字定义了函数类型 AttackAction 的代理类型</li>
+<li>然后我们申明了 <strong>静态</strong> 变量 OnAttackAction ，即模型中的 Subject</li>
+<li>当 OnAttackAction 被调用时，会自动通知所有侦听者</li>
+</ul>
+<p>客户代码：</p>
+<p><img src="../images/ch07/ch07-pattern-delegate-client.png" alt=""></p>
+<ul>
+<li>有 Teleport 这样的函数，它的函数签名与 delegate 的定义一样</li>
+<li>订阅就是加赋值</li>
+<li>取消订阅就是减赋值</li>
+</ul>
+<p>显然，大大简化了订阅/发布模式的代码！</p>
+<h2 id="6小结">6、小结</h2>
+<ul>
+<li>模型
+<ul>
+<li>模型是由网格、材料与骨骼动画构成</li>
+<li>模型预制包括定义刚体、碰撞、脚本等</li>
+<li>模型的类型</li>
+</ul>
+</li>
+<li>Mecanim动画系统
+<ul>
+<li>Animator组件与属性</li>
+<li>状态机原理与动画设计</li>
+<li>动画控制编程</li>
+<li>动画控制器事件</li>
+</ul>
+</li>
+<li>动画剪辑（Animation Clip）
+<ul>
+<li>动画原理</li>
+<li>动画设计与编辑</li>
+<li>动画剪辑事件</li>
+</ul>
+</li>
+<li>类人动画的使用</li>
+<li>动画中级技术
+<ul>
+<li>直接播放</li>
+<li>动画覆盖</li>
+<li>1D，2D 动画混合</li>
+</ul>
+</li>
+<li>面向对象的设计与编程
+<ul>
+<li>行为模式</li>
+<li>接口回调</li>
+<li>事件-代理机制（函数回调）</li>
+<li>订阅发布模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="7作业与练习">7、作业与练习</h2>
+<p>1、智能巡逻兵</p>
+<ul>
+<li>提交要求：</li>
+<li>游戏设计要求：
+<ul>
+<li>创建一个地图和若干巡逻兵(使用动画)；</li>
+<li>每个巡逻兵走一个3~5个边的凸多边型，位置数据是相对地址。即每次确定下一个目标位置，用自己当前位置为原点计算；</li>
+<li>巡逻兵碰撞到障碍物，则会自动选下一个点为目标；</li>
+<li>巡逻兵在设定范围内感知到玩家，会自动追击玩家；</li>
+<li>失去玩家目标后，继续巡逻；</li>
+<li>计分：玩家每次甩掉一个巡逻兵计一分，与巡逻兵碰撞游戏结束；</li>
+</ul>
+</li>
+<li>程序设计要求：
+<ul>
+<li>必须使用订阅与发布模式传消息
+<ul>
+<li>subject：OnLostGoal</li>
+<li>Publisher: ?</li>
+<li>Subscriber: ?</li>
+</ul>
+</li>
+<li>工厂模式生产巡逻兵</li>
+</ul>
+</li>
+<li>友善提示1：生成 3~5个边的凸多边型
+<ul>
+<li>随机生成矩形</li>
+<li>在矩形每个边上随机找点，可得到 3 - 4 的凸多边型</li>
+<li>5 ?</li>
+</ul>
+</li>
+<li>友善提示2：参考以前博客，给出自己新玩法</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/08-particle-system/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">八、粒子系统与流动效果</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/06-physics-and-collision/">
+            <span class="next-text nav-default">六、物理系统与碰撞</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

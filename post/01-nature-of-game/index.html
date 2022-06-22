@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>一、游戏的本质 - 3D游戏编程与设计 - 中山大学</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="潘茂林" /><meta name="description" content="Dropping in on the ones that looked interesting &amp;mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：2 * 45 min 1、游戏的概念 1.1 什么是游戏？ 游戏无处不在。在游牧年代据说就有了投壶这样的游戏，人们打牌、下" /><meta name="keywords" content="中山大学, 数据科学与计算机, 3D游戏编程与设计" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="http://Thresh-Holden.github.io/post/01-nature-of-game/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.32d4dc642fec98c34c80bebb9c784c50771712b4a8a25d9f4dd9cce3534b426e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="一、游戏的本质" />
+<meta property="og:description" content="Dropping in on the ones that looked interesting &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：2 * 45 min 1、游戏的概念 1.1 什么是游戏？ 游戏无处不在。在游牧年代据说就有了投壶这样的游戏，人们打牌、下" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://Thresh-Holden.github.io/post/01-nature-of-game/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-08-30T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-08-30T00:00:00+08:00" />
+
+<meta itemprop="name" content="一、游戏的本质">
+<meta itemprop="description" content="Dropping in on the ones that looked interesting &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：2 * 45 min 1、游戏的概念 1.1 什么是游戏？ 游戏无处不在。在游牧年代据说就有了投壶这样的游戏，人们打牌、下"><meta itemprop="datePublished" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="dateModified" content="2020-08-30T00:00:00+08:00" />
+<meta itemprop="wordCount" content="7211">
+<meta itemprop="keywords" content="课件," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一、游戏的本质"/>
+<meta name="twitter:description" content="Dropping in on the ones that looked interesting &mdash; Steve Jobs, Stanford Report, June 14, 2005 预计时间：2 * 45 min 1、游戏的概念 1.1 什么是游戏？ 游戏无处不在。在游牧年代据说就有了投壶这样的游戏，人们打牌、下"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">3D游戏编程与设计</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/post/index-2020">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">3D游戏编程与设计</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/post/index-2020">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">一、游戏的本质</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-30 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1游戏的概念">1、游戏的概念</a>
+          <ul>
+            <li><a href="#11-什么是游戏">1.1 什么是游戏？</a></li>
+            <li><a href="#12-游戏原理">1.2 游戏原理</a></li>
+            <li><a href="#13-游戏的本质">1.3 游戏的本质</a></li>
+          </ul>
+        </li>
+        <li><a href="#2视频游戏">2、视频游戏</a>
+          <ul>
+            <li><a href="#21-游戏的定义">2.1 游戏的定义</a></li>
+            <li><a href="#22-游戏设计的元素">2.2 游戏设计的元素</a></li>
+            <li><a href="#23-视频游戏的历史">2.3 视频游戏的历史</a></li>
+            <li><a href="#24-游戏的分类">2.4 游戏的分类</a></li>
+          </ul>
+        </li>
+        <li><a href="#3游戏软件的开发">3、游戏软件的开发</a>
+          <ul>
+            <li><a href="#31-视频游戏的原理">3.1 视频游戏的原理</a></li>
+            <li><a href="#32-游戏软件的基本架构">3.2 游戏软件的基本架构</a></li>
+            <li><a href="#33-游戏软件开发的流程">3.3 游戏软件开发的流程</a></li>
+            <li><a href="#34-游戏创意的表达">3.4 游戏创意的表达</a></li>
+          </ul>
+        </li>
+        <li><a href="#4游戏软件的商业盈利模式">4、游戏软件的商业盈利模式</a>
+          <ul>
+            <li><a href="#41-设备租用阶段">4.1 设备租用阶段</a></li>
+            <li><a href="#42-软件购买阶段">4.2 软件购买阶段</a></li>
+            <li><a href="#43-互联网阶段">4.3 互联网阶段</a></li>
+          </ul>
+        </li>
+        <li><a href="#5走出娱乐的游戏技术">5、走出娱乐的游戏技术</a></li>
+        <li><a href="#6作业与练习">6、作业与练习</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p><strong><em>Dropping in on the ones that looked interesting</em></strong></p>
+<p>&mdash; Steve Jobs, Stanford Report, June 14, 2005</p>
+</blockquote>
+<p><em>预计时间：2 * 45 min</em></p>
+<h2 id="1游戏的概念">1、游戏的概念</h2>
+<h3 id="11-什么是游戏">1.1 什么是游戏？</h3>
+<p>游戏无处不在。在游牧年代据说就有了投壶这样的游戏，人们打牌、下棋是游戏、拔河也是游戏、甚至玩骰子、喝酒划拳助兴（小蜜蜂等）也是游戏。在杂志上做个填词游戏，或在电脑或手机上玩个连连看、植物战僵尸等游戏。</p>
+<p>上述的游戏是吃瓜群众理解的狭义概念上的游戏。在我们的社会活动与经济生活中，类似的游戏过程无时不在上演。例如：南曹县与北曹县是一个国家吗？如果是，让它们兄弟去搞定，是打是和与别人无关。事实不是这样的，因为参与的多方都希望自己的利益最大化，大家都认为维持现状最好，尽管大家都知道国家分裂对当事居民是最差的选择。又例如，股市中每个玩家都想赚钱，每个人都根据自己掌握的信息，做出自己投资选择，产生了复杂的现象，被称为“零和”游戏。类似这种多方参与各自根据自己的利益按一定规则出牌的过程，经常出现在政策制定、合同谈判、资源调配、以及各类冲突与竞争的业务中。我们需要研究在特定上下文环境下，规则、行为选择与结局的关系，模型化 Game（游戏）则成为严肃的科学的概念。</p>
+<p><strong>游戏是社会某局部的缩影。</strong> 以休闲游戏“<a href="https://baike.baidu.com/item/%E5%A4%A7%E5%AF%8C%E7%BF%81/19289">大富翁</a>（Monopoly）” 为例，用骰子表示玩家的机会，从房产、道路、股票以及卡片（特权）等角度，让年轻人体验社会规则下，经济与社会活动的复杂性。从娱乐的角度，屌丝们可以快乐的设置一个个“收入1个亿”的小目标，仅需要付出时间和个人精力，逐步实现“梦想”；从教育的角度，玩家今天的游戏活动，正在积累玩家成为“商场精英”的能力与素养。正因如此，<strong>游戏不只是娱乐工具，也是人们认识社会与自然规律的工具</strong>。</p>
+<p>尽管我们生活到处是 <em>Game</em>，什么是 Game 什么不是 Game 却是难以回答的问题。</p>
+<h3 id="12-游戏原理">1.2 游戏原理</h3>
+<p><em>Game Theory</em> 不翻译成游戏理论，而是 <strong><a href="https://baike.baidu.com/item/%E5%8D%9A%E5%BC%88%E8%AE%BA/81545">博弈论</a></strong> 又称为对策论。简单一些解释该学科的任务，研究游戏中在特定场景与规则下，<strong>个体行为选择</strong> 与 <strong>可能结果</strong> 的数学方法，或者表达为基于模型的策略分析（经济游戏）的量化方法。计算机专业人员这样理解，李世石 和 <a href="https://en.wikipedia.org/wiki/AlphaGo">AlphaGo</a> 下棋（play game），玩家李世石选择了一个动作序列，玩家AlphaGo选择了另一个动作序列，结果李世石代表的人类最强大脑输给了计算机程序。</p>
+<h4 id="121-囚徒困境博弈模型">1.2.1 “囚徒困境”博弈模型</h4>
+<p>为了避免复杂的概念，我们也从博弈论的经典案例“囚徒困境”（ <em>prisoner&rsquo;s dilemma</em> ）介绍 Game 的概念与术语。</p>
+<blockquote>
+<p>警察与小偷的故事： 某团伙两小偷（A，B）不幸被警察叔叔抓了，警察叔叔隔离审问，并告知“坦白从宽，抗拒从严”。小偷只能选择“坦白”或“抗拒”行为，行为的后果如下表（贴在审讯室）。请问，两个小偷各自的选择是什么？</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">A \ B</th>
+<th style="text-align:center">抗拒</th>
+<th style="text-align:center">坦白</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">抗拒</td>
+<td style="text-align:center">1:1</td>
+<td style="text-align:center">10:0</td>
+</tr>
+<tr>
+<td style="text-align:center">坦白</td>
+<td style="text-align:center">0:10</td>
+<td style="text-align:center">8:8</td>
+</tr>
+</tbody>
+</table>
+<p>*A\B=1:1 表示A判1年，B判1年</p>
+<p>这个案例的结果就是：一般情况下，A 和 B 都选择了“坦白”。 它展示了上述规则下 “坦白从宽，抗拒从严” 的科学性。 普林斯顿大学约翰·纳什解释了这一现象，称为“ <a href="https://baike.baidu.com/item/%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1">纳什均衡</a>(Nash equilibrium) ” ， 纳什等因此在 1994 年获得 <strong>诺贝尔经济学奖</strong> 。</p>
+<p>所谓一般情况就是同时满足以下一些限制条件：</p>
+<ul>
+<li>A，B 都是有限理性的人。 因为 A 和 B 都是理性的，所以它会服从个体 <strong>利益最大化准则</strong> 而选择行为， 因此也可以理解为必须是 <strong>自私的玩家</strong> 。</li>
+<li>A，B 不能合作。例如隔离审问；桥牌比赛中不能互相使眼色等等</li>
+<li>不能有外力作用。 例如：警匪片中黑老大常说：“你放心去，出了事我替你照顾弟妹！”等等</li>
+</ul>
+<p>有了以上约束，我们就可以用上表模型解释 A 和 B 选择“坦白”的动机。</p>
+<h4 id="122-游戏的一些基本概念">1.2.2 游戏的一些基本概念</h4>
+<p>根据上述简单的、模型化游戏，指出了一个游戏模型的基本元素：</p>
+<p><strong>1、玩家/局中人（player）</strong></p>
+<p>一个游戏必须有两个或以上的玩家，否则就玩不起来了！</p>
+<p><strong>2、规则（rule）</strong></p>
+<p>所谓规则就是玩家的行为的约束以及与结果的关系。例如上述案例的表格。因此，它包括：</p>
+<ul>
+<li><strong>行为集合（actions set）</strong>: 玩家可以选择的行为，它必须是有限的</li>
+<li><strong>结果或收益（payoff）</strong>: 它是一个关于行为或行为序列的函数</li>
+</ul>
+<p>游戏的规则必须是公开和透明的，不能出现“潜规则”。即不能出现“<a href="https://baike.baidu.com/item/%E6%88%91%E7%88%B8%E6%98%AF%E6%9D%8E%E5%88%9A/5518946">我爸是李刚</a>”这类潜规则，游戏就无法玩了。因此，游戏规则一般比较简单，易于玩家理解掌握。</p>
+<p><strong>3、策略与决策（policy &amp; decision making）</strong></p>
+<p>用于描述玩家选择的行为约束或依据，常用概念包括：</p>
+<ul>
+<li><strong>目标（goals）</strong>：选择行为依据，即理性玩家追求的量化结果。如战胜对手。获得分数、生命力、魔法值、道具等等</li>
+<li><strong>有意义的选择、决策 (meaningful choice)</strong> : 即玩家的任何选择都是理性的，以确保有限理性玩家（limited-rational player）。</li>
+</ul>
+<p>有限理性是非常重要的概念。例如，你在电影院的门口玩“抓娃娃”机器，你就理解“有限”或“有意义”这个概念了！醉翁之意不在酒，在于心也，很多时候结果并不重要，而在做你认为“有意义”的事情。</p>
+<p><strong>4、结局（outcome）</strong></p>
+<p>游戏的最终结果。这不是指一场游戏谁的“输”或“赢”，而是关注在上述模型下，游戏能否达成某种均衡（equilibrium）状态。用通俗的话，达成游戏玩家乐于承认（认为<strong>公平与公正</strong>）具体结果，产生<strong>愿赌服输</strong>的状态！ 这里仅介绍两种常见的均衡结局：</p>
+<ul>
+<li><strong>纳什均衡（Nash Equilibrium）</strong>：每个玩家都认为自己做出了最合理的选择，最终达成最终状态。用计算机算法术语，玩家采用某种 <strong>贪心算法</strong> 达成的 <strong>局部最优解</strong></li>
+<li><strong>帕累托最优（Pareto Optimality）</strong>：游戏的最佳结果，又称为全局最优。在上述案例中，（抗拒，抗拒）的选择是玩家最优的结果，然而在没有串谋和外力的作用下，“抗拒、抗拒”的结果在社会学意义下是不合理的，“不理性”行为的后果就是更重的惩罚。</li>
+</ul>
+<p>以上四个元素是任何游戏必须具备的元素与遵守的准则，这对游戏设计、游戏现象建模分析至关重要。这关系到是否是一个<strong>合格的游戏</strong>这个基本问题。</p>
+<ul>
+<li>以人机对战的“五子棋”为例，如果机器凭借强大算法和算力，则计算机先走一定胜，有人会玩这样“AI”强大的游戏吗？ 这个案例说明了纳什均衡的重要性</li>
+<li>以windous自带的“扫雷”游戏为例，如果不显示打开网格周边地雷的数量，这样的游戏有人乐意玩吗？ 这个案例说明了玩家必须有足够信息开展有意义的选择、决策的重要性</li>
+<li>很多学游戏学生喜欢设计牌类游戏，然而这看似简单却通常是最难设计的游戏类。除了经典牌类游戏，能够流行的牌类游戏几乎几年都出不了一个。规则要简单、易于掌握，又要能达成均衡，这太难了。</li>
+<li>易于发现“帕累托最优”的游戏，可能导致缺乏挑战。以赛车游戏为例，玩家选择赛车型号时，如果某型赛车容易赢，大概就得修改车型参数或行为。使玩家处于 dilemma（左右两难） 的“选择综合征”状态，是游戏设计的要点之一。</li>
+</ul>
+<p>为了防止“帕累托最优”结局的达成，最常用的手段就是在决策过程中，游戏设计者有意识对玩家隐藏部分信息或引入随机过程干扰信息。单机游戏在各种攻略辅助下，很容易让玩家发现最优行为选择序列，形成“帕累托最优”结局，这时该游戏就逐步进入死亡期（玩家失去兴趣）。</p>
+<h4 id="123-信息与行为决策">1.2.3 信息与行为决策</h4>
+<p><strong>先验知识</strong>是玩家自身先天或在游戏中学习获得的知识。由于人具有知识学习的能力，即使两个人拥有相同的信息，也会做出不同的决策。由于人受生理与外部环境的限制，即使同样的决策，也不一定在规定时间内做出符合期望的行为，即 <strong>不确定性</strong>。我们称这些为玩家个体的差异。这种差异会导致游戏的不公平（fairness），导致游戏失去了期望的均衡。现实中，我们常用段位等能力分类作为设定的 <strong>先决条件</strong> 使得游戏得以成立。</p>
+<p><strong>合作（cooperative）</strong> 是许多现代游戏的特征。特别是游戏与社交网络结合，信息组合对个体决策产生了重大影响。</p>
+<p>不考虑上述复杂的信息与决策的关系，站在玩家的角度思考获取的信息，以下概念非常重要：</p>
+<p><strong>1、完全信息（Complete Information）/ 不完全信息（Incomplete Information）</strong></p>
+<p>完全信息指玩家根据这些信息可以计算对手/自己每个动作的收益（payoff）。显然，“囚徒困境”就是这样的游戏。显然，象棋、围棋等游戏都是这类，至于每步的收益对结局的影响，就不得而知的。</p>
+<p>对于 Tic-Tac-Toe，五子棋、围棋 三个游戏，三种游戏非常类似，都是完全信息，但对人的计算能力要求是完全不一样那个的。到了围棋，计算每一步对结局的影响是目前人类计算手段无法企及的。</p>
+<p>为了使游戏更加有趣，降低计算要求，我们常常利用规则“隐藏信息”，或引入自然不确定性元素，这样用户获得的信息就是不完全的。例如：“麻将”就这样老少皆宜的游戏。</p>
+<div class="admonition info"><p class="admonition-title">信息</p>
+<p>“打怪成功20%概率掉落武器”这样的概率的规则，依然属于完全信息的。</p>
+</div>
+<p><strong>2、完美信息（Perfect Information）/ 不完美信息（Imperfect Information）</strong></p>
+<p>完美信息是指我们可以观察到对手的所有动作（actions sequence）。通常，经典游戏都是指完美信息博弈。即使信息不完全，所谓的“高手”，可以通过记忆对手行为并推理（学习），在牌类游戏（如80分）中大显神威。</p>
+<p><strong>3、对称信息（Symmetric Information）/ 不对称信息（Asymmetric Information）</strong></p>
+<p>对称信息是指玩家获得的决策信息的一样的，即玩家决策不依赖私有信息。无疑，不对称的信息在游戏中的使用，必须不能破坏结局的均衡。例如：网上四国大战，其中有两人开着“QQ”互通信息，怎么玩？</p>
+<h4 id="124-博弈论与游戏设计">1.2.4 “博弈论”与游戏设计</h4>
+<p>“博弈论”是高大上的学科，和计算机游戏有什么关系？</p>
+<ul>
+<li>游戏设计必须使用上述概念，才能清晰、正确描述游戏。</li>
+<li>游戏规则设计与分析离不开数学模型。</li>
+</ul>
+<p>游戏的合理性和可分析性是游戏的设计与运营是重要方面，“博弈论”是玩家行为与游戏结果研究的基础理论。大型游戏公司每年不仅喜欢计算机的学生，也大量招聘经济学专业高材生。“金融、地产、游戏”是经济学专业三大就业方向，从中你大概就明白游戏就是社会，不仅仅是编程！如果你喜欢游戏设计，强力建议你选修经济、管理等专业开设的对应课程。</p>
+<h3 id="13-游戏的本质">1.3 游戏的本质</h3>
+<p>综上所述，游戏就是人们对自然规律、社会规律的认知基础上，创造一些事物、规则和场景上下文（Huizinga 1971 称为“魔法圈”，Adams “称为假想世界”）模型来模拟社会（甚至是<strong>未来社会</strong>）或自然规律。玩家通过智力、体力或技能对抗（竞争），实现“寓教于乐”乃至帮助我们理解社会规律的目标。</p>
+<div class="admonition note"><p class="admonition-title">要点</p>
+<p><strong>游戏就是社会场景的化简模型</strong></p>
+</div>
+<h2 id="2视频游戏">2、视频游戏</h2>
+<p><strong>视频游戏（Video Game）</strong>，游戏与计算机与互联网技术相集合的产物。多数情况下，视频游戏特指计算机娱乐游戏。</p>
+<h3 id="21-游戏的定义">2.1 游戏的定义</h3>
+<p>这里游戏的定义特指计算机娱乐类游戏(Video Game)，甚至不一定能包含严肃游戏、商业游戏、或社交游戏，因为游戏这词范围太广了，参见 <a href="https://en.wikipedia.org/wiki/Game">Game</a></p>
+<blockquote>
+<p>A <strong>game</strong> is a form of <em>interactive</em> entertainment where <em>players</em> must overcome <em>challenges</em>, by taking <em>actions</em> that are governed by <em>rules</em>, in order to meet a <em>victory condition</em>.</p>
+<p>Adams: <em>Fundamentals of Game Design</em></p>
+</blockquote>
+<p>这个定义在通用游戏基础上，加入了娱乐属性，提出了两个新元素，交互 和 挑战。</p>
+<blockquote>
+<p>A <strong>game</strong> is a <em>system</em> in which <em>players</em> engage in <em>artificial conflict</em>, defined by <em>rules</em>, that results in a <em>quantifiable outcome</em>.</p>
+<p>Salen &amp; Zimmerman: <em>Rules of Play</em></p>
+</blockquote>
+<h3 id="22-游戏设计的元素">2.2 游戏设计的元素</h3>
+<h4 id="221-构成游戏的基本元素">2.2.1 构成游戏的基本元素</h4>
+<p>一个游戏有哪些要数构成，属于游戏设计的基础话题。理解这些要数是游戏设计、评估的基础！一般来说，游戏就是博弈理论在娱乐竞技活动中的应用，因此游戏要素必须满足博弈的要素，以及娱乐竞技的要素。</p>
+<div class="admonition info"><p class="admonition-title">信息</p>
+<p>游戏设计话题属于艺术与媒体方向，游戏设计细节请参考 Ernest Adams（IGDA创始人） 或 Tracy Fullerton（南加州大学·电影学院·媒体与游戏专业） 编写的教材</p>
+</div>
+<p>游戏元素是设计师经验总结，并不是铁定规律，不同的游戏设计教材是有差别的（作为理工科生一般难以理解）。 比较公认的游戏设计元素包括：</p>
+<ul>
+<li>Players（玩家）：游戏参与者，需要定义玩家的模式草图（Mode Sketches）
+<ul>
+<li>Roles（角色）与 Characters（特征）</li>
+<li>Interactive mode（与游戏世界的交互方式）</li>
+</ul>
+</li>
+<li>Goals（游戏目标）：玩家在游戏中想要达成的事情。即游戏结束的成功条件与失败条件
+<ul>
+<li>Procedures（过程）：一组达成目标或者失败的故事</li>
+</ul>
+</li>
+<li>Rules（规则）与 Actions（行动）：
+<ul>
+<li>Resources（资源）或 Objects（游戏对象）：通常说的道具，包括金币、健康值、分数等</li>
+<li>Boundary（边界）或 Play-Space（游戏空间） ：游戏世界的时间与空间，如游戏的地图、年代</li>
+<li>Actions（行动）或 （操作）：玩家行为集合，即玩家可选择的操作</li>
+<li>Outcome（结果）：游戏对象所有可能达成的状态，即玩家看到的游戏世界，不是玩家的收获</li>
+<li>Rules（规则）：玩家在游戏中行为与结果之间的关系。即玩家行为导致游戏世界变化，如收获金币等</li>
+</ul>
+</li>
+<li>Challenges（挑战）：资源与规则的限制，对玩家达成目标的难度
+<ul>
+<li>Conflicts（冲突）：制造障碍物；设置特定技能的竞争对手；构造困境（dilemmas，两难选择，如：“囚徒困境”）</li>
+</ul>
+</li>
+</ul>
+<p>以游戏《拳皇》为例：第一步就是设计玩家扮演的角色并定义特点；第二步就是告诉玩家成功与失败情况；第三步就是说明游戏中有哪些事物、哪些游戏场景、玩家的动作列表，搏斗的计分规则等；游戏的挑战是 dilemmas 和 多样的对手；玩家最终会尝试几乎所有角色战胜所有对手！</p>
+<div class="admonition tip"><p class="admonition-title">提示</p>
+<p>很多玩家认为游戏设计就是人物设计、道具系统、装备系统、经济系统等，它们是特定类型游戏的设计元素<br>
+各类游戏元素设计，参见 Adams 《游戏设计基础》</p>
+</div>
+<p>绘画、原型、图、表格、脚本是设计游戏元素的工具，常见游戏元素设计工具：</p>
+<ul>
+<li>人物（角色）草图（原画）：设计描述 Players 与 PlaySpace 的形态或关键场景</li>
+<li>资源（道具）及其属性表：给出游戏中物体及其关键属性</li>
+<li>规则表：表达游戏规则，它通常是三栏表格，分别是<code>动作，前提条件、结果</code></li>
+<li>场景故事脚本：描述游戏从场景开始到场景结束过程中，玩家成功完成任务或失败的过程</li>
+<li>故事线：表示游戏场景变迁的图，通常用流程图表示</li>
+</ul>
+<h4 id="222-游戏的戏剧性元素">2.2.2 游戏的戏剧性元素</h4>
+<p>通常游戏具有娱乐特征，因此必须引入适当的戏剧性（Dramatic）元素，让玩家自认为（有限理性）每一步动作选择都是有意的（<strong>meaningful choices</strong>）。一些设计元素如：</p>
+<ul>
+<li>Challenge（挑战）：通俗说法&quot;打 Boss&quot;</li>
+<li>Play（玩法）：游戏玩法</li>
+<li>Premise（楔子）：引导故事。如火星遭袭的故事</li>
+<li>Story（故事）：如“仙剑”，我们必须设计故事线索作为挑战</li>
+<li>。。。</li>
+</ul>
+<div class="admonition quote"><p class="admonition-title">游戏设计建议阅读教材下载</p>
+<p>Tracy Fullerton, GAME DESIGN WORKSHOP, 2e, 【<a href="http://www.baidu.com/s?ie=utf-8&amp;bs=GAME+DESIGN+WORKSHOP&amp;f=8&amp;rsv_bp=1&amp;rsv_spt=3&amp;wd=GAME+DESIGN+WORKSHOP+pdf&amp;rsv_sug3=5&amp;rsv_sug1=5&amp;rsv_sug4=300&amp;inputT=4978">电子版下载</a>】</p>
+</div>
+<h4 id="223-游戏与计算科学">2.2.3 游戏与计算科学</h4>
+<p>游戏计算就是产生一个“合理”的 四元组（参与者，动作，游戏当前状态，游戏结果状态）序列或时间序列。</p>
+<p>我们通常关注下一个动作（以及时机），这是计算问题：</p>
+<ul>
+<li>根据当前状态决策（贪婪算法）</li>
+<li>根据当前状态+对手历史序列（规划问题）</li>
+<li>根据当前状态+以往的对局完整序列（机器学习）</li>
+<li>以往的对局完整序列+自己推演（深度学习）</li>
+</ul>
+<h3 id="23-视频游戏的历史">2.3 视频游戏的历史</h3>
+<p>请自己用维基百科</p>
+<h3 id="24-游戏的分类">2.4 游戏的分类</h3>
+<p>请自己用维基百科</p>
+<h2 id="3游戏软件的开发">3、游戏软件的开发</h2>
+<h3 id="31-视频游戏的原理">3.1 视频游戏的原理</h3>
+<h3 id="32-游戏软件的基本架构">3.2 游戏软件的基本架构</h3>
+<h3 id="33-游戏软件开发的流程">3.3 游戏软件开发的流程</h3>
+<h3 id="34-游戏创意的表达">3.4 游戏创意的表达</h3>
+<h2 id="4游戏软件的商业盈利模式">4、游戏软件的商业盈利模式</h2>
+<p>从历史发展的角度，游戏从娱乐变成产业分为三个阶段</p>
+<h3 id="41-设备租用阶段">4.1 设备租用阶段</h3>
+<ul>
+<li>视屏游戏产生。这时它是计算机大神的玩具，例如： 1958 年 William Higinbotham 设计的 <em><a href="https://en.wikipedia.org/wiki/Tennis_for_Two">Tennis for Two</a></em></li>
+<li>设备使用收费模式。
+<ul>
+<li>1961 年 MIT 学生 Steve Russell 在 DEC PDP-1 编写了 <em><a href="https://en.wikipedia.org/wiki/Spacewar!">Spacewar!</a></em>。</li>
+<li>1971 年 MIT 学生 Hugh Tuck 和 Bill Pitts 使用 DEC PDP-11 (最成功的小型机，当时价值 $20,000) 开发了投币玩计算机游戏的原型，深受学生欢迎，首次获得了商业上的成功</li>
+<li>随着 PC 与游戏机的普及，深受青少年欢迎的游戏机店满街都是。</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://2b.zol-img.com.cn/product/74/587/cezjel0MZkkk.jpg" alt="街机游戏"></p>
+<p>随着游戏机成本进一步减低，个人也有可能拥有专用的游戏计算机。产生了世界电子游戏业三大巨头——<strong>美国微软、日本索尼和任天堂</strong>！</p>
+<h3 id="42-软件购买阶段">4.2 软件购买阶段</h3>
+<ul>
+<li>软件授权使用模式
+<ul>
+<li>用户买游戏卡</li>
+<li>用户买加密的游戏盘</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://www.gamefk.com/games/65a.jpg" alt="超级玛丽"></p>
+<h3 id="43-互联网阶段">4.3 互联网阶段</h3>
+<p>随着互联网与联网游戏的产生，游戏盈利模型有了巨大的变化：</p>
+<ul>
+<li>流量模式
+<ul>
+<li>按用户下载量和用户点击量获取广告分成，小游戏通常免费玩，但会插广告</li>
+<li>爆款游戏是开发商最关注的话题</li>
+</ul>
+</li>
+<li>授权模式
+<ul>
+<li>VIP 会员。通过收会费，获得游戏特权</li>
+</ul>
+</li>
+<li>竞技模式
+<ul>
+<li>通过电子竞技，分享游戏的乐趣。通过转播权等获得收益。</li>
+<li>通过专利的电竞专业装备与设备获得独家收益。</li>
+</ul>
+</li>
+<li>内部购买模式
+<ul>
+<li>将虚拟世界的物品定价，用户必须将真金白银换成游戏币，在虚拟世界的市场中交换。</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://img.99danji.com/uploadfile/2015/1123/20151123052554630.jpg" alt="魔兽争霸"></p>
+<p>在西方游戏设计一般比较注重人权，奉行玩家平等原则。只要你成为 VIP 会员，你就有公平 pk 的资格，这样电子竞技类游戏市场就发展起来了，例如：红色警戒、魔兽争霸、反恐精英（CS）、DOTA、炉石传说等等电竞优秀游戏作品。中国人打开了“潘多拉”的盒子，在游戏中引入内部购买模式，宣布游戏进入了 <strong>有钱就是大爷模式</strong>，害了许多青少年。</p>
+<p>在互联网、移动互联网时代，商业模式变化彻底改变了游戏产业的格局，电子游戏业三大巨头的风光不在。以下是一些报道：</p>
+<ul>
+<li>2010年 <a href="http://games.qq.com/a/20110214/000146.htm">品牌价值100强 游戏业三巨头排名公布</a></li>
+</ul>
+<h2 id="5走出娱乐的游戏技术">5、走出娱乐的游戏技术</h2>
+<p>游戏是快速发展的高科技行业。强大的算力是其基础，为了输出可以“数毛”的逼真场景，特别是肌肉爆发的力量与美感，或飘曳的长发与衣襟，或潺潺的流水，这些涉及超级计算和复杂的算法；交互技术是其创新之源，AR 或 VR 技术正在颠覆游戏的应用领域，游戏技术正在走出娱乐、体育，走向医疗、电子商务、社交、教育等领域。</p>
+<h2 id="6作业与练习">6、作业与练习</h2>
+<div class="admonition quote"><p class="admonition-title">游戏策划学习资源</p>
+<p><a href="../doc/RocketCommanderWhitepaper.pdf">火箭指挥官</a>  <br>
+<a href="../doc/Guardians-of-Olympians.pdf">奥林匹斯守护者</a>  师兄AR游戏策划作品</p>
+</div>
+<p>请选择以下一个题目作为作业。</p>
+<ul>
+<li>阅读 Tracy Fullerton, <em>GAME DESIGN WORKSHOP</em> 第2-4章（游戏结构、基本元素、戏剧元素）。选择一款你喜欢的中等规模游戏如“植物大战僵尸体”为案例，根据教材中一个或一组练习要求，回答该游戏的分析与设计问题。
+<ul>
+<li>教材中每讲一部分元素，都是给出一段练习或问题，你仅需要回答案例游戏相关的问题。（游戏种类、题材太多，教材研讨的内容不一定会出现在具体游戏之中）</li>
+<li>你可以自由选择不同的练习组合，通过这组练习，至少能反映案例游戏的某个方面的设计要点。</li>
+</ul>
+</li>
+<li>游戏分类与热点探索
+<ul>
+<li>使用思维导图描述游戏的分类。（游戏分类方法特别多）</li>
+<li>结合手机游戏市场的下载量与排名等数据，结合游戏分类图，描述游戏市场的热点。</li>
+</ul>
+</li>
+<li>写一个 普通游戏 或 功能游戏 的策划稿
+<ul>
+<li>必须正确表达游戏的基本信息，包括游戏结构、基本元素、戏剧元素</li>
+<li>必须包括创新点</li>
+</ul>
+</li>
+</ul>
+<p>提交方式（仅提交分享的 URL）：</p>
+<ul>
+<li>在线文档</li>
+<li>如果您乐于与大家分享，请写成博客</li>
+</ul>
+<p><strong>DDL</strong></p>
+<ul>
+<li>两周内</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">潘茂林</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AF%BE%E4%BB%B6/">课件</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/x3-07-method-extend-lambda/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">附录 X3-07、方法扩展、Lambda 表达式</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/preface/">
+            <span class="next-text nav-default">前言</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:panml@mail.sysu.edu.cn" class="iconfont icon-email" title="email"></a>
+  <a href="http://Thresh-Holden.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">潘茂林</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.1c70606d1b733282f06230615f5561b5894924b6f9930ba2ab99cf1254f75a1a.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
